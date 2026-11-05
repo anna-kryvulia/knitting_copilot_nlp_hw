@@ -1,0 +1,13 @@
+.env
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+.ipynb_checkpoints/
+.cache/
+data/knit.db
+data/index/
+results/history/
+.DS_Store
+data/private/

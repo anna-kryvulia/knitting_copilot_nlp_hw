@@ -1,0 +1,2 @@
+# Installs the hr_copilot package with all runtime + dev dependencies (versions pinned in pyproject.toml)
+-e .[dev]
