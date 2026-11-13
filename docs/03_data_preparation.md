@@ -5,8 +5,8 @@ CRISP-DM phase 3. Turns the sources from Phase 2 into the data the components us
 | Part | Content | Status |
 |---|---|---|
 | **A** | Pattern IR schema, unit conversion, knowledge bases, yarn table | ✅ done |
-| B | Stitch simulator + synthetic pattern generator with gold labels | next |
-| C | Hand-written eval sets (intents, setup dialogues, KB queries, yarn mentions, yarn advice) | |
+| **B** | Stitch simulator + synthetic pattern generator with gold labels | ✅ done |
+| C | Hand-written eval sets (intents, setup dialogues, KB queries, yarn mentions, yarn advice) | next |
 | D | Annotations of 12 real Ravelry patterns | waits for the PDFs in `data/private/ravelry/` |
 
 ## 3.1 Part A
@@ -80,9 +80,84 @@ New data quality finding:
 `tests/test_units_ir.py`, `tests/test_kb.py`: 48 tests (IR validation, unit conversion, stitch arithmetic
 for 16 operations, 14 alias lookups, KB consistency, yarn weights, fibres). All pass.
 
-## 3.2 Reproduce
+## 3.2 Part B
+
+### Stitch simulator (`src/knit_copilot/simulator.py`)
+Executes a Pattern IR row by row using only the KB's stitch arithmetic. For every worked row it records
+the row number, label, side, start and end counts, and the expanded list of stitch operations (the
+input for charts, the tracker and the parser eval). It reports, with the row label:
+- a repeat that doesn't fit ("3 st(s) left over before the last 2"),
+- a row that leaves stitches unworked, an op that needs more stitches than are left, unknown ops,
+- stated counts that differ from computed counts (`count_mismatches()`, input for the validator).
+
+"Work until X cm" uses the row gauge (the pattern's or the knitter's), so the same IR gives a different
+number of rows for a different gauge, which is what gauge adjustment needs. Repeats of row blocks stop
+after whole blocks.
+
+**IR change found while building it:** real patterns often say "repeat these rows until 44 sts
+remain/are on the needle" (Gramma's Dishcloth, crown shaping). Added `until_count` to `repeat_rows`;
+the simulator raises an error if the repeat moves away from the target.
+
+### Templates (`src/knit_copilot/data/templates.py`)
+9 templates that build gold IR with random parameters (stitch multiples always valid):
+
+| Template | Construction | What it exercises |
+|---|---|---|
+| garter_scarf | flat | "k to end", repeat until length |
+| rib_scarf | flat | 2x2 rib with star repeats, WS mirror |
+| seed_cowl | round | rounds, alternating rounds |
+| ribbed_hat | round, **3 sizes** | rib brim, body until length per size, 8-section crown decreases with stated counts |
+| eyelet_scarf | flat | yo/k2tog/ssk lace, "to last 2 sts", named border rows |
+| feather_fan | flat | **nested repeats** ((k2tog) 3 times inside a star repeat) |
+| cable_scarf | flat | C6B/C6F crossings every 8 rows, repeats with a count |
+| bias_dishcloth | flat | increases then decreases, **repeat until stitch count** |
+| bordered_blanket | flat, **2 sizes** | garter borders, "k5, p to last 5 sts, k5" |
+
+Each template was simulated for 20 random seeds and every size: no errors, all stated counts agree.
+
+### Renderer and styles (`src/knit_copilot/data/generator.py`)
+The same IR is written in one of five styles:
+
+| Style | Example |
+|---|---|
+| terse | `Row 1 (RS): K2, *yo, k2tog, k3; rep from * to last 2 sts, k2. (44 sts)` |
+| brackets | `Row 1 (RS): K3, (p2, k6) 2 times, p2, k3.` |
+| verbose | `Rnd 1: Repeat [knit 1, purl 1] to the end of the round.` |
+| uk | `Tension: …`, `yfwd`, `skpo`, `Cast off`, `stocking stitch` |
+| imperial | `Needles: US 7`, `Gauge: 19 sts and 27 rows = 4 in`, `until piece measures 59 in` |
+
+Details that make parsing realistic: multi-size numbers `88 (96, 104)`; "rep from * 2 more times"
+(= 3 in total) vs "Work Rows 1–2 a total of 3 times"; stated counts in three formats (`(44 sts)`,
+`— 44 sts`, `[44 sts]`); named rows without a side ("Inc row") because they are worked on both sides;
+"until 4 sts remain" only when decreasing; headers (title, sizes, needles, gauge) and finishing notes.
+**Typos** (≈ 30% of cases): casing (`K2tog`), spacing (`k2 tog`), missing punctuation, `-` instead of `:`.
+
+For the imperial style the gold IR is converted from the rounded imperial values actually printed
+(e.g. 59 in → 149.9 cm; 19 sts/4 in → 18.7 sts/10 cm), so text and gold always agree.
+
+### Eval set: `data/eval/parse_cases.jsonl`
+63 cases = 9 templates × 7, all 45 template × style pairs covered; split stratified by template:
+**36 dev / 27 test**. Each case stores the text, the chosen size, the gold IR, total rows, final count
+and per-row counts. Patterns have 43–571 worked rows and 11–27 text lines. 14 multi-size, 14 in the
+round, 20 with typos.
+
+How the parser eval will compare (Phase 5): by **simulating** both the parsed and the gold IR and
+comparing per-row expanded operations and counts, not the IR structure. So `k to end` vs `k44` vs
+`*k1; rep from * to end` all count as correct. Sides are compared only for rows whose text states one.
+
+### Tests
+`tests/test_simulator.py` (10), `tests/test_generator.py` (46: every template × style renders and
+simulates; reproducibility; gold consistency). Total suite: 104 tests pass.
+
+### Not covered by the generator (to be measured on real patterns)
+Pattern-specific glossaries, "work as for…", charts-only instructions, prose like "continue in pattern
+as set", short rows/colourwork (out of scope). These are the expected gap between synthetic and real
+patterns.
+
+## 3.3 Reproduce
 
 ```bash
 python -m knit_copilot.data.build_yarns   # uses cached Ravelry responses in .cache/ravelry/
+python -m knit_copilot.data.generator     # data/eval/parse_cases.jsonl (seed 7, 63 cases)
 pytest -q
 ```

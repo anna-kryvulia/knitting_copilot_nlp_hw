@@ -67,7 +67,7 @@ Defined as Pydantic models in `src/knit_copilot/ir.py`. All measurements are met
            "stated_count": 40}                       // count printed in the pattern, if any
         ]},
         {"type": "repeat_rows", "rows_ref": ["Row 1", "Row 2", "Row 3", "Row 4"],
-         "until": {"length_cm": 150}},              // or {"times": 10}
+         "until_length_cm": 150},                   // or "times": 10, or "until_count": 44 (stitches)
         {"type": "bind_off", "method": "loose"}
       ]
     }

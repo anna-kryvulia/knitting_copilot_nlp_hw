@@ -81,12 +81,13 @@ class RepeatRowsStep(_Strict):
     rows_ref: list[str]                       # labels of rows already defined in this piece
     times: SizedInt | None = None
     until_length_cm: float | dict[str, float] | None = None
+    until_count: SizedInt | None = None       # "repeat until 44 sts on the needle / 4 sts remain"
     measured_from: Literal["cast_on", "previous_step"] = "cast_on"
 
     @model_validator(mode="after")
     def _one_stop_rule(self) -> RepeatRowsStep:
-        if (self.times is None) == (self.until_length_cm is None):
-            raise ValueError("repeat_rows needs exactly one of `times` or `until_length_cm`")
+        if sum(v is not None for v in (self.times, self.until_length_cm, self.until_count)) != 1:
+            raise ValueError("repeat_rows needs exactly one of `times`, `until_length_cm` or `until_count`")
         return self
 
 

@@ -84,3 +84,14 @@ Running log of decisions. Newest entries at the bottom. Format:
   for 198/219 (rest from CYC); new quality issue Q9: 22 label gauges flagged as inconsistent with their
   weight category. KB alias check found 2 ambiguous aliases (removed).
 - Next: Part B — stitch simulator + synthetic pattern generator with gold IR and counts.
+
+## 2026-11-13 — 3. Data Preparation (part B) — Simulator and synthetic pattern generator
+- What: `simulator.py`, `data/templates.py` (9 templates), `data/generator.py` (5 writing styles + typo
+  noise) → `data/eval/parse_cases.jsonl`; tests for simulator and generator; docs updated.
+- Why: No labelled dataset of written patterns exists; gold IR + simulation give exact labels.
+- Result / numbers: 63 cases (36 dev / 27 test), all 45 template×style pairs; 14 multi-size, 14 in the
+  round, 20 with typos; 104 tests pass. Loop back 3 → 4-design: IR gained `until_count`
+  ("repeat until 44 sts") after checking real patterns (Gramma's Dishcloth). Review of samples fixed
+  4 rendering errors ("until 48 sts remain" when increasing, "last 1 sts", sides on rows worked on both
+  sides, "end of the row" in rounds).
+- Next: Part C — hand-written eval sets (intents, setup dialogues, KB queries, yarn mentions, yarn advice).
