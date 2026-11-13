@@ -1,0 +1,113 @@
+# Router eval cases (hand-written). Labels: docs/CONVENTIONS.md § Intents.
+# tags: easy | indirect (no keyword) | typo | ambiguous (two intents plausible; label = what the system should do first) | context (needs project context)
+# Built into data/eval/intent_cases.jsonl by scripts/build_eval_sets.py
+
+setup:
+  - {text: "I'm going to use YarnArt Jeans for this", tags: [easy]}
+  - {text: "my needles are 4mm", tags: [easy]}
+  - {text: "My swatch came out at 21 stitches and 30 rows over 10 cm", tags: [easy]}
+  - {text: "Let's do size M", tags: [easy]}
+  - {text: "i got 18 sts per 4 inches on us 8 needles", tags: [typo]}
+  - {text: "Actually I switched to Drops Karisma", tags: [indirect]}
+  - {text: "I have some merino DK at home, that's what I'll knit with", tags: [indirect]}
+  - {text: "Gauge is 22/30 in stockinette after blocking", tags: [easy]}
+
+adjust_pattern:
+  - {text: "Can you recalculate the pattern for my gauge?", tags: [easy]}
+  - {text: "Adjust this to my tension please", tags: [easy]}
+  - {text: "My gauge is different from the pattern, what should I cast on?", tags: [ambiguous]}
+  - {text: "Generate the working pattern", tags: [easy]}
+  - {text: "Rewrite the instructions so they fit my yarn", tags: [indirect]}
+  - {text: "I'm ready, make my version of the pattern", tags: [indirect]}
+  - {text: "how many stitches do I need with my gauge for the same width", tags: [indirect]}
+  - {text: "resize it for my swatch", tags: [typo]}
+
+explain:
+  - {text: "What does row 3 mean?", tags: [easy]}
+  - {text: "Explain this pattern to me step by step", tags: [easy]}
+  - {text: "I don't understand the part with rep from * to last 2 sts", tags: [easy]}
+  - {text: "Can you walk me through the crown decreases?", tags: [easy]}
+  - {text: "what am I supposed to do in Row 5 (RS)", tags: [typo]}
+  - {text: "K2, *yo, k2tog, k3; rep from * to last 2 sts, k2 — what does this do?", tags: [easy]}
+  - {text: "Why does the stitch count go down in round 3?", tags: [indirect]}
+  - {text: "Is the border knitted on every row?", tags: [indirect]}
+
+yarn_advice:
+  - {text: "What needle size should I use for Alize Cotton Gold?", tags: [easy]}
+  - {text: "Is cotton a good yarn for a winter hat?", tags: [easy]}
+  - {text: "What gauge does Nako Calico usually give?", tags: [easy]}
+  - {text: "Can I machine wash DROPS Nepal?", tags: [easy]}
+  - {text: "Would mohair work for this cabled scarf?", tags: [indirect]}
+  - {text: "which yarn weight is himalaya everyday", tags: [typo]}
+  - {text: "My acrylic project looks uneven, will blocking help?", tags: [indirect]}
+  - {text: "Is Gazzal Baby Wool soft enough for a baby blanket?", tags: [easy]}
+
+abbreviation_lookup:
+  - {text: "what is ssk", tags: [easy]}
+  - {text: "What does k2tog mean?", tags: [easy]}
+  - {text: "m1l?", tags: [easy]}
+  - {text: "what's the difference between skp and ssk", tags: [easy]}
+  - {text: "What does yfwd mean in a UK pattern?", tags: [easy]}
+  - {text: "meaning of psso", tags: [easy]}
+  - {text: "C6B — how do I do that?", tags: [ambiguous]}
+  - {text: "wyib", tags: [easy]}
+
+knitting_question:
+  - {text: "How do I join in the round without twisting?", tags: [easy]}
+  - {text: "How do I make a left-leaning decrease?", tags: [indirect]}
+  - {text: "What's the stretchiest bind off for ribbing?", tags: [easy]}
+  - {text: "How do I weave in ends on garter stitch?", tags: [easy]}
+  - {text: "What is blocking and do I need to do it?", tags: [easy]}
+  - {text: "how to read RS and WS", tags: [typo]}
+  - {text: "Why do my edges look messy?", tags: [indirect]}
+  - {text: "Should I slip the first stitch of every row?", tags: [easy]}
+
+chart:
+  - {text: "Draw a chart for this pattern", tags: [easy]}
+  - {text: "Can I see the lace rows as a chart?", tags: [easy]}
+  - {text: "Show me the cable as a diagram", tags: [easy]}
+  - {text: "I'm a visual learner, can you make it into a grid?", tags: [indirect]}
+  - {text: "chart pls", tags: [typo]}
+  - {text: "Give me the symbol chart for rows 1-8", tags: [easy]}
+  - {text: "What does the stitch pattern look like visually?", tags: [indirect]}
+  - {text: "Export the chart so I can print it", tags: [easy]}
+
+tracker:
+  - {text: "I finished row 14, what's next?", tags: [easy]}
+  - {text: "Where was I?", tags: [context]}
+  - {text: "Mark row 22 as done", tags: [easy]}
+  - {text: "Which repeat am I on?", tags: [context]}
+  - {text: "How many rows are left?", tags: [context]}
+  - {text: "I ripped back 3 rows, go back please", tags: [indirect]}
+  - {text: "next row", tags: [easy]}
+  - {text: "how many sts should i have now", tags: [typo, context]}
+
+validate:
+  - {text: "Is there a mistake in this pattern?", tags: [easy]}
+  - {text: "Check whether the stitch counts add up", tags: [easy]}
+  - {text: "Row 12 says 64 sts but I get 62, is the pattern wrong?", tags: [ambiguous]}
+  - {text: "Can you proofread my pattern before I publish it?", tags: [indirect]}
+  - {text: "does the repeat fit the cast on number", tags: [typo]}
+  - {text: "Validate the pattern", tags: [easy]}
+  - {text: "Are all abbreviations in this pattern defined?", tags: [indirect]}
+  - {text: "I think there's an erratum in round 7", tags: [indirect]}
+
+out_of_scope:
+  - {text: "How do I crochet a granny square?", tags: [easy]}
+  - {text: "Explain this fair isle colourwork chart", tags: [ambiguous]}
+  - {text: "Where can I buy YarnArt Jeans cheapest?", tags: [indirect]}
+  - {text: "How do I do German short rows?", tags: [easy]}
+  - {text: "Write me a poem about sheep", tags: [easy]}
+  - {text: "How do I sew a zipper into a cardigan?", tags: [easy]}
+  - {text: "Translate this pattern into French", tags: [indirect]}
+  - {text: "What's the weather tomorrow?", tags: [easy]}
+
+smalltalk:
+  - {text: "Hi!", tags: [easy]}
+  - {text: "thanks, that helped a lot", tags: [easy]}
+  - {text: "Good morning", tags: [easy]}
+  - {text: "you're great", tags: [easy]}
+  - {text: "ok", tags: [easy]}
+  - {text: "bye", tags: [easy]}
+  - {text: "Who are you?", tags: [indirect]}
+  - {text: "lol my cat just stole my yarn", tags: [indirect]}

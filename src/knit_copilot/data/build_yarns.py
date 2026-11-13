@@ -81,7 +81,9 @@ def _row(brand: str, y: dict) -> dict | None:
     # Ravelry label gauges are sometimes inconsistent with the weight (data quality Q9): keep, but flag
     mid = (gauge[0] + gauge[1]) / 2
     lo, hi = cyc["sts_per_10cm"]
-    flag = "outside_cyc_range" if gauge[2] == "label" and not lo - GAUGE_TOLERANCE <= mid <= hi + GAUGE_TOLERANCE else ""
+    # Lace (CYC 0) is exempt: lace yarn is usually knitted on much larger needles than the CYC range (§2.7)
+    flag = ("outside_cyc_range" if gauge[2] == "label" and cyc["id"] != 0
+            and not lo - GAUGE_TOLERANCE <= mid <= hi + GAUGE_TOLERANCE else "")
 
     return {
         "yarn_id": y["id"], "brand": brand, "name": name, "aliases": "|".join(aliases),

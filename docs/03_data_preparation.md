@@ -6,8 +6,8 @@ CRISP-DM phase 3. Turns the sources from Phase 2 into the data the components us
 |---|---|---|
 | **A** | Pattern IR schema, unit conversion, knowledge bases, yarn table | ✅ done |
 | **B** | Stitch simulator + synthetic pattern generator with gold labels | ✅ done |
-| C | Hand-written eval sets (intents, setup dialogues, KB queries, yarn mentions, yarn advice) | next |
-| D | Annotations of 12 real Ravelry patterns | waits for the PDFs in `data/private/ravelry/` |
+| **C** | Hand-written eval sets (intents, setup dialogues, KB queries, yarn mentions, yarn advice) | ✅ done |
+| D | Annotations of 12 real Ravelry patterns | next — waits for the PDFs in `data/private/ravelry/` |
 
 ## 3.1 Part A
 
@@ -61,7 +61,7 @@ conversion table), fractions ("5 ½").
 | Name | Cyrillic alias in brackets moved to `aliases` ("Jeans (Джинс)" → name "Jeans", alias "Джинс"); spaces normalised |
 | Units | yards → metres, gauge per 4 in → per 10 cm |
 | Missing needle size (4 yarns) / gauge (21 yarns) | Filled from the CYC range of the weight; `needle_source` / `gauge_source` = `cyc` |
-| Inconsistent label gauge (22 yarns, **Q9**) | Kept but `gauge_flag = outside_cyc_range` when the midpoint is > 3 sts/10 cm outside the CYC range (e.g. Nako Pirlanta: Sport weight, label gauge 17 sts) |
+| Inconsistent label gauge (11 yarns, **Q9**) | Kept but `gauge_flag = outside_cyc_range` when the midpoint is > 3 sts/10 cm outside the CYC range (e.g. Nako Pirlanta: Sport weight, label gauge 17 sts). Lace weight is exempt (knitted on larger needles, §2.7 of Phase 2); this exemption was added in part C, which reduced the flags from 22 to 11 |
 | Fibre | Ravelry fibre names mapped to fibre KB keys; `main_fibre` = largest share (all 219 mapped) |
 | Popularity | `ravelry_rating_count` (Ravelry returns no project count for yarns) |
 
@@ -154,10 +154,52 @@ Pattern-specific glossaries, "work as for…", charts-only instructions, prose l
 as set", short rows/colourwork (out of scope). These are the expected gap between synthetic and real
 patterns.
 
-## 3.3 Reproduce
+## 3.3 Part C: hand-written eval sets
+
+Human-readable sources in `data/eval/src/*.yaml` are compiled by `src/knit_copilot/data/build_eval_sets.py`
+into JSONL. The build **validates every label against the real data**, so a typo becomes a build error
+instead of a wrong gold label.
+
+| File | Cases (dev/test) | Component | Gold label | Checked by the build |
+|---|---|---|---|---|
+| `intent_cases.jsonl` | 88 (55/33) | router | 11 intents × 8 | label set = CONVENTIONS, no duplicate texts |
+| `setup_cases.jsonl` | 30 (18/12) | setup agent | ordered tool calls + resulting project state | known tools/args, sizes exist, **state computed by code** (US 8 → 5.0 mm; 18 sts/4 in → 17.7/10 cm) |
+| `kb_queries.jsonl` | 50 (30/20) | KB lookup / retrieval | 25 exact lookups → 1 id; 25 questions → relevant ids + primary | ids exist, primary ∈ relevant |
+| `yarn_link_cases.jsonl` | 40 (24/16) | yarn linker | yarn_id, `null`, or ambiguous candidates | `[brand, name]` resolves to exactly one row of `yarns.csv` |
+| `yarn_advice_cases.jsonl` | 25 (16/9) | yarn advisor | CYC category, needle and gauge ranges (+ source), main fibre, facts to mention, gauge warning | numbers from `yarns.csv`/CYC; every `must_mention` fact exists in the fibre KB; `warn_gauge` agrees with the Q9 flag |
+
+Splits are stratified (by intent, by first tag, by match/none) with a fixed seed; ~60% dev / 40% test.
+
+Coverage highlights:
+- Intents: `indirect` phrasings without keywords, typos, `ambiguous` messages (labelled with what the
+  system should do first), messages that need project context ("Where was I?").
+- Setup: single and multi-slot messages, imperial input (code converts), corrections ("no wait, 4.5"),
+  ambiguous and unknown yarns, a locked project (no state change), messages that need **no** tool.
+- KB: US/UK variants (yfwd, skpo, cast off), typos (sskk, k2tgo), questions without keyword overlap
+  ("How can I add a stitch without leaving a hole?" → m1l, m1r, kfb, lifted increases).
+- Yarn mentions: case/spacing/typos, Cyrillic alias (Джинс), colour numbers, brand missing, names that
+  exist in two brands (Jeans, Baby Wool, Angora Gold → must ask), yarns not in the table (→ none).
+- Yarn advice: label vs CYC values, flagged label gauges (must warn), fibre-only input (cotton DK, lace mohair).
+
+**What the validation caught while building** (loop 3 → 3):
+1. DROPS Kid-Silk (lace) was flagged as an inconsistent gauge although Phase 2 decided lace yarns follow
+   their label → fixed the rule in `build_yarns.py` (lace exempt), flags 22 → 11.
+2. Two of my advice labels were wrong: Himalaya Everyday *is* inconsistent (DK, label 17.7 sts) → must warn;
+   YarnArt Merino De Luxe is *not* (label range 14.8–21.7, midpoint within tolerance) → relabelled
+   as `wide_gauge_range`.
+
+**Human review:** `docs/data/eval_review_sample.md` holds a random 20% sample of each set with a checkbox
+per label, to be checked by the author. Fixed labels are recorded here.
+
+Not built yet (they need components from Phase 4 to exist first): gauge-adjustment cases and chart cases
+(gold derived from the generator + simulator), explainer facts, and the judge-calibration set (needs real
+model outputs to rate).
+
+## 3.4 Reproduce
 
 ```bash
 python -m knit_copilot.data.build_yarns   # uses cached Ravelry responses in .cache/ravelry/
 python -m knit_copilot.data.generator     # data/eval/parse_cases.jsonl (seed 7, 63 cases)
+python -m knit_copilot.data.build_eval_sets  # hand-written eval sets + 20% review sample
 pytest -q
 ```

@@ -1,0 +1,58 @@
+# KB lookup / retrieval eval cases (hand-written). Ids: data/kb/abbreviations.yaml.
+# exact: the user types an abbreviation (with variants/typos) -> one gold id
+# question: natural-language question -> `relevant` ids (any order); `primary` = best single answer
+# tags: easy | variant | uk | typo | paraphrase (no keyword overlap with the entry name) | term
+
+exact:
+  - {query: "ssk", gold: ssk, tags: [easy]}
+  - {query: "K2TOG", gold: k2tog, tags: [variant]}
+  - {query: "k2 tog", gold: k2tog, tags: [variant]}
+  - {query: "p2tog", gold: p2tog, tags: [easy]}
+  - {query: "yo", gold: yo, tags: [easy]}
+  - {query: "yfwd", gold: yo, tags: [uk]}
+  - {query: "yrn", gold: yo, tags: [uk]}
+  - {query: "skpo", gold: skp, tags: [uk]}
+  - {query: "cast off", gold: bo, tags: [uk]}
+  - {query: "M1", gold: m1l, tags: [variant]}
+  - {query: "m1r", gold: m1r, tags: [easy]}
+  - {query: "kf&b", gold: kfb, tags: [variant]}
+  - {query: "cdd", gold: s2kp, tags: [variant]}
+  - {query: "s2kpo", gold: s2kp, tags: [variant]}
+  - {query: "sk2p", gold: sk2p, tags: [easy]}
+  - {query: "2/2 LC", gold: c4f, tags: [variant]}
+  - {query: "C6B", gold: c6b, tags: [easy]}
+  - {query: "k1tbl", gold: k_tbl, tags: [variant]}
+  - {query: "sl1 wyif", gold: sl_wyif, tags: [easy]}
+  - {query: "pm", gold: pm, tags: [easy]}
+  - {query: "rem", gold: rem, tags: [term]}
+  - {query: "tension", gold: gauge_term, tags: [uk, term]}
+  - {query: "stocking stitch", gold: st_st, tags: [uk, term]}
+  - {query: "sskk", gold: ssk, tags: [typo]}
+  - {query: "k2tgo", gold: k2tog, tags: [typo]}
+
+question:
+  - {query: "How do I make a left-leaning decrease?", relevant: [ssk, skp, k2tog_tbl], primary: ssk, tags: [paraphrase]}
+  - {query: "Which decrease leans to the right?", relevant: [k2tog, p2tog, k3tog], primary: k2tog, tags: [paraphrase]}
+  - {query: "How do I decrease two stitches at once with the middle stitch on top?", relevant: [s2kp], primary: s2kp, tags: [paraphrase]}
+  - {query: "How can I add a stitch without leaving a hole?", relevant: [m1l, m1r, kfb, kll, krl], primary: m1l, tags: [paraphrase]}
+  - {query: "How do I make a decorative hole in lace?", relevant: [yo, yo2], primary: yo, tags: [paraphrase]}
+  - {query: "What does it mean to work into the back of a stitch?", relevant: [k_tbl, p_tbl, tbl], primary: tbl, tags: [easy]}
+  - {query: "How do I cross stitches for a cable that leans left?", relevant: [c4f, c6f, c2f, c8f], primary: c4f, tags: [paraphrase]}
+  - {query: "How do I cross a cable to the right?", relevant: [c4b, c6b, c2b, c8b], primary: c4b, tags: [easy]}
+  - {query: "What does knit two together do?", relevant: [k2tog], primary: k2tog, tags: [easy]}
+  - {query: "How do I turn one stitch into two?", relevant: [kfb, pfb], primary: kfb, tags: [paraphrase]}
+  - {query: "How do I finish the edge so the stitches don't unravel?", relevant: [bo], primary: bo, tags: [paraphrase]}
+  - {query: "How do I add stitches in the middle of a row?", relevant: [co, m1l, m1r, kfb], primary: co, tags: [paraphrase]}
+  - {query: "What is a stitch marker for?", relevant: [pm, sm, rm], primary: pm, tags: [easy]}
+  - {query: "What does slipping a stitch mean?", relevant: [sl_pw, sl_kw, sl_wyib, sl_wyif], primary: sl_pw, tags: [easy]}
+  - {query: "Should I slip knitwise or purlwise?", relevant: [sl_pw, sl_kw, kwise, pwise], primary: sl_pw, tags: [easy]}
+  - {query: "What is the difference between seed stitch and moss stitch?", relevant: [seed, moss_us], primary: seed, tags: [term]}
+  - {query: "Which side is the right side?", relevant: [rs, ws], primary: rs, tags: [term]}
+  - {query: "What does 'work in pattern as established' mean?", relevant: [patt, cont], primary: patt, tags: [term]}
+  - {query: "What is gauge and why does it matter?", relevant: [gauge_term], primary: gauge_term, tags: [term]}
+  - {query: "How do I make a ladder of dropped stitches on purpose?", relevant: [drop], primary: drop, tags: [paraphrase]}
+  - {query: "How do I make a smooth V-stitch fabric?", relevant: [st_st, k], primary: st_st, tags: [paraphrase]}
+  - {query: "What is ribbing?", relevant: [rib], primary: rib, tags: [term]}
+  - {query: "Purl two together", relevant: [p2tog], primary: p2tog, tags: [easy]}
+  - {query: "How do I decrease on a purl row so it leans left?", relevant: [ssp, p2tog_tbl], primary: ssp, tags: [paraphrase]}
+  - {query: "What is a cable needle?", relevant: [cn], primary: cn, tags: [term]}

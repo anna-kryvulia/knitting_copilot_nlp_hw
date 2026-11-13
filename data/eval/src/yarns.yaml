@@ -1,0 +1,77 @@
+# Yarn linker + yarn advisor eval cases (hand-written).
+# Gold yarns are given as [brand, name] and resolved to yarn_id from data/yarns.csv by the build script,
+# so a typo in this file fails the build instead of producing a wrong label.
+
+# expect: one yarn | none (not in our table) | ambiguous (several candidates -> the system should ask)
+mentions:
+  - {text: "YarnArt Jeans", gold: [YarnArt, Jeans], tags: [exact]}
+  - {text: "yarnart jeans", gold: [YarnArt, Jeans], tags: [case]}
+  - {text: "Yarn Art Jeans", gold: [YarnArt, Jeans], tags: [spacing]}
+  - {text: "Джинс YarnArt", gold: [YarnArt, Jeans], tags: [cyrillic]}
+  - {text: "YarnArt Jeans 33", gold: [YarnArt, Jeans], tags: [colour_in_name]}
+  - {text: "Jeans Plus by YarnArt", gold: [YarnArt, Jeans Plus], tags: [exact]}
+  - {text: "Alize Cotton Gold", gold: [Alize, Cotton Gold Solids], tags: [partial]}
+  - {text: "alize cotton gold batik", gold: [Alize, Cotton Gold Batik Design], tags: [partial]}
+  - {text: "Alize Lanagold", gold: [Alize, Lanagold Classic], tags: [partial]}
+  - {text: "Alize Superlana Maxi", gold: [Alize, Superlana Maxi], tags: [exact]}
+  - {text: "Himalaya Everyday", gold: [Himalaya, Everyday], tags: [exact]}
+  - {text: "himalya dolphin baby", gold: [Himalaya, Dolphin Baby], tags: [typo]}
+  - {text: "Nako Calico", gold: [Nako, Calico], tags: [exact]}
+  - {text: "Nako Boho", gold: [Nako, Boho], tags: [exact]}
+  - {text: "Gazzal Baby Cotton", gold: [Gazzal, Baby Cotton (Acrylic Blend)], tags: [partial]}
+  - {text: "gazal baby wool", gold: [Gazzal, Baby Wool], tags: [typo]}
+  - {text: "Gazzal Giza", gold: [Gazzal, Giza], tags: [exact]}
+  - {text: "Kartopu Amigurumi", gold: [Kartopu, Amigurumi], tags: [exact]}
+  - {text: "Madame Tricote Camilla", gold: [Madame Tricote, Camilla], tags: [exact]}
+  - {text: "Madam Tricot Dora", gold: [Madame Tricote, Dora], tags: [typo]}
+  - {text: "DROPS Karisma", gold: [DROPS, DROPS Karisma], tags: [exact]}
+  - {text: "Drops Nepal", gold: [DROPS, DROPS Nepal], tags: [case]}
+  - {text: "Garnstudio Drops Air", gold: [DROPS, DROPS Air], tags: [exact]}
+  - {text: "drops kid silk", gold: [DROPS, DROPS Kid-Silk], tags: [spacing]}
+  - {text: "Drops Merino Extra Fine", gold: [DROPS, DROPS Merino Extra Fine], tags: [exact]}
+  - {text: "Lana Grossa Cool Wool", gold: [Lana Grossa, Cool Wool], tags: [exact]}
+  - {text: "Lana Grosa Meilenweit 6-fach", gold: [Lana Grossa, Meilenweit 6-fach], tags: [typo]}
+  - {text: "Etrofil Savona", gold: [Etrofil, Savona], tags: [exact]}
+  - {text: "Vizell Fayna", gold: [Vizell, FAYNA], tags: [case]}
+  - {text: "Vizell Mavka", gold: [Vizell, Mavka Nymph of Knitting], tags: [partial]}
+  - {text: "Cool Wool", gold: [Lana Grossa, Cool Wool], tags: [brand_missing]}
+  - {text: "Superwash Comfort Socks", gold: [Alize, Superwash Comfort Socks], tags: [brand_missing]}
+  - {text: "Jeans", ambiguous: [[YarnArt, Jeans], [Etrofil, Jeans]], tags: [ambiguous]}
+  - {text: "Baby Wool", ambiguous: [[Alize, Baby Wool], [Gazzal, Baby Wool]], tags: [ambiguous]}
+  - {text: "Angora Gold", ambiguous: [[Alize, Angora Gold], [Madame Tricote, Angora Gold]], tags: [ambiguous]}
+  - {text: "Rowan Felted Tweed", gold: null, tags: [unknown_yarn]}
+  - {text: "Malabrigo Rios", gold: null, tags: [unknown_yarn]}
+  - {text: "Lion Brand Wool-Ease", gold: null, tags: [unknown_yarn]}
+  - {text: "Alize Puffy", gold: null, tags: [unknown_yarn]}      # real Alize yarn, not in our top-20 table
+  - {text: "some acrylic I bought at the market", gold: null, tags: [unknown_yarn, no_name]}
+
+# Advisor cases. Gold numbers (weight category, needle and gauge ranges) are computed by the build script
+# from data/yarns.csv and data/kb/yarn_weights.yaml; `must_mention` are facts a correct answer contains
+# (checked against the fibre KB); `warn_gauge` = the yarn's label gauge is flagged (Q9) and the answer
+# must say the label value is unreliable / swatch first.
+advice:
+  - {yarn: [YarnArt, Jeans], question: "What needles and gauge for this yarn?", must_mention: [cotton, low elasticity], tags: [blend]}
+  - {yarn: [Alize, Cotton Gold Solids], question: "Is it good for a summer top?", must_mention: [cotton], tags: [suitability]}
+  - {yarn: [DROPS, DROPS Nepal], question: "What needles should I use?", must_mention: [wool], tags: [needles]}
+  - {yarn: [DROPS, DROPS Kid-Silk], question: "Can I knit a scarf with this?", must_mention: [mohair, halo, hard to unravel], tags: [suitability]}
+  - {yarn: [DROPS, DROPS Alpaca], question: "Is it good for a ribbed hat?", must_mention: [alpaca, low elasticity], tags: [suitability]}
+  - {yarn: [Himalaya, Everyday], question: "How do I wash it?", must_mention: [acrylic, machine washable], warn_gauge: true, tags: [care, flagged_gauge]}
+  - {yarn: [Himalaya, Deluxe Bamboo], question: "Which needles work best?", must_mention: [bamboo, slippery], tags: [needles]}
+  - {yarn: [Nako, Calico], question: "What gauge should I expect?", must_mention: [cotton], tags: [gauge]}
+  - {yarn: [Gazzal, Baby Wool], question: "Is it soft enough for a baby?", must_mention: [acrylic], tags: [suitability]}
+  - {yarn: [Lana Grossa, Cool Wool], question: "Can I put it in the washing machine?", must_mention: [merino], tags: [care]}
+  - {yarn: [Kartopu, Amigurumi], question: "What needle size?", must_mention: [acrylic], tags: [needles]}
+  - {yarn: [Vizell, FAYNA], question: "Good for socks?", must_mention: [merino], tags: [suitability]}
+  - {yarn: [Etrofil, Savona], question: "What gauge does it give?", must_mention: [wool], tags: [gauge]}
+  - {yarn: [Madame Tricote, Camilla], question: "Will my ribbing stay stretchy?", must_mention: [cotton, low elasticity], tags: [suitability]}
+  - {yarn: [YarnArt, Merino De Luxe], question: "What gauge does this yarn give?", must_mention: [merino], tags: [wide_gauge_range]}   # label 14.8-21.7 sts: answer must give the range
+  - {yarn: [Nako, Pirlanta], question: "Which needles and gauge?", must_mention: [acrylic], warn_gauge: true, tags: [flagged_gauge]}
+  - {yarn: [Himalaya, Super Soft], question: "What gauge?", must_mention: [acrylic], warn_gauge: true, tags: [flagged_gauge]}
+  - {fibre: cotton, weight: DK, question: "What needles for a DK cotton?", must_mention: [cotton, go down a needle size], tags: [no_name]}
+  - {fibre: wool, weight: Worsted, question: "Needles for worsted wool?", must_mention: [wool], tags: [no_name]}
+  - {fibre: acrylic, weight: Aran, question: "What gauge for aran acrylic?", must_mention: [acrylic], tags: [no_name]}
+  - {fibre: merino, weight: Fingering, question: "What needles for fingering merino socks?", must_mention: [merino], tags: [no_name]}
+  - {fibre: mohair, weight: Lace, question: "Needles for lace mohair?", must_mention: [mohair, larger needles], tags: [no_name, lace]}
+  - {fibre: alpaca, weight: Sport, question: "Would sport alpaca work for a fitted sweater?", must_mention: [alpaca, grow], tags: [no_name, suitability]}
+  - {fibre: linen, weight: Sport, question: "Is linen nice to knit with?", must_mention: [linen, softens], tags: [no_name]}
+  - {fibre: polyester, weight: Super Bulky, question: "How do I count stitches in plush yarn?", must_mention: [markers], tags: [no_name]}

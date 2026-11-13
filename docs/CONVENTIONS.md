@@ -162,6 +162,37 @@ Tags describe difficulty, e.g. `easy`, `nested_repeat`, `in_the_round`, `multi_s
 ## Naming
 
 - snake_case for modules/functions, PascalCase for Pydantic models.
-- Intents: `setup`, `explain`, `yarn_advice`, `abbreviation_lookup`, `knitting_question`,
-  `chart`, `tracker`, `out_of_scope`, `smalltalk`.
 - Citations: `abbreviations:k2tog`, `techniques:tink_back`, `fibres:cotton`.
+
+## Intents (router labels)
+
+| Intent | Meaning | Example |
+|---|---|---|
+| `setup` | Gives or changes project info: yarn, needles, gauge, size, pattern | "I'm using YarnArt Jeans and 3.5 mm needles" |
+| `adjust_pattern` | Asks to adapt the pattern to their gauge / generate the working pattern | "Can you recalculate this for my gauge?" |
+| `explain` | Wants a pattern (or part of it) explained | "What does row 3 mean?" |
+| `yarn_advice` | Asks about a yarn: needles, gauge, suitability, care | "What needles for Alize Cotton Gold?" |
+| `abbreviation_lookup` | Asks what an abbreviation means | "what is ssk" |
+| `knitting_question` | General technique question not about a specific abbreviation | "How do I join in the round?" |
+| `chart` | Wants a chart | "Draw a chart for the lace rows" |
+| `tracker` | About progress / current row | "I finished row 14, what's next?" |
+| `validate` | Asks to check the pattern for errors | "Is the stitch count in row 12 right?" |
+| `out_of_scope` | Not supported (crochet, colourwork, sewing, buying, other topics) | "How do I crochet a granny square?" |
+| `smalltalk` | Greetings, thanks | "thanks!" |
+
+## Setup tools (LLM tool calls)
+
+The setup agent fills the project only through these tools. Units are passed as stated by the user;
+**code converts** (the LLM never converts numbers). Tools fail with a message when the project is locked.
+
+| Tool | Arguments | Effect |
+|---|---|---|
+| `set_yarn` | `name: str \| null`, `fibre: str \| null`, `weight: str \| null` | Links `name` to `data/yarns.csv` (yarn linker) or stores fibre + weight |
+| `set_needles` | `size: float`, `system: "mm" \| "us"` | Stores needle size in mm |
+| `set_gauge` | `stitches: float`, `rows: float \| null`, `over: float = 10`, `unit: "cm" \| "in"` | Stores gauge per 10 cm |
+| `select_size` | `size: str` | Chooses one of the pattern's sizes |
+| `get_project_status` | — | Returns filled / missing fields and the stage |
+| `generate_working_pattern` | — | Runs gauge adjustment + charts and locks (only if complete) |
+| `start_over` | — | New version, unlock, progress reset (after confirmation) |
+
+The pattern text itself is pasted in the UI, not passed through a tool.

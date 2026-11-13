@@ -95,3 +95,13 @@ Running log of decisions. Newest entries at the bottom. Format:
   4 rendering errors ("until 48 sts remain" when increasing, "last 1 sts", sides on rows worked on both
   sides, "end of the row" in rounds).
 - Next: Part C — hand-written eval sets (intents, setup dialogues, KB queries, yarn mentions, yarn advice).
+
+## 2026-11-13 — 3. Data Preparation (part C) — Hand-written eval sets
+- What: intent labels and setup tool schema in CONVENTIONS; sources `data/eval/src/*.yaml`;
+  `data/build_eval_sets.py` (validation + stratified split + 20% review sample); 5 JSONL sets.
+- Why: Router, setup agent, KB retrieval, yarn linker and yarn advisor need labelled inputs; no dataset exists.
+- Result / numbers: 233 cases — intents 88, setup 30, KB 50, yarn links 40, yarn advice 25 (~60/40 dev/test).
+  Validation caught 3 label/data problems: lace yarns wrongly flagged (rule fixed in build_yarns, flags 22 → 11),
+  two wrong `warn_gauge` labels (corrected). 106 tests pass.
+- Next: human review of docs/data/eval_review_sample.md; Part D (Ravelry annotations) once PDFs are downloaded;
+  then Phase 4 (parser first — needs OPENROUTER_API_KEY).

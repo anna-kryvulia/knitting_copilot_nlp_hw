@@ -1,0 +1,183 @@
+# Setup-agent eval cases (hand-written). Tools: docs/CONVENTIONS.md § Setup tools.
+# Each case: the project state before, the user turns, the expected tool calls (in order; args compared
+# after normalisation) and the expected project fields afterwards (computed by code from the calls).
+# `stage: locked` cases expect no state change (the tool refuses or the agent asks to start over).
+# tags: single | multi_slot | imperial | correction | ambiguous_yarn | unknown_yarn | locked | no_tool | status
+
+- id: s01
+  stage: setup
+  turns: ["I'm using YarnArt Jeans"]
+  calls: [{tool: set_yarn, args: {name: "YarnArt Jeans"}}]
+  tags: [single]
+- id: s02
+  stage: setup
+  turns: ["my needles are 3.5 mm"]
+  calls: [{tool: set_needles, args: {size: 3.5, system: mm}}]
+  tags: [single]
+- id: s03
+  stage: setup
+  turns: ["Swatch: 22 sts and 28 rows over 10 cm"]
+  calls: [{tool: set_gauge, args: {stitches: 22, rows: 28, over: 10, unit: cm}}]
+  tags: [single]
+- id: s04
+  stage: setup
+  turns: ["I'll make size L"]
+  sizes: [S, M, L]
+  calls: [{tool: select_size, args: {size: L}}]
+  tags: [single]
+- id: s05
+  stage: setup
+  turns: ["I'm knitting with Alize Cotton Gold on 3.5mm needles and my gauge is 24 stitches per 10 cm"]
+  calls:
+    - {tool: set_yarn, args: {name: "Alize Cotton Gold"}}
+    - {tool: set_needles, args: {size: 3.5, system: mm}}
+    - {tool: set_gauge, args: {stitches: 24, rows: null, over: 10, unit: cm}}
+  tags: [multi_slot]
+- id: s06
+  stage: setup
+  turns: ["I got 18 stitches and 24 rows to 4 inches on US 8 needles"]
+  calls:
+    - {tool: set_gauge, args: {stitches: 18, rows: 24, over: 4, unit: in}}
+    - {tool: set_needles, args: {size: 8, system: us}}
+  tags: [multi_slot, imperial]
+- id: s07
+  stage: setup
+  turns: ["I'll use some merino DK I have at home"]
+  calls: [{tool: set_yarn, args: {name: null, fibre: merino, weight: DK}}]
+  tags: [single]
+- id: s08
+  stage: setup
+  turns: ["Yarn is DROPS Nepal", "Sorry, I meant DROPS Karisma"]
+  calls:
+    - {tool: set_yarn, args: {name: "DROPS Nepal"}}
+    - {tool: set_yarn, args: {name: "DROPS Karisma"}}
+  tags: [correction]
+- id: s09
+  stage: setup
+  turns: ["4mm needles", "no wait, 4.5"]
+  calls:
+    - {tool: set_needles, args: {size: 4, system: mm}}
+    - {tool: set_needles, args: {size: 4.5, system: mm}}
+  tags: [correction]
+- id: s10
+  stage: setup
+  turns: ["What's still missing before I can start?"]
+  calls: [{tool: get_project_status, args: {}}]
+  tags: [status]
+- id: s11
+  stage: setup
+  turns: ["I have everything, generate my pattern"]
+  calls: [{tool: generate_working_pattern, args: {}}]
+  tags: [single]
+- id: s12
+  stage: setup
+  turns: ["I'm using Jeans yarn"]
+  calls: [{tool: set_yarn, args: {name: "Jeans"}}]
+  expect_linker: ambiguous
+  tags: [ambiguous_yarn]
+- id: s13
+  stage: setup
+  turns: ["I'm using Rowan Felted Tweed"]
+  calls: [{tool: set_yarn, args: {name: "Rowan Felted Tweed"}}]
+  expect_linker: no_match
+  tags: [unknown_yarn]
+- id: s14
+  stage: locked
+  turns: ["I want to change my yarn to Nako Calico"]
+  calls: [{tool: set_yarn, args: {name: "Nako Calico"}}]
+  expect_state_change: false
+  tags: [locked]
+- id: s15
+  stage: locked
+  turns: ["Let's start over, I want a different size"]
+  calls: [{tool: start_over, args: {}}]
+  tags: [locked]
+- id: s16
+  stage: setup
+  turns: ["thanks!"]
+  calls: []
+  tags: [no_tool]
+- id: s17
+  stage: setup
+  turns: ["What is ssk?"]
+  calls: []
+  tags: [no_tool]
+- id: s18
+  stage: setup
+  turns: ["Gauge 20 sts / 10cm, rows I didn't measure"]
+  calls: [{tool: set_gauge, args: {stitches: 20, rows: null, over: 10, unit: cm}}]
+  tags: [single]
+- id: s19
+  stage: setup
+  turns: ["needles US 6"]
+  calls: [{tool: set_needles, args: {size: 6, system: us}}]
+  tags: [single, imperial]
+- id: s20
+  stage: setup
+  turns: ["Himalaya Everyday, size M please"]
+  sizes: [S, M, L]
+  calls:
+    - {tool: set_yarn, args: {name: "Himalaya Everyday"}}
+    - {tool: select_size, args: {size: M}}
+  tags: [multi_slot]
+- id: s21
+  stage: setup
+  turns: ["I want to use a cotton sport weight yarn"]
+  calls: [{tool: set_yarn, args: {name: null, fibre: cotton, weight: Sport}}]
+  tags: [single]
+- id: s22
+  stage: setup
+  turns: ["my swatch is 5 inches wide with 20 stitches"]
+  calls: [{tool: set_gauge, args: {stitches: 20, rows: null, over: 5, unit: in}}]
+  tags: [single, imperial]
+- id: s23
+  stage: setup
+  turns: ["gazal baby wool, 3mm"]
+  calls:
+    - {tool: set_yarn, args: {name: "Gazzal Baby Wool"}}
+    - {tool: set_needles, args: {size: 3, system: mm}}
+  tags: [multi_slot]
+- id: s24
+  stage: setup
+  turns: ["Size: the middle one"]
+  sizes: [S, M, L]
+  calls: [{tool: select_size, args: {size: M}}]
+  tags: [single]
+- id: s25
+  stage: setup
+  turns: ["I measured 26 stitches over 10 cm but I knit tightly, should I change needles?"]
+  calls: [{tool: set_gauge, args: {stitches: 26, rows: null, over: 10, unit: cm}}]
+  tags: [single]
+- id: s26
+  stage: locked
+  turns: ["Where am I in the project?"]
+  calls: [{tool: get_project_status, args: {}}]
+  tags: [status, locked]
+- id: s27
+  stage: setup
+  turns: ["Lana Grossa Cool Wool on 3.25 mm, 25 sts and 34 rows per 10 cm, size S"]
+  sizes: [S, M, L]
+  calls:
+    - {tool: set_yarn, args: {name: "Lana Grossa Cool Wool"}}
+    - {tool: set_needles, args: {size: 3.25, system: mm}}
+    - {tool: set_gauge, args: {stitches: 25, rows: 34, over: 10, unit: cm}}
+    - {tool: select_size, args: {size: S}}
+  tags: [multi_slot]
+- id: s28
+  stage: setup
+  turns: ["Use Vizell Fayna"]
+  calls: [{tool: set_yarn, args: {name: "Vizell Fayna"}}]
+  tags: [single]
+- id: s29
+  stage: setup
+  turns: ["I'll knit it in acrylic aran"]
+  calls: [{tool: set_yarn, args: {name: null, fibre: acrylic, weight: Aran}}]
+  tags: [single]
+- id: s30
+  stage: setup
+  turns: ["Make it the crib size", "and my gauge is 17 sts per 10 cm"]
+  sizes: [Stroller, Crib]
+  calls:
+    - {tool: select_size, args: {size: Crib}}
+    - {tool: set_gauge, args: {stitches: 17, rows: null, over: 10, unit: cm}}
+  tags: [multi_slot]
