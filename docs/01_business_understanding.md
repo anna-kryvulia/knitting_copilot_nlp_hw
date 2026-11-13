@@ -151,6 +151,7 @@ patterns have lower targets because their text is less regular.
 | End-to-end scenario success (setup → generate → track; scripted runs) | ≥ 0.80 |
 | Wrong number shown to the user (count, needle size, dimension) | 0 in the scenario set |
 | Median latency per chat turn (free models) | ≤ 15 s |
+| Reading one pattern with the LLM (one-time setup step; added in Phase 4, see 04_modeling.md) | ≤ 60 s |
 | Cost | 0 (free models) |
 
 ## 1.9 Assumptions and constraints

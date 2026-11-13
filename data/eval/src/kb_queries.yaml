@@ -31,8 +31,9 @@ exact:
   - {query: "k2tgo", gold: k2tog, tags: [typo]}
 
 question:
-  - {query: "How do I make a left-leaning decrease?", relevant: [ssk, skp, k2tog_tbl], primary: ssk, tags: [paraphrase]}
-  - {query: "Which decrease leans to the right?", relevant: [k2tog, p2tog, k3tog], primary: k2tog, tags: [paraphrase]}
+  # relevant sets list every decrease in the KB with that lean (label fix in v3, see docs/05_evaluation.md)
+  - {query: "How do I make a left-leaning decrease?", relevant: [ssk, skp, k2tog_tbl, sssk, sk2p, ssp, p2tog_tbl], primary: ssk, tags: [paraphrase]}
+  - {query: "Which decrease leans to the right?", relevant: [k2tog, p2tog, k3tog, p3tog], primary: k2tog, tags: [paraphrase]}
   - {query: "How do I decrease two stitches at once with the middle stitch on top?", relevant: [s2kp], primary: s2kp, tags: [paraphrase]}
   - {query: "How can I add a stitch without leaving a hole?", relevant: [m1l, m1r, kfb, kll, krl], primary: m1l, tags: [paraphrase]}
   - {query: "How do I make a decorative hole in lace?", relevant: [yo, yo2], primary: yo, tags: [paraphrase]}

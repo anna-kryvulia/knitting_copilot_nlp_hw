@@ -57,3 +57,11 @@ def test_fibres_have_required_fields_and_unique_aliases():
         assert required <= set(f), name
         aliases += [a.lower() for a in f["aliases"]]
     assert len(aliases) == len(set(aliases))
+
+
+def test_search_lookup_and_retrieval():
+    from knit_copilot.retrieval.search import _stem, lookup_exact, retrieve
+    assert lookup_exact("sskk").id == "ssk" and lookup_exact("sskk").method == "fuzzy"
+    assert lookup_exact("How do I make a left-leaning decrease?") is None
+    assert {_stem("slipping"), _stem("slips"), _stem("slipped")} == {"slip"} and _stem("stitches") == "stitch"
+    assert retrieve("Which decrease leans to the right?", "bm25", 3)[0].id in {"k2tog", "p2tog", "k3tog", "p3tog"}

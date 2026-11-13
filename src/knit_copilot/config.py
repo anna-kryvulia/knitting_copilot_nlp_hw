@@ -18,13 +18,14 @@ def _list(name: str) -> list[str]:
 class Settings:
     openrouter_api_key: str = os.getenv("OPENROUTER_API_KEY", "")
     base_url: str = "https://openrouter.ai/api/v1"
-    llm_model: str = os.getenv("LLM_MODEL", "google/gemma-4-31b-it:free")
+    llm_model: str = os.getenv("LLM_MODEL", "nvidia/nemotron-3.5-super-vl:free")
     fallback_models: list[str] = field(default_factory=lambda: _list("LLM_FALLBACK_MODELS"))
-    judge_model: str = os.getenv("JUDGE_MODEL", "nvidia/nemotron-3-ultra-550b-a55b:free")
+    judge_model: str = os.getenv("JUDGE_MODEL", "dots-studio/dots-3-note-preview:free")
     embedding_model: str = os.getenv("EMBEDDING_MODEL", "BAAI/bge-small-en-v1.5")
     llm_cache: bool = os.getenv("LLM_CACHE", "1") == "1"
     max_retries: int = int(os.getenv("LLM_MAX_RETRIES", "4"))
     timeout_s: float = float(os.getenv("LLM_TIMEOUT_S", "60"))
+    parse_budget_s: float = float(os.getenv("PARSE_TIME_BUDGET_S", "60"))
     db_path: Path = ROOT / os.getenv("DB_PATH", "data/knit.db")
     prompts_dir: Path = ROOT / "prompts"
     cache_dir: Path = ROOT / ".cache" / "llm"

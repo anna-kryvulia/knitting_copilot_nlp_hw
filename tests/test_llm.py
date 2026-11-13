@@ -23,3 +23,12 @@ def test_load_prompt_sections(tmp_path, monkeypatch):
     monkeypatch.setattr(llm, "settings", dataclasses.replace(llm.settings, prompts_dir=tmp_path))
     p = load_prompt("demo")
     assert p["system"] == "Be brief." and p["user template"] == "Q: {q}"
+
+
+def test_render_real_prompts():
+    from knit_copilot import llm
+    from knit_copilot.components import parser
+    msgs = llm.render("parser", ops=parser._ops_listing(), text="CO 10 sts.", feedback="")
+    assert '{"type": "rows"' in msgs[0]["content"] and "CO 10 sts." in msgs[1]["content"]
+    msgs = llm.render("explainer", facts="F", focus="", feedback="", focus_rule="- RULE")
+    assert "- RULE" in msgs[0]["content"] and "{focus_rule}" not in msgs[0]["content"]

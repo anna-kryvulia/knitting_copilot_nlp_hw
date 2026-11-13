@@ -1,0 +1,92 @@
+# 4. Modeling
+
+CRISP-DM phase 4. Components are built in the tier order of `AGENTS.md` §2; each one gets its eval
+before the next starts. This document grows with every component.
+
+| # | Component | Type | Status | Eval |
+|---|---|---|---|---|
+| 1 | Grammar parser (`parser_grammar.py`) | rules | ✅ | `eval/eval_parser.py --parser grammar` |
+| 2 | LLM / hybrid parser (`components/parser.py`) | LLM + simulator check | ✅ built, ⏳ eval needs `OPENROUTER_API_KEY` | `--parser llm`, `--parser hybrid` |
+| 3 | KB search (`retrieval/search.py`): exact + fuzzy lookup, BM25 / dense / hybrid retrieval | retrieval | ✅ default hybrid | `eval/eval_kb.py` |
+| 4 | Row display (`display.py`) | code | ✅ | `tests/test_display.py` |
+| 5 | Streamlit UI: Pattern tab + lookup | UI | ✅ first version | manual check |
+
+## 4.1 Parsers
+
+### Grammar parser (baseline, no model)
+`src/knit_copilot/parser_grammar.py`. Rules for standard notation:
+1. **Header**: sizes `S (M, L)`, needles (mm or US → mm), gauge/tension per 10 cm or per 4 in (converted),
+   cast-on with multi-size numbers.
+2. **Verbose → terse normalisation**: "knit 2 together" → `k2tog`, "repeat [..] until 2 stitches remain" →
+   `[..] to last 2 sts`, "work [..] three times" → `(..) 3 times`, "knit to the end of the round" → `k to end`.
+3. **Row bodies**: star repeats (`*…; rep from * to last 2 sts`, `N more times` = N+1 in total), bracket
+   groups, `X to end`, `k2 (3, 4)` per size, stated counts in `(44 sts)`, `[44 sts]`, `— 44 sts`.
+   Abbreviations are resolved through the KB (US/UK aliases, typo-tolerant normalisation).
+4. **Steps**: `Repeat Rows 1–4 until piece measures 59 in…` (→ cm), `a total of N times` (→ N−1 more),
+   `until 4 sts remain`, bind-off variants, "break yarn and draw through" (gather).
+5. Lines it can't read become **warnings** (never silently dropped).
+
+### LLM parser and hybrid
+`src/knit_copilot/components/parser.py`, prompt `prompts/parser.md`.
+
+```
+text ─► normalise_units (code: in→cm, per 4 in→per 10 cm, US→mm)
+     ─► LLM: text → Pattern IR JSON (schema-validated, re-asked once if invalid JSON)
+     ─► simulator check ── ok ──► IR
+                         └ error ─► error message sent back to the LLM (1 repair) ─► IR or "failed"
+hybrid: grammar first; the LLM runs only if the grammar has warnings or its IR does not simulate.
+```
+
+Design decisions:
+- **Numbers by code** (AGENTS.md §4): unit conversion happens *before* the model sees the text; the model
+  only maps structure. Every IR is simulated before it is accepted.
+- **Simulator-guided repair**: the model gets the concrete error ("Row 3: repeat does not fit: 3 sts left
+  over") instead of a generic retry. Tested with a mocked model (`tests/test_parser.py`).
+- **Hybrid** keeps cost and latency at zero for clean text and uses the LLM for what rules can't read
+  (free-form prose, unusual notation). The eval compares grammar vs LLM vs hybrid.
+
+## 4.2 UI (first version)
+`app.py` (Streamlit): paste a pattern or load an example → parse (hybrid or LLM) → metrics (construction,
+cast-on, rows, which parser read it, gauge) → row-by-row table (side, repeat iteration, start → end
+stitches, stated count, worked ops) with warnings for counts that don't add up. Sidebar: abbreviation
+lookup (UC6, exact). Run: `streamlit run app.py`.
+
+### Row display (`src/knit_copilot/display.py`)
+First UI feedback (user review): the table listed every stitch (`k2, p2, k2, p2, …`) and a "Repeat" column
+that started counting from the second time a row was worked, which looked like an off-by-one. Fix:
+- each row is described **from its IR**, with repeat counts computed from the stitch count:
+  `k2, (yo, k2tog, k3) ×8, k2`, nested repeats kept (`(k2tog ×3, (yo, k1) ×6, k2tog ×3) ×3`);
+- a **grouped view** (default) shows a repeated block as one line ("Rows 9–400 · Rows 1–4 × 98 more");
+  the "Show every row" toggle gives one line per worked row with "time 3 of 14".
+The same descriptions will feed the explainer (UC1) and the row tracker (UC5).
+
+### LLM model selection
+First real calls showed (1) `max_tokens` = 2048 cut the IR JSON off → raised to 12 000; a cut-off answer is
+now an error and never cached; (2) the Gemma 4 free models returned rate limits on every attempt.
+`scripts/compare_parser_models.py` ran the LLM parser with each free model alone (no fallback) on two dev
+patterns (`results/parser_model_comparison.json`):
+
+| Model | parse-004 (hat, UK, 3 sizes) | parse-006 (feather & fan, nested) |
+|---|---|---|
+| google/gemma-4-31b-it:free | fail, 32 s | fail, 33 s |
+| google/gemma-4-26b-a4b-it:free | fail, 33 s | fail, 32 s |
+| nvidia/nemotron-3.5-super-vl:free | exact, 57 s | exact, 32 s |
+| nvidia/nemotron-3-ultra-550b-a55b:free | exact, 71 s | exact, 108 s |
+| thinkingmachines/inkling:free | fail, 0 s | fail, 0 s |
+| thinkingmachines/inkling-small:free | fail, 0 s | fail, 0 s |
+| recursive/flint-v1.0:free | fail, 1340 s | exact, 80 s |
+| xingchen-agi/xing4.0-29b-a4b:free | fail, 0 s | fail, 0 s |
+| dots-studio/dots-3-note-preview:free | exact, 75 s | exact, 47 s |
+
+Decision: **app model `nvidia/nemotron-3.5-super-vl:free`** (exact on both, fastest), fallbacks
+Nemotron 3 Ultra and Dots 3 Note; **judge `dots-studio/dots-3-note-preview:free`** (exact on both and a
+different model family from the app model). Two patterns are a small sample; the full dev eval follows.
+
+### Time budget
+Flint hung for 22 minutes on one request: OpenRouter keeps slow connections alive, so the HTTP read
+timeout never fires. Requests now run in a worker thread with a **hard deadline**; reading one pattern with
+the LLM has a total budget of 60 s (`PARSE_TIME_BUDGET_S`) across models, retries and the repair attempt.
+A rate-limited or timed-out model is retried once, then the next model is tried. When the budget runs out
+the user gets a clear message (and, in hybrid mode, whatever the grammar could read). Separate target added
+for the report: **pattern reading ≤ 60 s** (one-time setup step), distinct from ≤ 15 s per chat turn.
+Check: cable scarf via LLM → correct in 32 s on the first attempt.

@@ -105,3 +105,33 @@ Running log of decisions. Newest entries at the bottom. Format:
   two wrong `warn_gauge` labels (corrected). 106 tests pass.
 - Next: human review of docs/data/eval_review_sample.md; Part D (Ravelry annotations) once PDFs are downloaded;
   then Phase 4 (parser first — needs OPENROUTER_API_KEY).
+
+## 2026-11-13 — 4. Modeling — Parsers and the first UI page
+- What: grammar parser (`parser_grammar.py`), LLM/hybrid parser with code-side unit normalisation and
+  simulator-guided repair (`components/parser.py`, `prompts/parser.md`), parser eval (`eval/eval_parser.py`,
+  `eval/common.py`), Streamlit `app.py` (Pattern tab + abbreviation lookup); docs 04 and 05 started.
+- Why: Parsing is the core NLP step for UC1/2/4/5/7; the grammar is the baseline and the free fast path.
+- Result / numbers: grammar on dev 36/36 exact after 1 iteration (35 → 36); flagged as optimistic (same
+  conventions as the generator). LLM eval blocked: no OPENROUTER_API_KEY. 112 tests pass. UI checked in the
+  browser: hat example parsed (88 sts, 56 rounds), yfwd → yo lookup.
+- Next: add the key, run `eval_parser --parser llm/hybrid` on dev; then explainer (UC1) and KB retrieval (UC6).
+
+## 2026-11-13 — 4/5. Modeling + Evaluation — Row display, KB search (UC6)
+- What: `display.py` (rows described from the IR with computed repeat counts, grouped view) after user
+  feedback on the first UI; `retrieval/search.py` (exact + fuzzy lookup, BM25/dense/hybrid);
+  `eval/eval_kb.py`; search in the UI sidebar; LLM client: output limit 12k tokens, cut-off answers rejected,
+  per-model run without fallback, `LLMConfigError` (no retries without a key).
+- Result / numbers: exact lookup 1.00 (dev and test). Question recall@3 v1 → v5 on dev: BM25 0.644 → 0.900,
+  hybrid 0.511 → 0.778; on test BM25 0.750 → 0.683, hybrid 0.783 → default hybrid. Loops: 5 → 3 twice
+  (2 incomplete labels fixed and documented; 6 KB descriptions given missing facts).
+- Note: test split was looked at after v4; a fresh author-written question set is needed for an unbiased number.
+- Next: pick the default parser model from the comparison; time budget for LLM parsing; explainer (UC1).
+
+## 2026-11-13 — 4. Modeling — Free-model selection and time budget
+- What: compared 9 free models on 2 dev patterns (`scripts/compare_parser_models.py`); hard per-request
+  deadline in `llm.py` (worker thread), parse time budget 60 s, faster move-on for rate-limited models.
+- Result / numbers: exact on both patterns: Nemotron 3.5 Super (32–57 s), Nemotron 3 Ultra (71–108 s),
+  Dots 3 Note (47–75 s); Flint 1/2 (one 22-min hang); Gemma 4 ×2 always rate-limited; Inkling ×2 and
+  Xingchen failed instantly. App model → Nemotron 3.5 Super; judge → Dots 3 Note (other family).
+  Cable scarf via LLM: correct in 32 s. New target in doc 01: pattern reading ≤ 60 s. 118 tests pass.
+- Next: full LLM/hybrid parser eval on dev (36 cases; ~20–40 min with free models), then explainer (UC1).

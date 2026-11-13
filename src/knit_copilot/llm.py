@@ -5,6 +5,7 @@ models, on-disk response cache, and JSON output validated against a Pydantic sch
 Input: chat messages (+ optional tools / schema). Output: text, a tool-call message, or a validated model.
 """
 
+import concurrent.futures as cf
 import hashlib
 import json
 import logging
@@ -24,11 +25,24 @@ T = TypeVar("T", bound=BaseModel)
 _client: OpenAI | None = None
 
 
+class LLMConfigError(RuntimeError):
+    """The LLM is not configured (e.g. no API key); retrying will not help."""
+
+
+class LLMTimeout(RuntimeError):
+    """The caller's time budget ran out before any model answered."""
+
+
+# Requests run in worker threads so a hard deadline can be enforced: OpenRouter keeps slow connections
+# alive with "processing" comments, so the HTTP read timeout alone never fires (a request once hung 22 min).
+_pool = cf.ThreadPoolExecutor(max_workers=4, thread_name_prefix="llm")
+
+
 def client() -> OpenAI:
     global _client
     if _client is None:
         if not settings.openrouter_api_key:
-            raise RuntimeError("OPENROUTER_API_KEY is not set. Copy .env.example to .env and add your key.")
+            raise LLMConfigError("OPENROUTER_API_KEY is not set. Copy .env.example to .env and add your key.")
         _client = OpenAI(base_url=settings.base_url, api_key=settings.openrouter_api_key,
                          timeout=settings.timeout_s, max_retries=0)
     return _client
@@ -55,14 +69,18 @@ def _cache_path(key_obj: dict[str, Any]):
 # ---------- core call ----------
 
 def chat(messages: list[dict[str, Any]], *, model: str | None = None, tools: list[dict] | None = None,
-         temperature: float = 0.0, max_tokens: int = 2048, use_cache: bool | None = None) -> dict[str, Any]:
+         temperature: float = 0.0, max_tokens: int = 2048, use_cache: bool | None = None,
+         fallback: bool = True, deadline: float | None = None) -> dict[str, Any]:
     """Call the chat API and return the assistant message as a dict
     ({"content": str | None, "tool_calls": [...] | None, "model": str}).
 
-    Tries `model` (default LLM_MODEL), then LLM_FALLBACK_MODELS, retrying each with exponential backoff
-    on rate limits / server errors.
+    Tries `model` (default LLM_MODEL), then LLM_FALLBACK_MODELS. Server errors and empty/cut-off answers are
+    retried with backoff; a rate-limited or timed-out model is retried at most once before moving on.
+    `deadline` (time.monotonic() value) is a hard stop for the whole call: raises LLMTimeout.
     """
-    models = [model or settings.llm_model] + [m for m in settings.fallback_models if m != (model or settings.llm_model)]
+    models = [model or settings.llm_model]
+    if fallback:
+        models += [m for m in settings.fallback_models if m != models[0]]
     use_cache = settings.llm_cache if use_cache is None else use_cache
     params = {"temperature": temperature, "max_tokens": max_tokens}
     if tools:
@@ -75,10 +93,21 @@ def chat(messages: list[dict[str, Any]], *, model: str | None = None, tools: lis
             return json.loads(path.read_text(encoding="utf-8"))
 
         for attempt in range(settings.max_retries):
+            remaining = None if deadline is None else deadline - time.monotonic()
+            if remaining is not None and remaining < 1:
+                raise LLMTimeout(f"time budget used up (last error: {last_err})")
+            per_request = settings.timeout_s if remaining is None else min(settings.timeout_s, remaining)
             try:
                 t0 = time.perf_counter()
-                resp = client().chat.completions.create(model=m, messages=messages, **params)
-                msg = resp.choices[0].message
+                future = _pool.submit(client().chat.completions.create, model=m, messages=messages, **params)
+                try:
+                    resp = future.result(timeout=per_request)
+                except cf.TimeoutError:
+                    raise openai.APITimeoutError(request=None) from None
+                choice = resp.choices[0]
+                msg = choice.message
+                if choice.finish_reason == "length":
+                    raise ValueError(f"response cut off at max_tokens={max_tokens}")
                 out = {
                     "content": msg.content,
                     "tool_calls": [tc.model_dump() for tc in msg.tool_calls] if msg.tool_calls else None,
@@ -95,8 +124,14 @@ def chat(messages: list[dict[str, Any]], *, model: str | None = None, tools: lis
             except (openai.RateLimitError, openai.APIConnectionError, openai.APITimeoutError,
                     openai.InternalServerError, ValueError) as e:
                 last_err = e
+                busy = isinstance(e, (openai.RateLimitError, openai.APITimeoutError))
+                if busy and attempt >= 1:          # a busy free model rarely recovers within seconds
+                    log.warning("LLM %s still %s, trying next model", m, type(e).__name__)
+                    break
                 wait = 2 ** attempt
-                log.warning("LLM %s failed (%s), attempt %d/%d, retry in %ss",
+                if deadline is not None:
+                    wait = min(wait, max(0.0, deadline - time.monotonic() - 1))
+                log.warning("LLM %s failed (%s), attempt %d/%d, retry in %.0fs",
                             m, type(e).__name__, attempt + 1, settings.max_retries, wait)
                 time.sleep(wait)
             except openai.APIStatusError as e:  # 4xx other than 429: model unavailable etc. → next model
@@ -120,14 +155,16 @@ def _extract_json(text: str) -> Any:
 
 
 def chat_json(messages: list[dict[str, Any]], schema: type[T], *, model: str | None = None,
-              temperature: float = 0.0) -> T:
+              temperature: float = 0.0, max_tokens: int = 12000, fallback: bool = True,
+              deadline: float | None = None) -> T:
     """Call the LLM and validate its JSON answer against `schema`. Re-asks once with the error on failure."""
     schema_hint = json.dumps(schema.model_json_schema(), ensure_ascii=False)
     msgs = list(messages)
     msgs[0] = {**msgs[0], "content": f"{msgs[0]['content']}\n\nRespond with ONLY a JSON object matching this "
                                      f"JSON schema, no prose:\n{schema_hint}"}
     for attempt in range(2):
-        out = chat(msgs, model=model, temperature=temperature)
+        out = chat(msgs, model=model, temperature=temperature, max_tokens=max_tokens, fallback=fallback,
+                   deadline=deadline)
         try:
             return schema.model_validate(_extract_json(out["content"] or ""))
         except (json.JSONDecodeError, ValidationError) as e:
@@ -141,5 +178,8 @@ def chat_json(messages: list[dict[str, Any]], schema: type[T], *, model: str | N
 def render(prompt_name: str, **vars: Any) -> list[dict[str, str]]:
     """Build [system, user] messages from prompts/<prompt_name>.md, filling {placeholders} in the user template."""
     p = load_prompt(prompt_name)
-    return [{"role": "system", "content": p["system"]},
+    system = p["system"]
+    for k, v in vars.items():              # plain replacement: system prompts may contain JSON braces
+        system = system.replace("{" + k + "}", str(v))
+    return [{"role": "system", "content": system},
             {"role": "user", "content": p["user template"].format(**vars)}]

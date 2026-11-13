@@ -1,0 +1,204 @@
+{
+  "component": "parser_grammar",
+  "split": "dev",
+  "version": "v1",
+  "model": "none",
+  "date": "2026-11-13",
+  "metrics": {
+    "overall": {
+      "n": 36,
+      "parse_success": 1.0,
+      "total_rows_match": 1.0,
+      "row_count_agreement": 1.0,
+      "op_precision": 1.0,
+      "op_recall": 1.0,
+      "op_f1": 1.0,
+      "exact_match": 1.0,
+      "side_accuracy": 1.0
+    },
+    "by_source": {
+      "synthetic": {
+        "n": 36,
+        "parse_success": 1.0,
+        "total_rows_match": 1.0,
+        "row_count_agreement": 1.0,
+        "op_precision": 1.0,
+        "op_recall": 1.0,
+        "op_f1": 1.0,
+        "exact_match": 1.0,
+        "side_accuracy": 1.0
+      }
+    },
+    "by_style": {
+      "+typo": {
+        "n": 8,
+        "parse_success": 1.0,
+        "total_rows_match": 1.0,
+        "row_count_agreement": 1.0,
+        "op_precision": 1.0,
+        "op_recall": 1.0,
+        "op_f1": 1.0,
+        "exact_match": 1.0,
+        "side_accuracy": 1.0
+      },
+      "brackets": {
+        "n": 8,
+        "parse_success": 1.0,
+        "total_rows_match": 1.0,
+        "row_count_agreement": 1.0,
+        "op_precision": 1.0,
+        "op_recall": 1.0,
+        "op_f1": 1.0,
+        "exact_match": 1.0,
+        "side_accuracy": 1.0
+      },
+      "imperial": {
+        "n": 6,
+        "parse_success": 1.0,
+        "total_rows_match": 1.0,
+        "row_count_agreement": 1.0,
+        "op_precision": 1.0,
+        "op_recall": 1.0,
+        "op_f1": 1.0,
+        "exact_match": 1.0,
+        "side_accuracy": 1.0
+      },
+      "terse": {
+        "n": 7,
+        "parse_success": 1.0,
+        "total_rows_match": 1.0,
+        "row_count_agreement": 1.0,
+        "op_precision": 1.0,
+        "op_recall": 1.0,
+        "op_f1": 1.0,
+        "exact_match": 1.0,
+        "side_accuracy": 1.0
+      },
+      "uk": {
+        "n": 7,
+        "parse_success": 1.0,
+        "total_rows_match": 1.0,
+        "row_count_agreement": 1.0,
+        "op_precision": 1.0,
+        "op_recall": 1.0,
+        "op_f1": 1.0,
+        "exact_match": 1.0,
+        "side_accuracy": 1.0
+      },
+      "verbose": {
+        "n": 8,
+        "parse_success": 1.0,
+        "total_rows_match": 1.0,
+        "row_count_agreement": 1.0,
+        "op_precision": 1.0,
+        "op_recall": 1.0,
+        "op_f1": 1.0,
+        "exact_match": 1.0,
+        "side_accuracy": 1.0
+      }
+    },
+    "by_template": {
+      "bias_dishcloth": {
+        "n": 4,
+        "parse_success": 1.0,
+        "total_rows_match": 1.0,
+        "row_count_agreement": 1.0,
+        "op_precision": 1.0,
+        "op_recall": 1.0,
+        "op_f1": 1.0,
+        "exact_match": 1.0,
+        "side_accuracy": 1.0
+      },
+      "bordered_blanket": {
+        "n": 4,
+        "parse_success": 1.0,
+        "total_rows_match": 1.0,
+        "row_count_agreement": 1.0,
+        "op_precision": 1.0,
+        "op_recall": 1.0,
+        "op_f1": 1.0,
+        "exact_match": 1.0,
+        "side_accuracy": 1.0
+      },
+      "cable_scarf": {
+        "n": 4,
+        "parse_success": 1.0,
+        "total_rows_match": 1.0,
+        "row_count_agreement": 1.0,
+        "op_precision": 1.0,
+        "op_recall": 1.0,
+        "op_f1": 1.0,
+        "exact_match": 1.0,
+        "side_accuracy": 1.0
+      },
+      "eyelet_scarf": {
+        "n": 4,
+        "parse_success": 1.0,
+        "total_rows_match": 1.0,
+        "row_count_agreement": 1.0,
+        "op_precision": 1.0,
+        "op_recall": 1.0,
+        "op_f1": 1.0,
+        "exact_match": 1.0,
+        "side_accuracy": 1.0
+      },
+      "feather_fan": {
+        "n": 4,
+        "parse_success": 1.0,
+        "total_rows_match": 1.0,
+        "row_count_agreement": 1.0,
+        "op_precision": 1.0,
+        "op_recall": 1.0,
+        "op_f1": 1.0,
+        "exact_match": 1.0,
+        "side_accuracy": 1.0
+      },
+      "garter_scarf": {
+        "n": 4,
+        "parse_success": 1.0,
+        "total_rows_match": 1.0,
+        "row_count_agreement": 1.0,
+        "op_precision": 1.0,
+        "op_recall": 1.0,
+        "op_f1": 1.0,
+        "exact_match": 1.0,
+        "side_accuracy": 1.0
+      },
+      "rib_scarf": {
+        "n": 4,
+        "parse_success": 1.0,
+        "total_rows_match": 1.0,
+        "row_count_agreement": 1.0,
+        "op_precision": 1.0,
+        "op_recall": 1.0,
+        "op_f1": 1.0,
+        "exact_match": 1.0,
+        "side_accuracy": 1.0
+      },
+      "ribbed_hat": {
+        "n": 4,
+        "parse_success": 1.0,
+        "total_rows_match": 1.0,
+        "row_count_agreement": 1.0,
+        "op_precision": 1.0,
+        "op_recall": 1.0,
+        "op_f1": 1.0,
+        "exact_match": 1.0,
+        "side_accuracy": null
+      },
+      "seed_cowl": {
+        "n": 4,
+        "parse_success": 1.0,
+        "total_rows_match": 1.0,
+        "row_count_agreement": 1.0,
+        "op_precision": 1.0,
+        "op_recall": 1.0,
+        "op_f1": 1.0,
+        "exact_match": 1.0,
+        "side_accuracy": null
+      }
+    }
+  },
+  "n": 36,
+  "failures": []
+}

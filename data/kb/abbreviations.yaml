@@ -104,7 +104,7 @@
   lean: null
   chart_symbol: "O"
   chart_symbol_ws: "O"
-  description: "Wrap the yarn over the right needle once to make a new loop; it leaves a small decorative hole."
+  description: "Wrap the yarn over the right needle once to make a new loop; it leaves a small decorative hole (an eyelet), the basis of lace."
   reference: CYC
 
 - id: yo2
@@ -127,7 +127,7 @@
   lean: left
   chart_symbol: "ML"
   chart_symbol_ws: "ML"
-  description: "Lift the strand between the needles from front to back onto the left needle and knit it through the back loop. Plain 'M1' means M1L unless the pattern says otherwise."
+  description: "Lift the strand between the needles from front to back onto the left needle and knit it through the back loop. The new stitch is almost invisible and leaves no hole. Plain 'M1' means M1L unless the pattern says otherwise."
   reference: CYC
 
 - id: m1r
@@ -139,7 +139,7 @@
   lean: right
   chart_symbol: "MR"
   chart_symbol_ws: "MR"
-  description: "Lift the strand between the needles from back to front onto the left needle and knit it through the front loop."
+  description: "Lift the strand between the needles from back to front onto the left needle and knit it through the front loop. The new stitch is almost invisible and leaves no hole."
   reference: CYC
 
 - id: m1p
@@ -150,7 +150,7 @@
   category: increase
   chart_symbol: "MP"
   chart_symbol_ws: "MP"
-  description: "Lift the strand between the needles onto the left needle and purl it through the back loop."
+  description: "Lift the strand between the needles onto the left needle and purl it through the back loop; an almost invisible increase on purl rows."
   reference: CYC
 
 - id: kfb
@@ -162,7 +162,7 @@
   lean: null
   chart_symbol: "Y"
   chart_symbol_ws: "Y"
-  description: "Knit into the front of the stitch, do not drop it, then knit into its back loop and drop it: one stitch becomes two."
+  description: "Knit into the front of the stitch, do not drop it, then knit into its back loop and drop it: one stitch becomes two. Leaves a small purl bump but no hole."
   reference: CYC
 
 - id: pfb
@@ -499,7 +499,7 @@
   category: other
   chart_symbol: "X"
   chart_symbol_ws: "X"
-  description: "Let the next stitch fall off the left needle without working it (often a yarn over), making a long open strand."
+  description: "Let the next stitch fall off the left needle without working it (often a yarn over). It unravels down the column and leaves a ladder of long open strands."
   reference: CYC
 
 - id: pm

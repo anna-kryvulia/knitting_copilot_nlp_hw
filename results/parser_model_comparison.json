@@ -1,0 +1,272 @@
+[
+  {
+    "model": "google/gemma-4-31b-it:free",
+    "case": "parse-004",
+    "tags": [
+      "ribbed_hat",
+      "uk"
+    ],
+    "seconds": 32.1,
+    "parse_success": false,
+    "exact_match": false,
+    "row_agreement": 0.0,
+    "why": "no IR: llm: All models failed: ['google/gemma-4-31b-it:free']; llm: All models failed: ['google/gemma-4-31b-it:free']",
+    "method": "failed",
+    "attempts": 2
+  },
+  {
+    "model": "google/gemma-4-31b-it:free",
+    "case": "parse-006",
+    "tags": [
+      "feather_fan",
+      "terse"
+    ],
+    "seconds": 32.7,
+    "parse_success": false,
+    "exact_match": false,
+    "row_agreement": 0.0,
+    "why": "no IR: llm: All models failed: ['google/gemma-4-31b-it:free']; llm: All models failed: ['google/gemma-4-31b-it:free']",
+    "method": "failed",
+    "attempts": 2
+  },
+  {
+    "model": "google/gemma-4-26b-a4b-it:free",
+    "case": "parse-004",
+    "tags": [
+      "ribbed_hat",
+      "uk"
+    ],
+    "seconds": 32.8,
+    "parse_success": false,
+    "exact_match": false,
+    "row_agreement": 0.0,
+    "why": "no IR: llm: All models failed: ['google/gemma-4-26b-a4b-it:free']; llm: All models failed: ['google/gemma-4-26b-a4b-it:free']",
+    "method": "failed",
+    "attempts": 2
+  },
+  {
+    "model": "google/gemma-4-26b-a4b-it:free",
+    "case": "parse-006",
+    "tags": [
+      "feather_fan",
+      "terse"
+    ],
+    "seconds": 31.9,
+    "parse_success": false,
+    "exact_match": false,
+    "row_agreement": 0.0,
+    "why": "no IR: llm: All models failed: ['google/gemma-4-26b-a4b-it:free']; llm: All models failed: ['google/gemma-4-26b-a4b-it:free']",
+    "method": "failed",
+    "attempts": 2
+  },
+  {
+    "model": "nvidia/nemotron-3.5-super-vl:free",
+    "case": "parse-004",
+    "tags": [
+      "ribbed_hat",
+      "uk"
+    ],
+    "seconds": 56.9,
+    "parse_success": true,
+    "exact_match": true,
+    "row_agreement": 1.0,
+    "why": null,
+    "method": "llm",
+    "attempts": 1
+  },
+  {
+    "model": "nvidia/nemotron-3.5-super-vl:free",
+    "case": "parse-006",
+    "tags": [
+      "feather_fan",
+      "terse"
+    ],
+    "seconds": 32.1,
+    "parse_success": true,
+    "exact_match": true,
+    "row_agreement": 1.0,
+    "why": null,
+    "method": "llm",
+    "attempts": 1
+  },
+  {
+    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "case": "parse-004",
+    "tags": [
+      "ribbed_hat",
+      "uk"
+    ],
+    "seconds": 71.4,
+    "parse_success": true,
+    "exact_match": true,
+    "row_agreement": 1.0,
+    "why": null,
+    "method": "llm",
+    "attempts": 1
+  },
+  {
+    "model": "nvidia/nemotron-3-ultra-550b-a55b:free",
+    "case": "parse-006",
+    "tags": [
+      "feather_fan",
+      "terse"
+    ],
+    "seconds": 107.8,
+    "parse_success": true,
+    "exact_match": true,
+    "row_agreement": 1.0,
+    "why": null,
+    "method": "llm",
+    "attempts": 1
+  },
+  {
+    "model": "thinkingmachines/inkling:free",
+    "case": "parse-004",
+    "tags": [
+      "ribbed_hat",
+      "uk"
+    ],
+    "seconds": 0.4,
+    "parse_success": false,
+    "exact_match": false,
+    "row_agreement": 0.0,
+    "why": "no IR: llm: All models failed: ['thinkingmachines/inkling:free']; llm: All models failed: ['thinkingmachines/inkling:free']",
+    "method": "failed",
+    "attempts": 2
+  },
+  {
+    "model": "thinkingmachines/inkling:free",
+    "case": "parse-006",
+    "tags": [
+      "feather_fan",
+      "terse"
+    ],
+    "seconds": 0.2,
+    "parse_success": false,
+    "exact_match": false,
+    "row_agreement": 0.0,
+    "why": "no IR: llm: All models failed: ['thinkingmachines/inkling:free']; llm: All models failed: ['thinkingmachines/inkling:free']",
+    "method": "failed",
+    "attempts": 2
+  },
+  {
+    "model": "thinkingmachines/inkling-small:free",
+    "case": "parse-004",
+    "tags": [
+      "ribbed_hat",
+      "uk"
+    ],
+    "seconds": 0.1,
+    "parse_success": false,
+    "exact_match": false,
+    "row_agreement": 0.0,
+    "why": "no IR: llm: All models failed: ['thinkingmachines/inkling-small:free']; llm: All models failed: ['thinkingmachines/inkling-small:free']",
+    "method": "failed",
+    "attempts": 2
+  },
+  {
+    "model": "thinkingmachines/inkling-small:free",
+    "case": "parse-006",
+    "tags": [
+      "feather_fan",
+      "terse"
+    ],
+    "seconds": 0.3,
+    "parse_success": false,
+    "exact_match": false,
+    "row_agreement": 0.0,
+    "why": "no IR: llm: All models failed: ['thinkingmachines/inkling-small:free']; llm: All models failed: ['thinkingmachines/inkling-small:free']",
+    "method": "failed",
+    "attempts": 2
+  },
+  {
+    "model": "recursive/flint-v1.0:free",
+    "case": "parse-004",
+    "tags": [
+      "ribbed_hat",
+      "uk"
+    ],
+    "seconds": 1339.5,
+    "parse_success": false,
+    "exact_match": false,
+    "row_agreement": 0.0,
+    "why": "no IR: llm: All models failed: ['recursive/flint-v1.0:free']; llm: All models failed: ['recursive/flint-v1.0:free']",
+    "method": "failed",
+    "attempts": 2
+  },
+  {
+    "model": "recursive/flint-v1.0:free",
+    "case": "parse-006",
+    "tags": [
+      "feather_fan",
+      "terse"
+    ],
+    "seconds": 80.1,
+    "parse_success": true,
+    "exact_match": true,
+    "row_agreement": 1.0,
+    "why": null,
+    "method": "llm",
+    "attempts": 1
+  },
+  {
+    "model": "xingchen-agi/xing4.0-29b-a4b:free",
+    "case": "parse-004",
+    "tags": [
+      "ribbed_hat",
+      "uk"
+    ],
+    "seconds": 0.3,
+    "parse_success": false,
+    "exact_match": false,
+    "row_agreement": 0.0,
+    "why": "no IR: llm: All models failed: ['xingchen-agi/xing4.0-29b-a4b:free']; llm: All models failed: ['xingchen-agi/xing4.0-29b-a4b:free']",
+    "method": "failed",
+    "attempts": 2
+  },
+  {
+    "model": "xingchen-agi/xing4.0-29b-a4b:free",
+    "case": "parse-006",
+    "tags": [
+      "feather_fan",
+      "terse"
+    ],
+    "seconds": 0.2,
+    "parse_success": false,
+    "exact_match": false,
+    "row_agreement": 0.0,
+    "why": "no IR: llm: All models failed: ['xingchen-agi/xing4.0-29b-a4b:free']; llm: All models failed: ['xingchen-agi/xing4.0-29b-a4b:free']",
+    "method": "failed",
+    "attempts": 2
+  },
+  {
+    "model": "dots-studio/dots-3-note-preview:free",
+    "case": "parse-004",
+    "tags": [
+      "ribbed_hat",
+      "uk"
+    ],
+    "seconds": 74.9,
+    "parse_success": true,
+    "exact_match": true,
+    "row_agreement": 1.0,
+    "why": null,
+    "method": "llm",
+    "attempts": 1
+  },
+  {
+    "model": "dots-studio/dots-3-note-preview:free",
+    "case": "parse-006",
+    "tags": [
+      "feather_fan",
+      "terse"
+    ],
+    "seconds": 46.8,
+    "parse_success": true,
+    "exact_match": true,
+    "row_agreement": 1.0,
+    "why": null,
+    "method": "llm",
+    "attempts": 1
+  }
+]

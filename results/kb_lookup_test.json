@@ -1,0 +1,37 @@
+{
+  "component": "kb_lookup",
+  "split": "test",
+  "version": "v5",
+  "model": "none",
+  "date": "2026-11-13",
+  "metrics": {
+    "exact": {
+      "n": 10,
+      "accuracy": 1.0
+    },
+    "questions": {
+      "bm25": {
+        "n": 10,
+        "hit@1": 0.8,
+        "recall@3": 0.683,
+        "mrr": 0.823
+      },
+      "dense": {
+        "n": 10,
+        "hit@1": 0.8,
+        "recall@3": 0.783,
+        "mrr": 0.867
+      },
+      "hybrid": {
+        "n": 10,
+        "hit@1": 0.7,
+        "recall@3": 0.783,
+        "mrr": 0.833
+      },
+      "lookup_false_positive": 0.0
+    }
+  },
+  "n": 20,
+  "failures": [],
+  "embedding_model": "BAAI/bge-small-en-v1.5"
+}
