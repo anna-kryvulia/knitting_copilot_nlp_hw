@@ -74,3 +74,13 @@ Running log of decisions. Newest entries at the bottom. Format:
   machine knitting, crochet only) → synthetic generator + 12 hand-annotated Ravelry patterns.
 - Next: Phase 3 — abbreviation KB, yarn_weights.yaml, fibres KB, yarns.csv, Pattern IR + generator, eval sets;
   user downloads the 12 chosen patterns into data/private/ravelry/.
+
+## 2026-11-13 — 3. Data Preparation (part A) — IR, units, knowledge bases, yarn table
+- What: `ir.py` (Pattern IR, multi-size values), `units.py`, `kb.py` + `data/kb/abbreviations.yaml`
+  (74 entries), `yarn_weights.yaml` (CYC 0–7 + Ravelry mapping), `fibres.yaml` (14 fibres),
+  `data/build_yarns.py` → `data/yarns.csv` (219 yarns, 11 brands); `docs/03_data_preparation.md`.
+- Why: KB is the single source of stitch arithmetic and chart symbols; the yarn table backs UC3.
+- Result / numbers: 48 unit tests pass. Yarn table: needle size from label for 215/219, gauge from label
+  for 198/219 (rest from CYC); new quality issue Q9: 22 label gauges flagged as inconsistent with their
+  weight category. KB alias check found 2 ambiguous aliases (removed).
+- Next: Part B — stitch simulator + synthetic pattern generator with gold IR and counts.

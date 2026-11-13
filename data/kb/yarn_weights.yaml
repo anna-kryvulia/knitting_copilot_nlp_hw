@@ -1,0 +1,58 @@
+# Craft Yarn Council Standard Yarn Weight System (knitting columns), metric only.
+# Source: https://www.craftyarncouncil.com/standards/yarn-weight-system ("guidelines only").
+# CYC gives gauge per 4 in (10.16 cm); values are used as per 10 cm (difference < 2%, well inside the ranges).
+# ravelry_names: Ravelry's yarn_weight names mapped to the category (docs/02_data_understanding.md §2.3).
+
+categories:
+  - id: 0
+    name: Lace
+    typical: [lace, fingering, 10-count thread]
+    sts_per_10cm: [33, 40]
+    needle_mm: [1.5, 2.25]
+    ravelry_names: [Lace, Cobweb, Thread]
+    note: "Lace yarn is often knitted on much larger needles for openwork; follow the pattern gauge."
+  - id: 1
+    name: Super Fine
+    typical: [sock, fingering, baby]
+    sts_per_10cm: [27, 32]
+    needle_mm: [2.25, 3.25]
+    ravelry_names: [Light Fingering, Fingering]
+  - id: 2
+    name: Fine
+    typical: [sport, baby]
+    sts_per_10cm: [23, 26]
+    needle_mm: [3.25, 3.75]
+    ravelry_names: [Sport]
+  - id: 3
+    name: Light
+    typical: [DK, light worsted]
+    sts_per_10cm: [21, 24]
+    needle_mm: [3.75, 4.5]
+    ravelry_names: [DK]
+  - id: 4
+    name: Medium
+    typical: [worsted, afghan, aran]
+    sts_per_10cm: [16, 20]
+    needle_mm: [4.5, 5.5]
+    ravelry_names: [Worsted, Aran]
+  - id: 5
+    name: Bulky
+    typical: [chunky, craft, rug]
+    sts_per_10cm: [12, 15]
+    needle_mm: [5.5, 8.0]
+    ravelry_names: [Bulky]
+  - id: 6
+    name: Super Bulky
+    typical: [super bulky, roving]
+    sts_per_10cm: [7, 11]
+    needle_mm: [8.0, 12.75]
+    ravelry_names: [Super Bulky]
+  - id: 7
+    name: Jumbo
+    typical: [jumbo, roving]
+    sts_per_10cm: [1, 6]
+    needle_mm: [12.75, 25.0]
+    ravelry_names: [Jumbo]
+
+# Standard metric needle sizes available in shops (used to round recommendations).
+standard_needles_mm: [2.0, 2.25, 2.5, 2.75, 3.0, 3.25, 3.5, 3.75, 4.0, 4.5, 5.0, 5.5, 6.0, 6.5, 7.0, 8.0, 9.0, 10.0, 12.0, 15.0, 20.0, 25.0]

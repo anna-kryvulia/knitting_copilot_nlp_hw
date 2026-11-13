@@ -1,0 +1,177 @@
+# Fibre knowledge base for UC3 yarn advice. Written in our own words from general knitting knowledge.
+# Fields:
+#   aliases          names used by Ravelry / shops
+#   elasticity       low | medium | high  (how much the knitted fabric springs back)
+#   warmth           low | medium | high
+#   drape            low | medium | high  (how much the fabric flows rather than holds shape)
+#   needle_adjust_mm suggested change from the label needle size for an even fabric (code applies it, 0 = none)
+#   good_for / avoid_for   typical projects
+#   care, blocking, tips   short advice sentences the advisor may cite
+
+wool:
+  aliases: [wool, sheep wool, lambswool, virgin wool]
+  elasticity: high
+  warmth: high
+  drape: low
+  needle_adjust_mm: 0
+  good_for: [hats, sweaters, mittens, cables, ribbing]
+  avoid_for: [summer tops]
+  care: "Hand wash cool or use a wool programme; non-superwash wool felts with heat and agitation."
+  blocking: "Wet block; wool relaxes and evens out stitches noticeably."
+  tips: ["Very forgiving for beginners: uneven stitches even out after blocking.", "Ribbing keeps its shape well."]
+
+merino:
+  aliases: [merino, merino wool, superwash merino, extrafine merino]
+  elasticity: high
+  warmth: high
+  drape: medium
+  needle_adjust_mm: 0
+  good_for: [accessories next to skin, baby items, sweaters]
+  avoid_for: []
+  care: "Superwash merino can be machine washed on a wool cycle, but it may grow when wet; dry flat."
+  blocking: "Wet block gently; superwash merino can stretch, so do not hang it."
+  tips: ["Soft enough for scarves and hats worn against the skin.", "Superwash merino can pill with wear."]
+
+alpaca:
+  aliases: [alpaca, baby alpaca, suri alpaca]
+  elasticity: low
+  warmth: high
+  drape: high
+  needle_adjust_mm: 0
+  good_for: [scarves, shawls, cowls, loose sweaters]
+  avoid_for: [ribbed cuffs that must hug, fitted garments]
+  care: "Hand wash cool, dry flat."
+  blocking: "Wet block; alpaca opens up lace beautifully but can grow over time."
+  tips: ["Warmer than wool for its weight.", "Heavy fabrics can stretch; consider blending with wool for structure."]
+
+mohair:
+  aliases: [mohair, kid mohair, super kid mohair]
+  elasticity: medium
+  warmth: high
+  drape: high
+  needle_adjust_mm: 1.0
+  good_for: [halo effect, held together with another yarn, light shawls]
+  avoid_for: [projects you may need to unravel, detailed stitch patterns]
+  care: "Hand wash cool, dry flat."
+  blocking: "Light steam or wet block."
+  tips: ["Fuzzy halo hides stitch definition.", "Very hard to unravel; use a lifeline.", "Often held together with a smooth yarn."]
+
+cotton:
+  aliases: [cotton, mercerized cotton, mercerised cotton, egyptian cotton, organic cotton, combed cotton]
+  elasticity: low
+  warmth: low
+  drape: medium
+  needle_adjust_mm: -0.25
+  good_for: [summer tops, dishcloths, baby items, bags, crisp textures]
+  avoid_for: [stretchy ribbing, very long heavy garments]
+  care: "Usually machine washable; can shrink a little in a hot dryer."
+  blocking: "Wet block and pin; cotton keeps the blocked shape well."
+  tips: ["No elastic memory: ribbing will not spring back, so cast on firmly.", "Many knitters go down a needle size for even stitches.", "Hard on the hands; take breaks."]
+
+linen:
+  aliases: [linen, flax]
+  elasticity: low
+  warmth: low
+  drape: high
+  needle_adjust_mm: 0
+  good_for: [summer tops, shawls, towels]
+  avoid_for: [ribbing, fitted garments]
+  care: "Machine washable; gets softer with each wash."
+  blocking: "Wet block; the fabric softens and drapes after washing."
+  tips: ["Feels stiff while knitting but softens a lot.", "Stitches look uneven until washed."]
+
+bamboo:
+  aliases: [bamboo, bamboo viscose, bamboo rayon]
+  elasticity: low
+  warmth: low
+  drape: high
+  needle_adjust_mm: -0.25
+  good_for: [summer tops, shawls, baby items]
+  avoid_for: [structured items, ribbing]
+  care: "Hand wash or gentle cycle, dry flat; weaker when wet."
+  blocking: "Wet block gently, do not stretch hard."
+  tips: ["Slippery: use wooden or bamboo needles.", "Heavy fabrics grow in length."]
+
+viscose:
+  aliases: [viscose, rayon, modal, lyocell, tencel]
+  elasticity: low
+  warmth: low
+  drape: high
+  needle_adjust_mm: -0.25
+  good_for: [summer tops, drapey shawls]
+  avoid_for: [ribbing, structured items]
+  care: "Gentle cycle or hand wash; weaker when wet."
+  blocking: "Wet block gently."
+  tips: ["Slippery and splitty; a lifeline helps in lace.", "Garments tend to lengthen with wear."]
+
+acrylic:
+  aliases: [acrylic, polyacrylic, premium acrylic, anti-pilling acrylic]
+  elasticity: medium
+  warmth: medium
+  drape: medium
+  needle_adjust_mm: 0
+  good_for: [blankets, toys, children's clothes, practice projects]
+  avoid_for: [items that need firm blocking]
+  care: "Machine washable and dryable on low heat."
+  blocking: "Does not respond to wet blocking much; steam lightly (do not touch the iron to the fabric) to relax stitches."
+  tips: ["Cheap, easy-care and widely available in Ukraine.", "Too much steam 'kills' acrylic: it goes flat and limp."]
+
+polyamide:
+  aliases: [nylon, polyamide]
+  elasticity: medium
+  warmth: medium
+  drape: medium
+  needle_adjust_mm: 0
+  good_for: [socks (blended with wool), durable items]
+  avoid_for: []
+  care: "Usually follows the main fibre's care."
+  blocking: "Follows the main fibre."
+  tips: ["Usually a minor part of a blend that adds strength."]
+
+polyester:
+  aliases: [polyester, microfiber, microfibre, metallic, lurex]
+  elasticity: low
+  warmth: medium
+  drape: medium
+  needle_adjust_mm: 0
+  good_for: [toys, plush yarns, novelty effects]
+  avoid_for: [items needing blocking]
+  care: "Machine washable on low heat."
+  blocking: "Little effect; light steam only."
+  tips: ["Plush/velvet yarns hide stitches; count carefully and use markers."]
+
+angora:
+  aliases: [angora, rabbit, rabbit hair]
+  elasticity: low
+  warmth: high
+  drape: medium
+  needle_adjust_mm: 0.5
+  good_for: [accessories with halo]
+  avoid_for: [detailed stitch patterns]
+  care: "Hand wash cool, dry flat."
+  blocking: "Light wet block."
+  tips: ["Sheds and has a halo.", "Very warm for its weight."]
+
+silk:
+  aliases: [silk, mulberry silk, tussah silk]
+  elasticity: low
+  warmth: medium
+  drape: high
+  needle_adjust_mm: -0.25
+  good_for: [shawls, drapey tops, lace]
+  avoid_for: [ribbing]
+  care: "Hand wash cool, dry flat."
+  blocking: "Wet block; holds lace shape well."
+  tips: ["Adds sheen and strength to blends."]
+
+cashmere:
+  aliases: [cashmere]
+  elasticity: medium
+  warmth: high
+  drape: medium
+  needle_adjust_mm: 0
+  good_for: [luxury accessories]
+  avoid_for: [hard-wearing items]
+  care: "Hand wash cool, dry flat."
+  blocking: "Gentle wet block."
+  tips: ["Pills with friction; best for accessories."]

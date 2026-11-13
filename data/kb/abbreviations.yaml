@@ -1,0 +1,615 @@
+# Knitting abbreviation knowledge base.
+# Format: docs/CONVENTIONS.md § Abbreviation KB entry. Descriptions are written in our own words.
+# consumes = stitches taken from the left needle, produces = stitches placed on the right needle.
+# category "term" = vocabulary used in instructions (no stitch arithmetic); consumes/produces are null.
+# Reference abbreviations: Craft Yarn Council (CYC) knitting abbreviations list.
+
+# ---------------- basic stitches ----------------
+- id: k
+  name: knit
+  aliases: [k, K, knit]
+  consumes: 1
+  produces: 1
+  category: basic
+  chart_symbol: " "
+  chart_symbol_ws: "•"
+  description: "Insert the right needle from front to back through the next stitch, wrap the yarn and pull a loop through."
+  reference: CYC
+
+- id: p
+  name: purl
+  aliases: [p, P, purl]
+  consumes: 1
+  produces: 1
+  category: basic
+  chart_symbol: "•"
+  chart_symbol_ws: " "
+  description: "With the yarn in front, insert the right needle from back to front through the next stitch, wrap and pull the loop through to the back."
+  reference: CYC
+
+- id: k_tbl
+  name: knit through the back loop
+  aliases: [k1 tbl, k tbl, ktbl, k1tbl, knit through back loop]
+  consumes: 1
+  produces: 1
+  category: basic
+  chart_symbol: "Q"
+  chart_symbol_ws: "Q"
+  description: "Knit the stitch through its back leg instead of the front leg, which twists it."
+  reference: CYC
+
+- id: p_tbl
+  name: purl through the back loop
+  aliases: [p1 tbl, p tbl, ptbl, p1tbl, purl through back loop]
+  consumes: 1
+  produces: 1
+  category: basic
+  chart_symbol: "Q•"
+  chart_symbol_ws: "Q"
+  description: "Purl the stitch through its back leg, which twists it."
+  reference: CYC
+
+- id: sl_kw
+  name: slip knitwise
+  aliases: [sl1 kwise, sl 1 kwise, sl1 k, slip 1 knitwise, sl kwise]
+  consumes: 1
+  produces: 1
+  category: slip
+  chart_symbol: "V"
+  chart_symbol_ws: "V"
+  description: "Move the stitch to the right needle as if to knit, without working it; this turns the stitch."
+  reference: CYC
+
+- id: sl_pw
+  name: slip purlwise
+  aliases: [sl, sl1, sl 1, sl1 pwise, sl 1 pwise, slip 1, slip 1 purlwise, sl pwise]
+  consumes: 1
+  produces: 1
+  category: slip
+  chart_symbol: "V"
+  chart_symbol_ws: "V"
+  description: "Move the stitch to the right needle as if to purl, without working it. Unless a pattern says otherwise, slip purlwise."
+  reference: CYC
+
+- id: sl_wyib
+  name: slip with yarn in back
+  aliases: [sl1 wyib, sl 1 wyib, slip 1 with yarn in back, sl wyib, sl1wyib]
+  consumes: 1
+  produces: 1
+  category: slip
+  chart_symbol: "V"
+  chart_symbol_ws: "V"
+  description: "Keep the working yarn at the back of the work and slip the next stitch purlwise."
+  reference: CYC
+
+- id: sl_wyif
+  name: slip with yarn in front
+  aliases: [sl1 wyif, sl 1 wyif, slip 1 with yarn in front, sl wyif, sl1wyif]
+  consumes: 1
+  produces: 1
+  category: slip
+  chart_symbol: "V-"
+  chart_symbol_ws: "V-"
+  description: "Bring the working yarn to the front, slip the next stitch purlwise, and leave the strand across the front of that stitch."
+  reference: CYC
+
+# ---------------- increases ----------------
+- id: yo
+  name: yarn over
+  aliases: [yo, YO, yarn over, yfwd, yf, yon, yrn, yarn forward, yarn over needle, yarn round needle]
+  uk_term: yfwd / yon / yrn
+  consumes: 0
+  produces: 1
+  category: increase
+  lean: null
+  chart_symbol: "O"
+  chart_symbol_ws: "O"
+  description: "Wrap the yarn over the right needle once to make a new loop; it leaves a small decorative hole."
+  reference: CYC
+
+- id: yo2
+  name: double yarn over
+  aliases: [yo2, yo twice, double yo, yo 2 times]
+  consumes: 0
+  produces: 2
+  category: increase
+  chart_symbol: "OO"
+  chart_symbol_ws: "OO"
+  description: "Wrap the yarn around the right needle twice. On the next row the two loops are usually worked as two stitches (for example k1, p1)."
+  reference: CYC
+
+- id: m1l
+  name: make one left
+  aliases: [m1l, M1L, m1, M1, make 1, make one, make 1 left, make one left]
+  consumes: 0
+  produces: 1
+  category: increase
+  lean: left
+  chart_symbol: "ML"
+  chart_symbol_ws: "ML"
+  description: "Lift the strand between the needles from front to back onto the left needle and knit it through the back loop. Plain 'M1' means M1L unless the pattern says otherwise."
+  reference: CYC
+
+- id: m1r
+  name: make one right
+  aliases: [m1r, M1R, make 1 right, make one right]
+  consumes: 0
+  produces: 1
+  category: increase
+  lean: right
+  chart_symbol: "MR"
+  chart_symbol_ws: "MR"
+  description: "Lift the strand between the needles from back to front onto the left needle and knit it through the front loop."
+  reference: CYC
+
+- id: m1p
+  name: make one purlwise
+  aliases: [m1p, M1P, m1 purlwise, make 1 purlwise, make one purl]
+  consumes: 0
+  produces: 1
+  category: increase
+  chart_symbol: "MP"
+  chart_symbol_ws: "MP"
+  description: "Lift the strand between the needles onto the left needle and purl it through the back loop."
+  reference: CYC
+
+- id: kfb
+  name: knit front and back
+  aliases: [kfb, KFB, k1fb, kf&b, knit into front and back]
+  consumes: 1
+  produces: 2
+  category: increase
+  lean: null
+  chart_symbol: "Y"
+  chart_symbol_ws: "Y"
+  description: "Knit into the front of the stitch, do not drop it, then knit into its back loop and drop it: one stitch becomes two."
+  reference: CYC
+
+- id: pfb
+  name: purl front and back
+  aliases: [pfb, PFB, p1fb, pf&b, purl into front and back]
+  consumes: 1
+  produces: 2
+  category: increase
+  chart_symbol: "Y•"
+  chart_symbol_ws: "Y"
+  description: "Purl into the front of the stitch, keep it on the needle, then purl into its back loop: one stitch becomes two."
+  reference: CYC
+
+- id: kll
+  name: knit left lifted increase
+  aliases: [lli, LLI, kll, left lifted increase]
+  consumes: 0
+  produces: 1
+  category: increase
+  lean: left
+  chart_symbol: "LL"
+  chart_symbol_ws: "LL"
+  description: "Knit into the left leg of the stitch two rows below the stitch just worked on the right needle."
+  reference: CYC
+
+- id: krl
+  name: knit right lifted increase
+  aliases: [rli, RLI, krl, right lifted increase]
+  consumes: 0
+  produces: 1
+  category: increase
+  lean: right
+  chart_symbol: "RL"
+  chart_symbol_ws: "RL"
+  description: "Knit into the right leg of the stitch below the next stitch on the left needle, then knit that stitch as usual."
+  reference: CYC
+
+# ---------------- decreases ----------------
+- id: k2tog
+  name: knit two together
+  aliases: [k2tog, K2tog, k2 tog, knit 2 together, knit two together]
+  consumes: 2
+  produces: 1
+  category: decrease
+  lean: right
+  chart_symbol: "/"
+  chart_symbol_ws: "/"
+  description: "Insert the right needle knitwise into the next two stitches at once and knit them as one."
+  reference: CYC
+
+- id: ssk
+  name: slip, slip, knit
+  aliases: [ssk, SSK, slip slip knit, slip 1 slip 1 knit]
+  consumes: 2
+  produces: 1
+  category: decrease
+  lean: left
+  chart_symbol: "\\"
+  chart_symbol_ws: "\\"
+  description: "Slip two stitches knitwise one at a time, put the left needle into their fronts and knit them together through the back loops."
+  reference: CYC
+
+- id: skp
+  name: slip, knit, pass over
+  aliases: [skp, SKP, skpo, sl1 k1 psso, sl 1 k1 psso, slip 1 knit 1 pass slipped stitch over]
+  uk_term: skpo
+  consumes: 2
+  produces: 1
+  category: decrease
+  lean: left
+  chart_symbol: "\\"
+  chart_symbol_ws: "\\"
+  description: "Slip one stitch, knit the next, then lift the slipped stitch over the knitted one and off the needle."
+  reference: CYC
+
+- id: k2tog_tbl
+  name: knit two together through the back loops
+  aliases: [k2tog tbl, k2togtbl, knit 2 together through back loops]
+  consumes: 2
+  produces: 1
+  category: decrease
+  lean: left
+  chart_symbol: "\\Q"
+  chart_symbol_ws: "\\Q"
+  description: "Knit the next two stitches together, going into their back loops."
+  reference: CYC
+
+- id: p2tog
+  name: purl two together
+  aliases: [p2tog, P2tog, p2 tog, purl 2 together, purl two together]
+  consumes: 2
+  produces: 1
+  category: decrease
+  lean: right
+  chart_symbol: "/•"
+  chart_symbol_ws: "/"
+  description: "Insert the right needle purlwise into the next two stitches and purl them as one."
+  reference: CYC
+
+- id: ssp
+  name: slip, slip, purl
+  aliases: [ssp, SSP, slip slip purl]
+  consumes: 2
+  produces: 1
+  category: decrease
+  lean: left
+  chart_symbol: "\\•"
+  chart_symbol_ws: "\\"
+  description: "Slip two stitches knitwise one at a time, return them to the left needle and purl them together through the back loops."
+  reference: CYC
+
+- id: p2tog_tbl
+  name: purl two together through the back loops
+  aliases: [p2tog tbl, p2togtbl]
+  consumes: 2
+  produces: 1
+  category: decrease
+  lean: left
+  chart_symbol: "\\•Q"
+  chart_symbol_ws: "\\Q"
+  description: "Purl the next two stitches together through their back loops."
+  reference: CYC
+
+- id: k3tog
+  name: knit three together
+  aliases: [k3tog, K3tog, k3 tog, knit 3 together]
+  consumes: 3
+  produces: 1
+  category: decrease
+  lean: right
+  chart_symbol: "/3"
+  chart_symbol_ws: "/3"
+  description: "Knit the next three stitches together as one; a right-leaning double decrease."
+  reference: CYC
+
+- id: sssk
+  name: slip, slip, slip, knit
+  aliases: [sssk, SSSK, slip slip slip knit]
+  consumes: 3
+  produces: 1
+  category: decrease
+  lean: left
+  chart_symbol: "\\3"
+  chart_symbol_ws: "\\3"
+  description: "Slip three stitches knitwise one at a time and knit them together through the back loops; a left-leaning double decrease."
+  reference: CYC
+
+- id: p3tog
+  name: purl three together
+  aliases: [p3tog, P3tog, purl 3 together]
+  consumes: 3
+  produces: 1
+  category: decrease
+  lean: right
+  chart_symbol: "/3•"
+  chart_symbol_ws: "/3"
+  description: "Purl the next three stitches together as one."
+  reference: CYC
+
+- id: sk2p
+  name: slip one, knit two together, pass over
+  aliases: [sk2p, SK2P, sk2po, sl1 k2tog psso, sl 1 k2tog psso, slip 1 k2tog pass slipped stitch over]
+  consumes: 3
+  produces: 1
+  category: decrease
+  lean: left
+  chart_symbol: "Λ\\"
+  chart_symbol_ws: "Λ\\"
+  description: "Slip one stitch knitwise, knit the next two together, then pass the slipped stitch over: three stitches become one, leaning left."
+  reference: CYC
+
+- id: s2kp
+  name: centred double decrease
+  aliases: [s2kp, S2KP, s2kpo, s2kp2, cdd, CDD, sl2 k1 p2sso, slip 2 knit 1 pass 2 slipped stitches over, centered double decrease, central double decrease]
+  consumes: 3
+  produces: 1
+  category: decrease
+  lean: centre
+  chart_symbol: "Λ"
+  chart_symbol_ws: "Λ"
+  description: "Slip two stitches together as if to knit them together, knit one, then pass both slipped stitches over: the middle stitch stays on top."
+  reference: CYC
+
+# ---------------- cables (front = left cross, back = right cross) ----------------
+- id: c2f
+  name: 1/1 left cross
+  aliases: [c2f, C2F, 1/1 lc, 1/1 LC, lt, LT, left twist]
+  consumes: 2
+  produces: 2
+  category: cable
+  lean: left
+  chart_symbol: "⟍2"
+  chart_symbol_ws: "⟍2"
+  description: "Cross one stitch over one to the left: work the second stitch behind or with a cable needle held in front, then the first."
+  reference: CYC
+
+- id: c2b
+  name: 1/1 right cross
+  aliases: [c2b, C2B, 1/1 rc, 1/1 RC, rt, RT, right twist]
+  consumes: 2
+  produces: 2
+  category: cable
+  lean: right
+  chart_symbol: "⟋2"
+  chart_symbol_ws: "⟋2"
+  description: "Cross one stitch over one to the right: hold one stitch on a cable needle at the back, knit one, then knit the held stitch."
+  reference: CYC
+
+- id: c4f
+  name: 2/2 left cross
+  aliases: [c4f, C4F, 2/2 lc, 2/2 LC, cable 4 front]
+  consumes: 4
+  produces: 4
+  category: cable
+  lean: left
+  chart_symbol: "⟍4"
+  chart_symbol_ws: "⟍4"
+  description: "Slip two stitches to a cable needle held in front, knit two, then knit the two from the cable needle."
+  reference: CYC
+
+- id: c4b
+  name: 2/2 right cross
+  aliases: [c4b, C4B, 2/2 rc, 2/2 RC, cable 4 back]
+  consumes: 4
+  produces: 4
+  category: cable
+  lean: right
+  chart_symbol: "⟋4"
+  chart_symbol_ws: "⟋4"
+  description: "Slip two stitches to a cable needle held at the back, knit two, then knit the two from the cable needle."
+  reference: CYC
+
+- id: c6f
+  name: 3/3 left cross
+  aliases: [c6f, C6F, 3/3 lc, 3/3 LC, cable 6 front]
+  consumes: 6
+  produces: 6
+  category: cable
+  lean: left
+  chart_symbol: "⟍6"
+  chart_symbol_ws: "⟍6"
+  description: "Slip three stitches to a cable needle held in front, knit three, then knit the three from the cable needle."
+  reference: CYC
+
+- id: c6b
+  name: 3/3 right cross
+  aliases: [c6b, C6B, 3/3 rc, 3/3 RC, cable 6 back]
+  consumes: 6
+  produces: 6
+  category: cable
+  lean: right
+  chart_symbol: "⟋6"
+  chart_symbol_ws: "⟋6"
+  description: "Slip three stitches to a cable needle held at the back, knit three, then knit the three from the cable needle."
+  reference: CYC
+
+- id: c8f
+  name: 4/4 left cross
+  aliases: [c8f, C8F, 4/4 lc, 4/4 LC, cable 8 front]
+  consumes: 8
+  produces: 8
+  category: cable
+  lean: left
+  chart_symbol: "⟍8"
+  chart_symbol_ws: "⟍8"
+  description: "Slip four stitches to a cable needle held in front, knit four, then knit the four from the cable needle."
+  reference: CYC
+
+- id: c8b
+  name: 4/4 right cross
+  aliases: [c8b, C8B, 4/4 rc, 4/4 RC, cable 8 back]
+  consumes: 8
+  produces: 8
+  category: cable
+  lean: right
+  chart_symbol: "⟋8"
+  chart_symbol_ws: "⟋8"
+  description: "Slip four stitches to a cable needle held at the back, knit four, then knit the four from the cable needle."
+  reference: CYC
+
+- id: t3f
+  name: 2/1 left purl cross
+  aliases: [t3f, T3F, 2/1 lpc, 2/1 LPC, c3f, twist 3 front]
+  consumes: 3
+  produces: 3
+  category: cable
+  lean: left
+  chart_symbol: "⟍3•"
+  chart_symbol_ws: "⟍3•"
+  description: "Slip two stitches to a cable needle held in front, purl one, then knit the two from the cable needle."
+  reference: CYC
+
+- id: t3b
+  name: 2/1 right purl cross
+  aliases: [t3b, T3B, 2/1 rpc, 2/1 RPC, c3b, twist 3 back]
+  consumes: 3
+  produces: 3
+  category: cable
+  lean: right
+  chart_symbol: "⟋3•"
+  chart_symbol_ws: "⟋3•"
+  description: "Slip one stitch to a cable needle held at the back, knit two, then purl the stitch from the cable needle."
+  reference: CYC
+
+# ---------------- other stitch operations ----------------
+- id: bo
+  name: bind off
+  aliases: [bo, BO, bind off, cast off]
+  uk_term: cast off
+  consumes: 1
+  produces: 0
+  category: other
+  chart_symbol: "▬"
+  chart_symbol_ws: "▬"
+  description: "Work two stitches, lift the first over the second and off the needle; repeat to close stitches. In this system 'BO n' removes n stitches."
+  reference: CYC
+
+- id: co
+  name: cast on
+  aliases: [co, CO, cast on]
+  consumes: 0
+  produces: 1
+  category: other
+  chart_symbol: "+"
+  chart_symbol_ws: "+"
+  description: "Make new stitches on the needle. Mid-row, a cable or backward-loop cast-on adds stitches; 'CO n' adds n stitches."
+  reference: CYC
+
+- id: drop
+  name: drop stitch
+  aliases: [drop, drop st, drop 1, drop the yo, drop yo, drop next st, ds]
+  consumes: 1
+  produces: 0
+  category: other
+  chart_symbol: "X"
+  chart_symbol_ws: "X"
+  description: "Let the next stitch fall off the left needle without working it (often a yarn over), making a long open strand."
+  reference: CYC
+
+- id: pm
+  name: place marker
+  aliases: [pm, PM, place marker]
+  consumes: 0
+  produces: 0
+  category: marker
+  chart_symbol: ""
+  chart_symbol_ws: ""
+  description: "Put a stitch marker on the right needle; it marks a position and is not a stitch."
+  reference: CYC
+
+- id: sm
+  name: slip marker
+  aliases: [sm, SM, slip marker, slm]
+  consumes: 0
+  produces: 0
+  category: marker
+  chart_symbol: ""
+  chart_symbol_ws: ""
+  description: "Move the marker from the left needle to the right needle."
+  reference: CYC
+
+- id: rm
+  name: remove marker
+  aliases: [rm, RM, remove marker]
+  consumes: 0
+  produces: 0
+  category: marker
+  chart_symbol: ""
+  chart_symbol_ws: ""
+  description: "Take the marker off the needle."
+  reference: CYC
+
+- id: wyif
+  name: with yarn in front
+  aliases: [wyif, with yarn in front, yf position]
+  consumes: 0
+  produces: 0
+  category: marker
+  chart_symbol: ""
+  chart_symbol_ws: ""
+  description: "Position instruction: hold the working yarn at the front of the work for the next action."
+  reference: CYC
+
+- id: wyib
+  name: with yarn in back
+  aliases: [wyib, with yarn in back]
+  consumes: 0
+  produces: 0
+  category: marker
+  chart_symbol: ""
+  chart_symbol_ws: ""
+  description: "Position instruction: hold the working yarn at the back of the work for the next action."
+  reference: CYC
+
+# ---------------- instruction vocabulary (no stitch arithmetic) ----------------
+- {id: rs, name: right side, aliases: [RS, right side], category: term, consumes: null, produces: null,
+   description: "The side of the work that faces outward on the finished piece.", reference: CYC}
+- {id: ws, name: wrong side, aliases: [WS, wrong side], category: term, consumes: null, produces: null,
+   description: "The side of the work that faces inward on the finished piece.", reference: CYC}
+- {id: rnd, name: round, aliases: [rnd, rnds, round, rounds], category: term, consumes: null, produces: null,
+   description: "One full circuit of stitches when knitting in the round.", reference: CYC}
+- {id: rep, name: repeat, aliases: [rep, repeat, rep from *], category: term, consumes: null, produces: null,
+   description: "Work the marked instructions again. 'Rep from *' means go back to the asterisk and repeat.", reference: CYC}
+- {id: st, name: stitch, aliases: [st, sts, stitch, stitches], category: term, consumes: null, produces: null,
+   description: "A single loop on the needle.", reference: CYC}
+- {id: beg, name: beginning, aliases: [beg, beginning], category: term, consumes: null, produces: null,
+   description: "The start of a row, round or section.", reference: CYC}
+- {id: rem, name: remaining, aliases: [rem, remain, remaining], category: term, consumes: null, produces: null,
+   description: "The stitches left after decreasing or binding off.", reference: CYC}
+- {id: cont, name: continue, aliases: [cont, continue], category: term, consumes: null, produces: null,
+   description: "Keep working as set.", reference: CYC}
+- {id: patt, name: pattern, aliases: [patt, pat, pattern, in patt, as established], category: term, consumes: null, produces: null,
+   description: "The stitch pattern already set up; 'work in patt' means continue it as established.", reference: CYC}
+- {id: tog, name: together, aliases: [tog, together], category: term, consumes: null, produces: null,
+   description: "Worked as one stitch with the others named.", reference: CYC}
+- {id: tbl, name: through the back loop, aliases: [tbl, through back loop], category: term, consumes: null, produces: null,
+   description: "Work into the back leg of the stitch, twisting it.", reference: CYC}
+- {id: psso, name: pass slipped stitch over, aliases: [psso, pass slipped stitch over], category: term, consumes: null, produces: null,
+   description: "Lift the slipped stitch over the stitch just worked and off the needle.", reference: CYC}
+- {id: inc_term, name: increase, aliases: [inc, inc'd, increase, increased], category: term, consumes: null, produces: null,
+   description: "Add stitches. When a pattern says only 'inc 1' without a method, kfb is a common choice.", reference: CYC}
+- {id: dec_term, name: decrease, aliases: [dec, dec'd, decrease, decreased], category: term, consumes: null, produces: null,
+   description: "Remove stitches, usually by working two or more together.", reference: CYC}
+- {id: kwise, name: knitwise, aliases: [kwise, knitwise, k-wise], category: term, consumes: null, produces: null,
+   description: "Insert the needle as if to knit.", reference: CYC}
+- {id: pwise, name: purlwise, aliases: [pwise, purlwise, p-wise], category: term, consumes: null, produces: null,
+   description: "Insert the needle as if to purl.", reference: CYC}
+- {id: cn, name: cable needle, aliases: [cn, cable needle], category: term, consumes: null, produces: null,
+   description: "A short needle that holds stitches while a cable is crossed.", reference: CYC}
+- {id: dpn, name: double-pointed needles, aliases: [dpn, dpns, double pointed needles], category: term, consumes: null, produces: null,
+   description: "Short needles with points at both ends, used for small circumferences in the round.", reference: CYC}
+- {id: foll, name: following, aliases: [foll, follows, following], category: term, consumes: null, produces: null,
+   description: "The next row, round or instruction.", reference: CYC}
+- {id: alt, name: alternate, aliases: [alt, alternate], category: term, consumes: null, produces: null,
+   description: "Every other one, for example every other row.", reference: CYC}
+- {id: approx, name: approximately, aliases: [approx, approximately], category: term, consumes: null, produces: null,
+   description: "About; measurements are not exact.", reference: CYC}
+- {id: gauge_term, name: gauge, aliases: [gauge, tension], uk_term: tension, category: term, consumes: null, produces: null,
+   description: "How many stitches and rows fit in a set width and height (here per 10 cm); UK patterns call it tension.", reference: CYC}
+- {id: st_st, name: stockinette stitch, aliases: [st st, stst, stockinette, stockinette stitch, stocking stitch], uk_term: stocking stitch,
+   category: term, consumes: null, produces: null,
+   description: "Knit RS rows and purl WS rows (or knit every round in the round); smooth Vs on the right side.", reference: CYC}
+- {id: garter, name: garter stitch, aliases: [garter, garter st, garter stitch], category: term, consumes: null, produces: null,
+   description: "Knit every row when working flat (or alternate knit and purl rounds in the round); ridged on both sides.", reference: CYC}
+- {id: seed, name: seed stitch, aliases: [seed st, seed stitch], uk_term: moss stitch, category: term, consumes: null, produces: null,
+   description: "Alternate knit and purl, and on the next row knit the purls and purl the knits. UK patterns call this moss stitch.", reference: CYC}
+- {id: moss_us, name: moss stitch (US), aliases: [moss st, moss stitch, us moss stitch, double moss], category: term, consumes: null, produces: null,
+   description: "In US patterns, a 4-row version of seed stitch (two rows of k1, p1 then two rows shifted). In UK patterns 'moss stitch' means US seed stitch; check which terms the pattern uses.", reference: CYC}
+- {id: rib, name: ribbing, aliases: [rib, ribbing, k1p1 rib, k2p2 rib, 1x1 rib, 2x2 rib], category: term, consumes: null, produces: null,
+   description: "Knit and purl stitches stacked in columns, for example k2, p2; stretchy, used for cuffs and brims.", reference: CYC}

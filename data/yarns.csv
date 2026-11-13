@@ -1,0 +1,220 @@
+yarn_id,brand,name,aliases,weight,cyc_category,grams,length_m,fibres,main_fibre,needle_min_mm,needle_max_mm,needle_source,gauge_min_sts_10cm,gauge_max_sts_10cm,gauge_source,gauge_flag,machine_washable,ravelry_rating_count,ravelry_url,source
+9876,YarnArt,Jeans,Джинс,Sport,2,50,160,Cotton 55%; Acrylic 45%,cotton,3.5,3.5,label,23.6,23.6,label,,True,754,https://www.ravelry.com/yarns/library/yarnart-jeans-dzhins,ravelry_api
+170519,YarnArt,Flowers,,Fingering,1,250,1000,Cotton 55%; Acrylic 45%,cotton,2.5,2.5,label,27.6,27.6,label,,True,491,https://www.ravelry.com/yarns/library/yarnart-flowers,ravelry_api
+32787,YarnArt,Begonia,,Fingering,1,50,169,Cotton 100%,cotton,3.0,3.5,label,26.6,26.6,label,,True,178,https://www.ravelry.com/yarns/library/yarnart-begonia,ravelry_api
+16154,YarnArt,Summer,,Sport,2,100,350,Cotton 70%; Rayon 30%,cotton,3.5,3.5,label,25.6,25.6,label,,True,149,https://www.ravelry.com/yarns/library/yarnart-summer,ravelry_api
+14651,YarnArt,Baby,,Sport,2,50,150,Acrylic 100%,acrylic,3.5,3.5,label,21.7,29.5,label,,True,76,https://www.ravelry.com/yarns/library/yarnart-baby,ravelry_api
+202913,YarnArt,Rosegarden,,Fingering,1,250,1000,Cotton 100%,cotton,2.5,3.0,label,27.6,27.6,label,,,128,https://www.ravelry.com/yarns/library/yarnart-rosegarden,ravelry_api
+41737,YarnArt,Merino De Luxe,,DK,3,100,280,Merino 50%; Acrylic 50%,merino,3.5,3.5,label,14.8,21.7,label,,True,100,https://www.ravelry.com/yarns/library/yarnart-merino-de-luxe,ravelry_api
+33594,YarnArt,Charisma,,Worsted,4,100,199,Wool 80%; Acrylic 20%,wool,3.0,4.0,label,20.7,20.7,label,,,103,https://www.ravelry.com/yarns/library/yarnart-charisma,ravelry_api
+193344,YarnArt,Flowers Moonlight,,Fingering,1,260,1000,Cotton 53%; Acrylic 43%; Metallic 4%,cotton,2.25,3.25,cyc,27.6,27.6,label,,,115,https://www.ravelry.com/yarns/library/yarnart-flowers-moonlight,ravelry_api
+153770,YarnArt,Jeans Plus,,Aran,4,100,160,Cotton 55%; Acrylic 45%,cotton,5.0,5.5,label,17.7,17.7,label,,True,54,https://www.ravelry.com/yarns/library/yarnart-jeans-plus,ravelry_api
+203573,YarnArt,Milano,,DK,3,50,130,Acrylic 64%; Wool 20%; Alpaca 8%; Rayon 8%,acrylic,4.0,4.0,label,19.7,23.6,label,,,37,https://www.ravelry.com/yarns/library/yarnart-milano,ravelry_api
+16186,YarnArt,Wool,,Fingering,1,100,339,Wool 80%; Nylon 20%,wool,3.0,3.25,label,27.6,27.6,label,,,87,https://www.ravelry.com/yarns/library/yarnart-wool,ravelry_api
+136193,YarnArt,Dolce,,Super Bulky,6,100,120,Polyester 100%,polyester,4.5,4.5,label,13.8,13.8,label,,True,49,https://www.ravelry.com/yarns/library/yarnart-dolce,ravelry_api
+46619,YarnArt,Magic,,DK,3,100,199,Wool 100%,wool,4.5,5.5,label,15.7,21.7,label,,,75,https://www.ravelry.com/yarns/library/yarnart-magic,ravelry_api
+27120,YarnArt,Angora De Luxe,,Lace,0,100,512,Mohair 70%; Acrylic 30%,mohair,2.5,4.0,label,35.4,35.4,label,,,72,https://www.ravelry.com/yarns/library/yarnart-angora-de-luxe,ravelry_api
+11031,YarnArt,Crazy Color,,Sport,2,100,261,Acrylic 65%; Wool 35%,acrylic,3.5,3.5,label,23.6,23.6,label,,,68,https://www.ravelry.com/yarns/library/yarnart-crazy-color,ravelry_api
+38803,YarnArt,Merino Bulky,,Super Bulky,6,100,100,Acrylic 70%; Merino 30%,acrylic,6.0,7.0,label,11.8,14.8,label,,,71,https://www.ravelry.com/yarns/library/yarnart-merino-bulky,ravelry_api
+67468,YarnArt,Magic Fine,,Sport,2,100,300,Wool 50%; Acrylic 50%,wool,3.5,3.5,label,23,26,cyc,,False,80,https://www.ravelry.com/yarns/library/yarnart-magic-fine,ravelry_api
+206076,YarnArt,Baby Cotton,,Fingering,1,50,165,Cotton 50%; Acrylic 50%,cotton,3.0,3.0,label,27.6,27.6,label,,,44,https://www.ravelry.com/yarns/library/yarnart-baby-cotton,ravelry_api
+60822,YarnArt,Cotton Soft,,Light Fingering,1,100,600,Cotton 55%; Acrylic 45%,cotton,2.5,3.0,label,31.5,31.5,label,,True,47,https://www.ravelry.com/yarns/library/yarnart-cotton-soft,ravelry_api
+39514,Alize,Superwash,,Light Fingering,1,100,420,Wool 75%; Nylon 25%,wool,2.5,3.0,label,31.5,31.5,label,,True,492,https://www.ravelry.com/yarns/library/alize-superwash,ravelry_api
+77163,Alize,Cotton Gold Solids,,Sport,2,100,329,Cotton 55%; Acrylic 45%,cotton,3.5,5.0,label,25.6,25.6,label,,True,311,https://www.ravelry.com/yarns/library/alize-cotton-gold-solids,ravelry_api
+22881,Alize,Lanagold Classic,,Aran,4,100,240,Acrylic 51%; Wool 49%,acrylic,3.5,4.0,label,17.2,17.2,label,,True,385,https://www.ravelry.com/yarns/library/alize-lanagold-classic-2,ravelry_api
+214488,Alize,Superwash Artisan,,Light Fingering,1,100,420,Wool 75%; Nylon 25%,wool,2.0,4.0,label,26.1,36.4,label,,True,184,https://www.ravelry.com/yarns/library/alize-superwash-artisan,ravelry_api
+4216,Alize,Cashmira,,Sport,2,100,300,Wool 100%,wool,3.5,4.5,label,19.7,23.6,label,,False,377,https://www.ravelry.com/yarns/library/alize-cashmira,ravelry_api
+214314,Alize,Superwash Comfort Socks,,Light Fingering,1,100,420,Wool 75%; Nylon 25%,wool,2.0,4.0,label,31.5,31.5,label,,True,169,https://www.ravelry.com/yarns/library/alize-superwash-comfort-socks,ravelry_api
+65340,Alize,Angora Gold,,Lace,0,100,550,Acrylic 80%; Mohair 10%; Wool 10%,acrylic,3.0,6.0,label,20.7,20.7,label,outside_cyc_range,,230,https://www.ravelry.com/yarns/library/alize-angora-gold,ravelry_api
+77237,Alize,Diva,,Fingering,1,100,350,Microfiber 100%,polyester,2.5,3.5,label,29.5,29.5,label,,,245,https://www.ravelry.com/yarns/library/alize-diva,ravelry_api
+41555,Alize,Angora Gold Batik,,Lace,0,100,550,Acrylic 80%; Wool 20%; Mohair,acrylic,3.0,6.0,label,27.6,27.6,label,outside_cyc_range,True,246,https://www.ravelry.com/yarns/library/alize-angora-gold-batik,ravelry_api
+63253,Alize,Bella Solid,,Fingering,1,50,179,Cotton 100%,cotton,3.0,4.0,label,25.6,25.6,label,,True,251,https://www.ravelry.com/yarns/library/alize-bella-solid,ravelry_api
+92654,Alize,Bella Batik Design,,Fingering,1,50,180,Cotton 100%,cotton,2.75,3.5,label,25.6,25.6,label,,True,186,https://www.ravelry.com/yarns/library/alize-bella-batik-design,ravelry_api
+83302,Alize,Kid Royal,,Lace,0,25,250,Mohair 62%; Nylon 38%,mohair,2.0,4.0,label,33,40,cyc,,True,177,https://www.ravelry.com/yarns/library/alize-kid-royal,ravelry_api
+77688,Alize,Cotton Gold Batik Design,,Sport,2,100,329,Cotton 55%; Acrylic 45%,cotton,3.5,5.0,label,25.6,25.6,label,,True,203,https://www.ravelry.com/yarns/library/alize-cotton-gold-batik-design,ravelry_api
+83484,Alize,Baby Wool,,Fingering,1,50,176,Acrylic 40%; Wool 40%; Rayon 20%,acrylic,2.5,4.0,label,26.6,26.6,label,,True,176,https://www.ravelry.com/yarns/library/alize-baby-wool,ravelry_api
+77151,Alize,Lanagold Fine,,Fingering,1,100,392,Acrylic 51%; Wool 49%,acrylic,2.5,4.0,label,23.6,31.5,label,,True,146,https://www.ravelry.com/yarns/library/alize-lanagold-fine,ravelry_api
+76195,Alize,Diva Batik,,Fingering,1,100,350,Microfiber 100%,polyester,2.5,3.5,label,29.5,29.5,label,,True,188,https://www.ravelry.com/yarns/library/alize-diva-batik,ravelry_api
+69970,Alize,Superlana Klasik,,DK,3,100,281,Acrylic 75%; Wool 25%,acrylic,3.5,4.0,label,22.6,22.6,label,,False,125,https://www.ravelry.com/yarns/library/alize-superlana-klasik,ravelry_api
+82830,Alize,Superlana Maxi,,Super Bulky,6,100,100,Acrylic 75%; Wool 25%,acrylic,8.0,10.0,label,7.9,9.8,label,,,135,https://www.ravelry.com/yarns/library/alize-superlana-maxi,ravelry_api
+47251,Alize,Burcum Batik,,Aran,4,100,210,Acrylic 100%,acrylic,4.0,6.0,label,14.8,14.8,label,,,130,https://www.ravelry.com/yarns/library/alize-burcum-batik,ravelry_api
+84670,Alize,Angora Gold Simli,,Lace,0,100,500,Acrylic 75%; Mohair 10%; Wool 10%; Metallic 5%,acrylic,3.0,6.0,label,33,40,cyc,,False,130,https://www.ravelry.com/yarns/library/alize-angora-gold-simli,ravelry_api
+196692,Himalaya,Dolphin Baby,,Super Bulky,6,100,120,Polyester 100%,polyester,6.5,6.5,label,9.8,9.8,label,,True,97,https://www.ravelry.com/yarns/library/himalaya-dolphin-baby,ravelry_api
+107059,Himalaya,Everyday,,DK,3,100,250,Acrylic 100%,acrylic,4.0,4.5,label,17.7,17.7,label,outside_cyc_range,True,142,https://www.ravelry.com/yarns/library/himalaya-everyday,ravelry_api
+143378,Himalaya,Deluxe Bamboo,,DK,3,100,250,Bamboo 60%; Cotton 40%,bamboo,3.5,3.5,label,19.7,19.7,label,,,59,https://www.ravelry.com/yarns/library/himalaya-deluxe-bamboo,ravelry_api
+125353,Himalaya,Dolphin Baby Colors,,Super Bulky,6,100,120,Polyester 100%,polyester,6.5,6.5,label,9.8,9.8,label,,True,52,https://www.ravelry.com/yarns/library/himalaya-dolphin-baby-colors,ravelry_api
+134472,Himalaya,Everyday New Tweed,,Aran,4,100,200,Acrylic 100%,acrylic,5.0,5.0,label,17.7,17.7,label,,,53,https://www.ravelry.com/yarns/library/himalaya-everyday-new-tweed,ravelry_api
+121449,Himalaya,Everyday Bebe Lux,,Worsted,4,100,250,Acrylic 100%,acrylic,4.0,4.0,label,19.7,19.7,label,,True,36,https://www.ravelry.com/yarns/library/himalaya-everyday-bebe-lux,ravelry_api
+46101,Himalaya,Perlina 50/50,,Worsted,4,100,290,Cotton 50%; Acrylic 50%,cotton,5.0,5.5,label,16,20,cyc,,True,40,https://www.ravelry.com/yarns/library/himalaya-perlina-50-50,ravelry_api
+92277,Himalaya,Everyday Bebe,,DK,3,100,330,Acrylic 100%,acrylic,3.5,4.0,label,20.7,20.7,label,,True,32,https://www.ravelry.com/yarns/library/himalaya-everyday-bebe,ravelry_api
+118138,Himalaya,Everyday Big,,Super Bulky,6,100,80,Acrylic 100%,acrylic,9.0,9.0,label,9.8,9.8,label,,True,22,https://www.ravelry.com/yarns/library/himalaya-everyday-big,ravelry_api
+203250,Himalaya,Socks,,Fingering,1,100,400,Wool 75%; Nylon 25%,wool,2.0,2.75,label,25.6,25.6,label,,,18,https://www.ravelry.com/yarns/library/himalaya-socks,ravelry_api
+138061,Himalaya,Super Soft,,Aran,4,200,328,Acrylic 100%,acrylic,5.0,5.0,label,11.8,11.8,label,outside_cyc_range,True,29,https://www.ravelry.com/yarns/library/himalaya-super-soft,ravelry_api
+148445,Himalaya,Socks Bamboo,,Fingering,1,100,420,Merino 50%; Nylon 25%; Bamboo 25%,merino,2.75,2.75,label,27.6,27.6,label,,True,15,https://www.ravelry.com/yarns/library/himalaya-socks-bamboo,ravelry_api
+55758,Himalaya,Ultra Kaşmir,,Aran,4,50,175,Acrylic 75%; Alpaca 25%,acrylic,5.0,5.0,label,17.7,17.7,label,,,29,https://www.ravelry.com/yarns/library/himalaya-ultra-kasmir,ravelry_api
+138294,Himalaya,Everyday Worsted,,Aran,4,100,165,Acrylic 100%,acrylic,5.0,5.0,label,17.7,17.7,label,,,14,https://www.ravelry.com/yarns/library/himalaya-everyday-worsted,ravelry_api
+137052,Himalaya,Everyday Super Lux,,Worsted,4,100,250,Acrylic 100%,acrylic,4.0,5.0,label,19.7,19.7,label,,True,11,https://www.ravelry.com/yarns/library/himalaya-everyday-super-lux,ravelry_api
+205296,Himalaya,Velvet,,Super Bulky,6,100,120,Polyester 100%,polyester,8.0,8.0,label,9.8,9.8,label,,,13,https://www.ravelry.com/yarns/library/himalaya-velvet,ravelry_api
+213022,Himalaya,Lana Lux 400,,Sport,2,100,400,Wool 50%; Acrylic 50%,wool,4.0,4.0,label,21.7,21.7,label,,,11,https://www.ravelry.com/yarns/library/himalaya-lana-lux-400,ravelry_api
+137108,Himalaya,Home Cotton,,Aran,4,100,160,Cotton 85%; Polyester 15%,cotton,5.0,5.0,label,17.7,17.7,label,,True,17,https://www.ravelry.com/yarns/library/himalaya-home-cotton,ravelry_api
+125869,Himalaya,Mercan Sport,,Sport,2,100,315,Acrylic 100%,acrylic,3.5,3.5,label,23.6,23.6,label,,,15,https://www.ravelry.com/yarns/library/himalaya-mercan-sport,ravelry_api
+173452,Himalaya,Sweet Roll,,Aran,4,140,224,Acrylic 100%,acrylic,5.0,5.0,label,16.7,16.7,label,,True,12,https://www.ravelry.com/yarns/library/himalaya-sweet-roll,ravelry_api
+140307,Nako,Boho,,Fingering,1,100,400,Wool 75%; Nylon 25%,wool,2.5,3.5,label,27.6,27.6,label,,True,205,https://www.ravelry.com/yarns/library/nako-boho,ravelry_api
+131500,Nako,Calico,,DK,3,100,244,Cotton 50%; Acrylic 50%,cotton,4.0,4.5,label,21.7,21.7,label,,True,147,https://www.ravelry.com/yarns/library/nako-calico,ravelry_api
+98663,Nako,Vals,,DK,3,100,240,Acrylic 100%,acrylic,4.0,4.5,label,18.7,18.7,label,,True,145,https://www.ravelry.com/yarns/library/nako-vals,ravelry_api
+136656,Nako,Fiore,,Sport,2,50,150,Rayon 40%; Cotton 35%; Linen 25%,viscose,3.75,3.75,label,23.6,23.6,label,,True,129,https://www.ravelry.com/yarns/library/nako-fiore,ravelry_api
+41374,Nako,Nakolen,,DK,3,100,209,Acrylic 51%; Wool 49%,acrylic,4.5,5.0,label,21.7,21.7,label,,True,61,https://www.ravelry.com/yarns/library/nako-nakolen,ravelry_api
+135821,Nako,Arya Ebruli,,Lace,0,100,549,Acrylic 80%; Alpaca 10%; Wool 10%,acrylic,3.5,3.5,label,23.6,23.6,label,outside_cyc_range,,96,https://www.ravelry.com/yarns/library/nako-arya-ebruli,ravelry_api
+99928,Nako,Sport Wool,,Bulky,5,100,120,Acrylic 75%; Wool 25%,acrylic,6.5,7.0,label,12.8,12.8,label,,True,61,https://www.ravelry.com/yarns/library/nako-sport-wool,ravelry_api
+67410,Nako,Superlambs Special,,Worsted,4,100,199,Wool 50%; Acrylic 50%,wool,4.5,5.0,label,16.7,16.7,label,,True,58,https://www.ravelry.com/yarns/library/nako-superlambs-special,ravelry_api
+57790,Nako,Pirlanta,,Sport,2,100,225,Acrylic 100%,acrylic,4.0,4.5,label,16.7,16.7,label,outside_cyc_range,True,44,https://www.ravelry.com/yarns/library/nako-pirlanta,ravelry_api
+150113,Nako,Elit Baby,,DK,3,100,250,Acrylic 100%,acrylic,3.5,4.0,label,21.7,21.7,label,,True,48,https://www.ravelry.com/yarns/library/nako-elit-baby,ravelry_api
+117767,Nako,Estiva,,Fingering,1,100,375,Cotton 50%; Bamboo 50%,cotton,2.0,2.5,label,27.6,27.6,label,,,54,https://www.ravelry.com/yarns/library/nako-estiva,ravelry_api
+150081,Nako,Elit Baby Muare,,DK,3,100,250,Acrylic 100%,acrylic,3.5,4.5,label,21.7,21.7,label,,True,52,https://www.ravelry.com/yarns/library/nako-elit-baby-muare,ravelry_api
+141311,Nako,Arya Ebruli Sim (Glitz),,Sport,2,100,498,Acrylic 76%; Alpaca 10%; Wool 10%; Metallic 4%,acrylic,3.5,3.5,label,23.6,23.6,label,,,80,https://www.ravelry.com/yarns/library/nako-arya-ebruli-sim-glitz,ravelry_api
+77049,Nako,Baby Lüks Minnoş,,Sport,2,100,336,Acrylic 50%; Polyester 50%,acrylic,3.5,4.0,label,18.7,18.7,label,outside_cyc_range,True,34,https://www.ravelry.com/yarns/library/nako-baby-luks-minnos,ravelry_api
+59249,Nako,Bambino,,Sport,2,50,130,Acrylic 75%; Wool 25%,acrylic,4.0,4.5,label,17.7,19.7,label,outside_cyc_range,,39,https://www.ravelry.com/yarns/library/nako-bambino,ravelry_api
+61827,Nako,Mohair Delicate,,Lace,0,100,499,Acrylic 60%; Mohair 40%,acrylic,3.5,4.0,label,17.7,17.7,label,outside_cyc_range,,52,https://www.ravelry.com/yarns/library/nako-mohair-delicate,ravelry_api
+79632,Nako,Saten,,Worsted,4,100,230,Acrylic 100%,acrylic,4.0,4.5,label,21.7,27.6,label,outside_cyc_range,True,50,https://www.ravelry.com/yarns/library/nako-saten,ravelry_api
+146631,Nako,Calico Jakar,,DK,3,100,244,Cotton 50%; Acrylic 50%,cotton,4.0,4.0,label,21.7,21.7,label,,True,55,https://www.ravelry.com/yarns/library/nako-calico-jakar,ravelry_api
+198004,Nako,Pure Sock Plus,,Worsted,4,100,200,Wool 75%; Nylon 25%,wool,4.5,5.0,label,19.7,19.7,label,,True,15,https://www.ravelry.com/yarns/library/nako-pure-sock-plus,ravelry_api
+139758,Nako,Ombre,,Aran,4,100,190,Acrylic 75%; Wool 25%,acrylic,5.0,6.0,label,16,20,cyc,,,46,https://www.ravelry.com/yarns/library/nako-ombre,ravelry_api
+127542,Gazzal,Baby Cotton (Acrylic Blend),,Sport,2,50,165,Cotton 60%; Acrylic 40%,cotton,3.0,4.0,label,23.6,23.6,label,,True,135,https://www.ravelry.com/yarns/library/gazzal-baby-cotton-acrylic-blend,ravelry_api
+198977,Gazzal,Happy Feet Hand Painted,,Sport,2,100,330,Merino 75%; Nylon 25%,merino,2.5,3.0,label,23.6,25.6,label,,,83,https://www.ravelry.com/yarns/library/gazzal-happy-feet-hand-painted,ravelry_api
+68636,Gazzal,Baby Wool,,Fingering,1,50,175,Acrylic 40%; Merino 40%; Nylon 20%,acrylic,3.0,3.0,label,24.6,24.6,label,,,118,https://www.ravelry.com/yarns/library/gazzal-baby-wool,ravelry_api
+212322,Gazzal,Wool Star,,Sport,2,100,349,Merino 100%,merino,3.5,4.0,label,21.7,21.7,label,,True,59,https://www.ravelry.com/yarns/library/gazzal-wool-star,ravelry_api
+148776,Gazzal,Baby Wool XL,,Aran,4,50,100,Merino 40%; Acrylic 40%; Cashmere 20%,merino,4.5,5.0,label,17.7,17.7,label,,,37,https://www.ravelry.com/yarns/library/gazzal-baby-wool-xl,ravelry_api
+207582,Gazzal,Unicorn,,Worsted,4,100,197,Merino 100%,merino,6.0,6.0,label,19.7,19.7,label,,True,32,https://www.ravelry.com/yarns/library/gazzal-unicorn,ravelry_api
+166246,Gazzal,Organic Baby Cotton,,DK,3,50,115,Cotton 100%,cotton,4.5,5.0,label,21.7,21.7,label,,,40,https://www.ravelry.com/yarns/library/gazzal-organic-baby-cotton,ravelry_api
+154832,Gazzal,Baby Cotton XL,,DK,3,50,105,Cotton 50%; Acrylic 50%,cotton,4.0,4.5,label,21.7,21.7,label,,,36,https://www.ravelry.com/yarns/library/gazzal-baby-cotton-xl,ravelry_api
+84432,Gazzal,Exclusive,,Fingering,1,25,190,Merino 60%; Silk 30%; Mohair 10%,merino,2.75,3.25,label,27,32,cyc,,,46,https://www.ravelry.com/yarns/library/gazzal-exclusive,ravelry_api
+200904,Gazzal,Giza,,Sport,2,50,125,Cotton 100%,cotton,2.5,3.5,label,23.6,23.6,label,,,12,https://www.ravelry.com/yarns/library/gazzal-giza,ravelry_api
+164637,Gazzal,Rock ’N’ Roll,,Sport,2,50,115,Nylon 70%; Acrylic 21%; Merino 9%,polyamide,3.25,5.0,label,23.6,23.6,label,,,38,https://www.ravelry.com/yarns/library/gazzal-rock-n-roll,ravelry_api
+220418,Gazzal,Alpaca Air,,Worsted,4,50,150,Alpaca 58%; Nylon 28%; Merino 14%,alpaca,5.0,6.0,label,15.7,15.7,label,,,19,https://www.ravelry.com/yarns/library/gazzal-alpaca-air,ravelry_api
+162182,Gazzal,Baby Alpaca,,Sport,2,50,160,Alpaca 55%; Merino 45%,alpaca,2.5,4.0,label,23.6,23.6,label,,,28,https://www.ravelry.com/yarns/library/gazzal-baby-alpaca,ravelry_api
+211718,Gazzal,Happy Feet Uni Colors,,Sport,2,50,165,Merino 75%; Nylon 25%,merino,2.5,3.0,label,28.5,41.3,label,outside_cyc_range,True,16,https://www.ravelry.com/yarns/library/gazzal-happy-feet-uni-colors,ravelry_api
+68388,Gazzal,Dennis,,Sport,2,50,500,Merino 50%; Acrylic 25%; Nylon 25%,merino,2.0,3.5,label,24.6,24.6,label,,,26,https://www.ravelry.com/yarns/library/gazzal-dennis,ravelry_api
+213668,Gazzal,Wool 175,,Sport,2,50,175,Merino 100%,merino,3.5,4.0,label,23.6,23.6,label,,True,11,https://www.ravelry.com/yarns/library/gazzal-wool-175,ravelry_api
+61025,Gazzal,Galla,,Aran,4,100,300,Merino 50%; Acrylic 25%; Nylon 25%,merino,4.5,5.0,label,17.7,17.7,label,,,13,https://www.ravelry.com/yarns/library/gazzal-galla,ravelry_api
+213078,Gazzal,Wool & Silk Lace,,Lace,0,50,329,Merino 80%; Silk 20%,merino,2.0,2.5,label,41.3,41.3,label,,,11,https://www.ravelry.com/yarns/library/gazzal-wool--silk-lace,ravelry_api
+57460,Gazzal,Artic,,Sport,2,50,300,Merino 50%; Microfiber 25%; Nylon 25%,merino,3.75,4.0,label,24.6,24.6,label,,,12,https://www.ravelry.com/yarns/library/gazzal-artic,ravelry_api
+164635,Gazzal,Super Kid Mohair with 13% merino,,Lace,0,25,375,Mohair 52%; Nylon 35%; Merino 13%,mohair,3.0,5.0,label,21.7,29.5,label,outside_cyc_range,,13,https://www.ravelry.com/yarns/library/gazzal-super-kid-mohair-with-13-merino,ravelry_api
+145711,Kartopu,Melange Wool Solids,,Bulky,5,100,170,Acrylic 80%; Wool 20%,acrylic,6.0,7.0,label,15.7,15.7,label,,,79,https://www.ravelry.com/yarns/library/kartopu-melange-wool-solids,ravelry_api
+57006,Kartopu,Flora,,Sport,2,100,230,Acrylic 100%,acrylic,2.5,3.0,label,23.6,23.6,label,,True,47,https://www.ravelry.com/yarns/library/kartopu-flora,ravelry_api
+60513,Kartopu,Gonca,,Sport,2,100,300,Acrylic 100%,acrylic,3.5,3.5,label,23.6,23.6,label,,True,22,https://www.ravelry.com/yarns/library/kartopu-gonca,ravelry_api
+181319,Kartopu,Organica Solids,,DK,3,50,124,Cotton 100%,cotton,3.5,4.0,label,20.7,20.7,label,,True,38,https://www.ravelry.com/yarns/library/kartopu-organica-solids,ravelry_api
+171944,Kartopu,Amigurumi,,DK,3,50,130,Acrylic 51%; Cotton 49%,acrylic,3.5,4.5,label,20.7,24.6,label,,True,16,https://www.ravelry.com/yarns/library/kartopu-amigurumi,ravelry_api
+178274,Kartopu,Love Cotton Prints,,DK,3,100,230,Cotton 100%,cotton,3.5,3.75,label,21.7,21.7,label,,,37,https://www.ravelry.com/yarns/library/kartopu-love-cotton-prints,ravelry_api
+169839,Kartopu,Sock,,Light Fingering,1,100,420,Wool 75%; Nylon 25%,wool,2.0,3.0,label,31.5,31.5,label,,True,21,https://www.ravelry.com/yarns/library/kartopu-sock,ravelry_api
+191141,Kartopu,Baby One,,DK,3,100,250,Acrylic 100%,acrylic,3.75,4.5,cyc,21.7,21.7,label,,True,19,https://www.ravelry.com/yarns/library/kartopu-baby-one,ravelry_api
+18179,Kartopu,Kristal,,Lace,0,100,900,Acrylic 100%,acrylic,1.75,3.0,label,31.5,31.5,label,,True,21,https://www.ravelry.com/yarns/library/kartopu-kristal,ravelry_api
+170284,Kartopu,Snowball Pullskein DK,,DK,3,100,300,Acrylic 100%,acrylic,4.0,4.0,label,19.7,27.6,label,,True,17,https://www.ravelry.com/yarns/library/kartopu-snowball-pullskein-dk,ravelry_api
+157598,Kartopu,Elite Wool,,DK,3,100,220,Acrylic 51%; Wool 49%,acrylic,5.0,6.0,label,21.7,21.7,label,,,22,https://www.ravelry.com/yarns/library/kartopu-elite-wool,ravelry_api
+86317,Kartopu,Zambak,,Bulky,5,100,133,Acrylic 100%,acrylic,7.0,8.0,label,13.8,13.8,label,,True,29,https://www.ravelry.com/yarns/library/kartopu-zambak,ravelry_api
+172449,Kartopu,Uni Sock,,Light Fingering,1,100,420,Wool 75%; Nylon 25%,wool,2.5,3.0,label,31.5,31.5,label,,True,14,https://www.ravelry.com/yarns/library/kartopu-uni-sock,ravelry_api
+148574,Kartopu,Jersey,,DK,3,200,360,Acrylic 80%; Wool 20%,acrylic,5.5,5.5,label,21,24,cyc,,True,18,https://www.ravelry.com/yarns/library/kartopu-jersey,ravelry_api
+69044,Kartopu,Ak-Soft,,Sport,2,100,240,Acrylic 100%,acrylic,5.0,6.0,label,25.6,25.6,label,,True,9,https://www.ravelry.com/yarns/library/kartopu-ak-soft,ravelry_api
+149851,Kartopu,Lamb's Wool,,DK,3,100,245,Wool 55%; Acrylic 25%; Nylon 20%,wool,4.0,4.0,label,21.7,21.7,label,,,15,https://www.ravelry.com/yarns/library/kartopu-lambs-wool,ravelry_api
+159108,Kartopu,NO 1: Anti-pilling,,Super Bulky,6,100,160,Acrylic 100%,acrylic,3.75,4.0,label,16.7,21.7,label,outside_cyc_range,,15,https://www.ravelry.com/yarns/library/kartopu-no-1-anti-pilling,ravelry_api
+69043,Kartopu,Benekli Bebe,,Sport,2,100,300,Acrylic 100%,acrylic,4.0,4.0,label,17.7,17.7,label,outside_cyc_range,True,15,https://www.ravelry.com/yarns/library/kartopu-benekli-bebe,ravelry_api
+210313,Kartopu,Lotus,,Sport,2,100,350,Microfiber 100%,polyester,2.5,3.5,label,23,26,cyc,,True,14,https://www.ravelry.com/yarns/library/kartopu-lotus,ravelry_api
+145442,Kartopu,Merino Yün,,Aran,4,100,170,Merino 100%,merino,5.0,6.0,label,16.7,16.7,label,,,16,https://www.ravelry.com/yarns/library/kartopu-merino-yun,ravelry_api
+20655,Madame Tricote,Camilla,,Sport,2,50,125,Cotton 100%,cotton,2.5,3.75,label,25.6,25.6,label,,True,139,https://www.ravelry.com/yarns/library/madame-tricote-camilla,ravelry_api
+91959,Madame Tricote,Merino Gold,,Fingering,1,100,400,Acrylic 51%; Merino 49%,acrylic,2.25,3.25,label,27.6,27.6,label,,True,108,https://www.ravelry.com/yarns/library/madame-tricote-merino-gold,ravelry_api
+55710,Madame Tricote,Dora,,Sport,2,100,250,Acrylic 100%,acrylic,3.0,3.5,label,21.7,23.6,label,,True,51,https://www.ravelry.com/yarns/library/madame-tricote-paris-dora,ravelry_api
+108106,Madame Tricote,Favori,,Worsted,4,100,210,Acrylic 100%,acrylic,4.0,4.5,label,18.7,18.7,label,,True,24,https://www.ravelry.com/yarns/library/madame-tricote-favori,ravelry_api
+22544,Madame Tricote,Almina 8/4,,Fingering,1,50,169,Cotton 100%,cotton,2.5,3.0,label,26.6,26.6,label,,,42,https://www.ravelry.com/yarns/library/madame-tricote-paris-almina-8-4,ravelry_api
+127129,Madame Tricote,Merino Gold 200,,Worsted,4,100,200,Merino 60%; Acrylic 40%,merino,4.5,5.0,label,19.7,19.7,label,,True,26,https://www.ravelry.com/yarns/library/madame-tricote-paris-merino-gold-200,ravelry_api
+99866,Madame Tricote,Star,,Sport,2,100,300,Acrylic 100%,acrylic,4.0,4.0,label,23.6,23.6,label,,True,18,https://www.ravelry.com/yarns/library/madame-tricote-star,ravelry_api
+89593,Madame Tricote,Cashmere Gold,,Sport,2,100,320,Wool 55%; Acrylic 40%; Cashmere 5%,wool,3.25,3.75,cyc,24.6,24.6,label,,,27,https://www.ravelry.com/yarns/library/madame-tricote-paris-cashmere-gold,ravelry_api
+214116,Madame Tricote,Madame Cotton,,DK,3,100,280,Acrylic 51%; Cotton 49%,acrylic,3.0,4.0,label,23.6,23.6,label,,,13,https://www.ravelry.com/yarns/library/madame-tricote-madame-cotton,ravelry_api
+144310,Madame Tricote,Camilla Batik,,Sport,2,100,251,Cotton 100%,cotton,3.0,3.75,label,23.6,23.6,label,,,22,https://www.ravelry.com/yarns/library/madame-tricote-paris-camilla-batik,ravelry_api
+45549,Madame Tricote,Lorena,,Sport,2,50,150,Cotton 60%; Acrylic 40%,cotton,4.0,5.0,label,23.6,23.6,label,,,17,https://www.ravelry.com/yarns/library/madame-tricote-paris-lorena,ravelry_api
+80528,Madame Tricote,Angora,,Lace,0,100,550,Acrylic 80%; Wool 10%; Mohair 10%,acrylic,3.5,4.0,label,29.5,29.5,label,outside_cyc_range,,23,https://www.ravelry.com/yarns/library/madame-tricote-angora,ravelry_api
+110578,Madame Tricote,Elysée Laine,,Sport,2,50,150,Acrylic 100%,acrylic,3.0,3.5,label,23,26,cyc,,True,14,https://www.ravelry.com/yarns/library/madame-tricote-paris-elysee-laine,ravelry_api
+63925,Madame Tricote,Luna Ince Tiftik,,Lace,0,50,550,Acrylic 40%; Mohair 30%; Nylon 30%,acrylic,2.5,3.0,label,29.5,29.5,label,outside_cyc_range,,20,https://www.ravelry.com/yarns/library/madame-tricote-paris-luna-ince-tiftik,ravelry_api
+106474,Madame Tricote,Tango,,Super Bulky,6,100,120,Acrylic 100%,acrylic,6.0,8.0,label,7.9,9.8,label,,True,12,https://www.ravelry.com/yarns/library/madame-tricote-paris-tango,ravelry_api
+167648,Madame Tricote,Merino Gold Batik Design,,Fingering,1,100,400,Acrylic 70%; Merino 30%,acrylic,2.0,3.75,label,27.6,27.6,label,,,14,https://www.ravelry.com/yarns/library/madame-tricote-merino-gold-batik-design,ravelry_api
+106472,Madame Tricote,Angora Gold Batik,,Lace,0,100,503,Acrylic 55%; Mohair 45%,acrylic,4.0,6.0,label,20.7,20.7,label,outside_cyc_range,,21,https://www.ravelry.com/yarns/library/madame-tricote-angora-gold-batik,ravelry_api
+98392,Madame Tricote,Super Baby,,Sport,2,100,359,Acrylic 100%,acrylic,3.0,3.5,label,23.6,23.6,label,,True,8,https://www.ravelry.com/yarns/library/madame-tricote-paris-super-baby,ravelry_api
+100484,Madame Tricote,Angora Gold,,Lace,0,100,550,Angora 70%; Acrylic 30%,angora,5.0,5.5,label,33,40,cyc,,True,5,https://www.ravelry.com/yarns/library/madame-tricote-paris-angora-gold,ravelry_api
+122489,Madame Tricote,Sweet Baby Batik,,Sport,2,100,359,Acrylic 100%,acrylic,3.0,3.5,label,23.6,23.6,label,,True,8,https://www.ravelry.com/yarns/library/madame-tricote-paris-sweet-baby-batik,ravelry_api
+4116,DROPS,DROPS Fabel,,Fingering,1,50,205,Wool 75%; Nylon 25%,wool,2.0,2.75,label,23.6,23.6,label,outside_cyc_range,True,8065,https://www.ravelry.com/yarns/library/garnstudio-drops-fabel,ravelry_api
+24537,DROPS,DROPS Kid-Silk,,Lace,0,25,210,Mohair 75%; Silk 25%,mohair,3.5,3.5,label,22.6,22.6,label,outside_cyc_range,,8611,https://www.ravelry.com/yarns/library/garnstudio-drops-kid-silk,ravelry_api
+4507,DROPS,DROPS Alpaca,,Sport,2,50,167,Alpaca 100%,alpaca,3.0,3.0,label,23.6,23.6,label,,,9633,https://www.ravelry.com/yarns/library/garnstudio-drops-alpaca,ravelry_api
+52662,DROPS,DROPS Baby Merino,,Sport,2,50,175,Merino 100%,merino,2.5,3.5,label,23.6,23.6,label,,True,6188,https://www.ravelry.com/yarns/library/garnstudio-drops-baby-merino,ravelry_api
+58406,DROPS,DROPS Nepal,,Aran,4,50,75,Wool 65%; Alpaca 35%,wool,5.0,5.0,label,16.7,16.7,label,,,7147,https://www.ravelry.com/yarns/library/garnstudio-drops-nepal,ravelry_api
+70736,DROPS,DROPS Lima Unicolor,,DK,3,50,100,Wool 65%; Alpaca 35%,wool,4.0,5.0,label,20.7,20.7,label,,,5628,https://www.ravelry.com/yarns/library/garnstudio-drops-lima-unicolor,ravelry_api
+121308,DROPS,DROPS Air,,Aran,4,50,150,Alpaca 65%; Nylon 28%; Merino 7%,alpaca,5.0,5.0,label,16.7,16.7,label,,,5572,https://www.ravelry.com/yarns/library/garnstudio-drops-air,ravelry_api
+2694,DROPS,DROPS Karisma,,DK,3,50,100,Wool 100%,wool,3.5,4.0,label,20.7,20.7,label,,True,5526,https://www.ravelry.com/yarns/library/garnstudio-drops-karisma,ravelry_api
+25852,DROPS,DROPS Merino Extra Fine,,DK,3,50,105,Merino 100%,merino,3.5,4.0,label,20.7,20.7,label,,True,4893,https://www.ravelry.com/yarns/library/garnstudio-drops-merino-extra-fine,ravelry_api
+146102,DROPS,DROPS Flora,,Fingering,1,50,210,Wool 65%; Alpaca 35%,wool,3.0,3.0,label,23.6,31.5,label,,,3854,https://www.ravelry.com/yarns/library/garnstudio-drops-flora,ravelry_api
+108955,DROPS,DROPS Brushed Alpaca Silk,,Aran,4,25,140,Alpaca 77%; Silk 23%,alpaca,5.0,5.0,label,16.7,16.7,label,,,4122,https://www.ravelry.com/yarns/library/garnstudio-drops-brushed-alpaca-silk,ravelry_api
+157158,DROPS,DROPS Nord,,Sport,2,50,170,Alpaca 45%; Nylon 30%; Wool 25%,alpaca,3.0,3.0,label,22.6,25.6,label,,,3044,https://www.ravelry.com/yarns/library/garnstudio-drops-nord,ravelry_api
+128085,DROPS,DROPS Belle,,DK,3,50,120,Cotton 53%; Rayon 33%; Linen 14%,cotton,4.0,4.0,label,20.7,20.7,label,,True,4017,https://www.ravelry.com/yarns/library/garnstudio-drops-belle,ravelry_api
+2708,DROPS,DROPS Safran,,Sport,2,50,160,Cotton 100%,cotton,3.0,3.0,label,23.6,23.6,label,,True,3120,https://www.ravelry.com/yarns/library/garnstudio-drops-safran,ravelry_api
+110855,DROPS,DROPS Cotton Merino,,DK,3,50,110,Cotton 50%; Merino 50%,cotton,4.0,4.0,label,20.7,20.7,label,,True,3338,https://www.ravelry.com/yarns/library/garnstudio-drops-cotton-merino,ravelry_api
+2706,DROPS,DROPS Paris,,Aran,4,50,75,Cotton 100%,cotton,4.5,5.5,label,16.7,17.7,label,,True,2710,https://www.ravelry.com/yarns/library/garnstudio-drops-paris,ravelry_api
+2683,DROPS,DROPS Alaska,,Aran,4,50,70,Wool 100%,wool,4.5,5.5,label,16.7,16.7,label,,,2532,https://www.ravelry.com/yarns/library/garnstudio-drops-alaska,ravelry_api
+2710,DROPS,DROPS Muskat,,DK,3,50,100,Cotton 100%,cotton,4.0,4.5,label,19.7,20.7,label,,True,2261,https://www.ravelry.com/yarns/library/garnstudio-drops-muskat,ravelry_api
+92857,DROPS,DROPS Big Merino,,Aran,4,50,75,Merino 100%,merino,5.0,5.0,label,16.7,16.7,label,,True,1880,https://www.ravelry.com/yarns/library/garnstudio-drops-big-merino,ravelry_api
+195274,DROPS,DROPS Snow,,Super Bulky,6,50,50,Wool 100%,wool,9.0,9.0,label,9.8,9.8,label,,,1116,https://www.ravelry.com/yarns/library/garnstudio-drops-snow,ravelry_api
+1853,Lana Grossa,Meilenweit Uni,,Light Fingering,1,100,420,Wool 80%; Nylon 20%,wool,2.5,3.0,label,27.6,31.5,label,,True,1634,https://www.ravelry.com/yarns/library/lana-grossa-meilenweit-uni,ravelry_api
+52178,Lana Grossa,Silkhair,,Lace,0,25,210,Mohair 70%; Silk 30%,mohair,4.5,5.0,label,21.7,21.7,label,outside_cyc_range,,1540,https://www.ravelry.com/yarns/library/lana-grossa-silkhair,ravelry_api
+400,Lana Grossa,Cool Wool Big,,Worsted,4,50,120,Merino 100%,merino,3.5,4.0,label,18.7,18.7,label,,True,1203,https://www.ravelry.com/yarns/library/lana-grossa-cool-wool-big,ravelry_api
+163545,Lana Grossa,Ecopuno,,Sport,2,50,215,Cotton 72%; Merino 17%; Alpaca 11%,cotton,4.0,4.5,label,23.6,23.6,label,,,1092,https://www.ravelry.com/yarns/library/lana-grossa-ecopuno,ravelry_api
+394,Lana Grossa,Bingo,,Aran,4,50,80,Merino 100%,merino,4.5,5.5,label,15.7,15.7,label,,True,1165,https://www.ravelry.com/yarns/library/lana-grossa-bingo,ravelry_api
+204764,Lana Grossa,Setasuri,,Lace,0,25,212,Alpaca 69%; Silk 31%,alpaca,3.5,4.0,label,25.6,25.6,label,outside_cyc_range,,590,https://www.ravelry.com/yarns/library/lana-grossa-setasuri,ravelry_api
+366,Lana Grossa,Meilenweit Tweed,,Fingering,1,100,420,Wool 80%; Nylon 20%,wool,2.5,3.0,label,27.6,27.6,label,,True,565,https://www.ravelry.com/yarns/library/lana-grossa-meilenweit-tweed,ravelry_api
+353,Lana Grossa,Meilenweit 6-fach,,DK,3,150,390,Wool 80%; Nylon 20%,wool,3.0,4.0,label,20.7,20.7,label,,True,538,https://www.ravelry.com/yarns/library/lana-grossa-meilenweit-6-fach,ravelry_api
+50550,Lana Grossa,Cool Wool Melange,,Sport,2,50,160,Merino 100%,merino,3.0,3.5,label,23.6,23.6,label,,True,679,https://www.ravelry.com/yarns/library/lana-grossa-cool-wool-melange,ravelry_api
+90010,Lana Grossa,Cotone,,Sport,2,50,125,Cotton 100%,cotton,2.5,2.5,label,22.6,22.6,label,,True,408,https://www.ravelry.com/yarns/library/lana-grossa-cotone,ravelry_api
+75485,Lana Grossa,Cool Wool Baby,,Fingering,1,50,220,Merino 100%,merino,2.5,3.0,label,27.6,27.6,label,,True,462,https://www.ravelry.com/yarns/library/lana-grossa-cool-wool-baby,ravelry_api
+1167,Lana Grossa,Elastico,,Sport,2,50,160,Cotton 96%; Polyester 4%,cotton,3.5,3.5,label,23.6,23.6,label,,True,514,https://www.ravelry.com/yarns/library/lana-grossa-elastico,ravelry_api
+135306,Lana Grossa,Meilenweit Cashmere,,Light Fingering,1,50,210,Merino 70%; Nylon 25%; Cashmere 5%,merino,2.5,3.25,label,29.5,31.5,label,,True,338,https://www.ravelry.com/yarns/library/lana-grossa-meilenweit-cashmere,ravelry_api
+165070,Lana Grossa,Cool Wool,,Sport,2,50,160,Merino 100%,merino,3.0,3.5,label,23.6,23.6,label,,True,251,https://www.ravelry.com/yarns/library/lana-grossa-cool-wool,ravelry_api
+151178,Lana Grossa,Linea Pura Solo Lino,,Sport,2,50,120,Rayon 80%; Linen 20%,viscose,3.5,4.0,label,24.6,24.6,label,,True,465,https://www.ravelry.com/yarns/library/lana-grossa-linea-pura-solo-lino,ravelry_api
+179106,Lana Grossa,Landlust Sommerseide,,DK,3,50,170,Cotton 50%; Silk 50%,cotton,3.5,4.0,label,21.7,21.7,label,,,401,https://www.ravelry.com/yarns/library/lana-grossa-landlust-sommerseide,ravelry_api
+66159,Lana Grossa,Alta Moda Alpaca,,Aran,4,50,140,Alpaca 90%; Merino 5%; Nylon 5%,alpaca,5.0,6.0,label,16.7,16.7,label,,,418,https://www.ravelry.com/yarns/library/lana-grossa-alta-moda-alpaca,ravelry_api
+208850,Lana Grossa,Meilenweit Seta,,Fingering,1,100,400,Merino 55%; Nylon 25%; Silk 20%,merino,2.0,3.0,label,29.5,29.5,label,,True,208,https://www.ravelry.com/yarns/library/lana-grossa-meilenweit-seta,ravelry_api
+144830,Lana Grossa,Cashmere 16 Fine,,Sport,2,50,320,Merino 80%; Nylon 10%; Cashmere 10%,merino,4.0,5.0,label,22.6,22.6,label,,,329,https://www.ravelry.com/yarns/library/lana-grossa-cashmere-16-fine,ravelry_api
+37913,Lana Grossa,Feltro,,Super Bulky,6,50,50,Wool 100%,wool,8.0,8.0,label,11.8,11.8,label,,,275,https://www.ravelry.com/yarns/library/lana-grossa-feltro,ravelry_api
+230301,Etrofil,Blue Faced Leicester DK,,DK,3,100,240,Wool 100%,wool,5.0,5.0,label,21.7,21.7,label,,True,30,https://www.ravelry.com/yarns/library/etrofil-blue-faced-leicester-dk,ravelry_api
+217713,Etrofil,Baby Merino Super Fine,,Fingering,1,50,200,Merino 100%,merino,3.5,4.0,label,25.6,33.5,label,,True,16,https://www.ravelry.com/yarns/library/etrofil-baby-merino-super-fine,ravelry_api
+180124,Etrofil,Puzzle Gradient,,Light Fingering,1,250,999,Cotton 55%; Acrylic 45%,cotton,2.5,2.5,label,31.5,31.5,label,,,26,https://www.ravelry.com/yarns/library/etrofil-puzzle-gradient,ravelry_api
+231249,Etrofil,Falkland Worsted,,Worsted,4,100,199,Wool 100%,wool,4.5,5.5,label,15.7,19.7,label,,True,17,https://www.ravelry.com/yarns/library/etrofil-falkland-worsted,ravelry_api
+175879,Etrofil,Rainbow,,Sport,2,50,150,Merino 75%; Nylon 25%,merino,3.0,3.25,label,23.6,23.6,label,,True,11,https://www.ravelry.com/yarns/library/etrofil-rainbow,ravelry_api
+174264,Etrofil,Savona,,DK,3,50,175,Wool 100%,wool,2.5,3.5,label,20.7,20.7,label,,,10,https://www.ravelry.com/yarns/library/etrofil-savona,ravelry_api
+231463,Etrofil,Heirloom Organic Print,,Super Bulky,6,100,123,Wool 100%,wool,6.0,7.0,label,11.8,11.8,label,,True,7,https://www.ravelry.com/yarns/library/etrofil-heirloom-organic-print,ravelry_api
+198384,Etrofil,Re-Public,,Light Fingering,1,250,999,Cotton 100%,cotton,2.5,2.5,label,31.5,31.5,label,,,10,https://www.ravelry.com/yarns/library/etrofil-re-public,ravelry_api
+208394,Etrofil,Bambino Lux Wool,,DK,3,50,160,Merino 60%; Acrylic 40%,merino,4.0,4.0,label,22.6,27.6,label,,,10,https://www.ravelry.com/yarns/library/etrofil-bambino-lux-wool,ravelry_api
+180123,Etrofil,Baby Cashmere,,DK,3,100,225,Nylon 90%; Cashmere 10%,polyamide,4.0,4.0,label,21,24,cyc,,,9,https://www.ravelry.com/yarns/library/etrofil-baby-cashmere,ravelry_api
+194128,Etrofil,Lanacot,,Light Fingering,1,50,230,Merino 55%; Cotton 45%,merino,2.5,3.5,label,26.6,34.4,label,,,9,https://www.ravelry.com/yarns/library/etrofil-lanacot,ravelry_api
+183728,Etrofil,Fine Organic Cotton,,Fingering,1,50,165,Cotton 100%,cotton,2.75,2.75,label,25.6,25.6,label,,,5,https://www.ravelry.com/yarns/library/etrofil-fine-organic-cotton,ravelry_api
+187458,Etrofil,Iceland,,Lace,0,50,250,Nylon 55%; Rayon 30%; Mohair 10%; Angora 5%,polyamide,3.0,3.0,label,33.5,33.5,label,,,6,https://www.ravelry.com/yarns/library/etrofil-iceland,ravelry_api
+178242,Etrofil,Rustik,,Fingering,1,100,400,Wool 50%; Cotton 50%,wool,4.0,4.0,label,25.6,35.4,label,,True,7,https://www.ravelry.com/yarns/library/etrofil-rustik,ravelry_api
+213972,Etrofil,İpek Yolu,,Fingering,1,100,400,Wool 90%; Silk 10%,wool,2.25,3.25,cyc,27,32,cyc,,,3,https://www.ravelry.com/yarns/library/etrofil-ipek-yolu,ravelry_api
+192635,Etrofil,Soft Shetland,,Lace,0,50,280,Wool 100%,wool,2.5,4.0,label,33,40,cyc,,,4,https://www.ravelry.com/yarns/library/etrofil-soft-shetland,ravelry_api
+233010,Etrofil,Jeans,,Sport,2,50,160,Cotton 55%; Acrylic 45%,cotton,4.0,4.0,label,23.6,23.6,label,,,3,https://www.ravelry.com/yarns/library/etrofil-jeans,ravelry_api
+173827,Etrofil,Bambino Organic,,Sport,2,50,165,Cotton 60%; Acrylic 40%,cotton,3.25,3.5,label,23.6,23.6,label,,True,5,https://www.ravelry.com/yarns/library/etrofil-bambino-organic,ravelry_api
+232253,Etrofil,Megastar,,Super Bulky,6,100,110,Acrylic 75%; Wool 25%,acrylic,8.0,10.0,label,10.8,10.8,label,,True,1,https://www.ravelry.com/yarns/library/etrofil-megastar,ravelry_api
+187820,Etrofil,Angora Lux,,Fingering,1,50,199,Angora 40%; Nylon 40%; Cashmere 20%,angora,3.25,3.25,label,23.6,23.6,label,outside_cyc_range,False,2,https://www.ravelry.com/yarns/library/etrofil-angora-lux,ravelry_api
+227605,Vizell,Sicilia,,Fingering,1,100,400,Merino 75%; Nylon 25%,merino,2.5,3.0,label,27,32,cyc,,True,1,https://www.ravelry.com/yarns/library/vizell-sicilia,ravelry_api
+158692,Vizell,FAYNA,,Fingering,1,100,380,Merino 100%,merino,1.5,3.0,label,27,32,cyc,,,11,https://www.ravelry.com/yarns/library/pryazha-ot-vizell-fayna,ravelry_api
+232899,Vizell,Waves,,Fingering,1,100,400,Merino 75%; Nylon 25%,merino,2.5,3.0,label,28.5,41.3,label,,,2,https://www.ravelry.com/yarns/library/vizell-waves,ravelry_api
+160161,Vizell,TENDY Gradient,,Fingering,1,100,400,Merino 100%,merino,2.0,3.5,label,27.6,27.6,label,,,8,https://www.ravelry.com/yarns/library/pryazha-ot-vizell-tendy-gradient,ravelry_api
+160130,Vizell,TENDY,,Fingering,1,100,400,Merino 100%,merino,2.0,3.5,label,27,32,cyc,,,7,https://www.ravelry.com/yarns/library/pryazha-ot-vizell-tendy,ravelry_api
+184736,Vizell,Sock,,Sport,2,100,300,Merino 75%; Nylon 25%,merino,2.0,3.0,label,23.6,23.6,label,,,5,https://www.ravelry.com/yarns/library/pryazha-ot-vizell-sock,ravelry_api
+160129,Vizell,FAYNA Gradient,,Fingering,1,100,380,Merino 100%,merino,2.0,3.5,label,27,32,cyc,,,6,https://www.ravelry.com/yarns/library/pryazha-ot-vizell-fayna-gradient,ravelry_api
+97354,Vizell,Soft,,Sport,2,100,330,Cotton 50%; Rayon 50%,cotton,3.5,4.0,label,23.6,23.6,label,,False,2,https://www.ravelry.com/yarns/library/vizell-soft,ravelry_api
+184733,Vizell,Mavka Nymph of Knitting,,DK,3,100,219,Merino 100%,merino,3.5,4.5,label,21.7,21.7,label,,,,https://www.ravelry.com/yarns/library/pryazha-ot-vizell-mavka-nymph-of-knitting,ravelry_api
+160391,Vizell,CHANKY,,Super Bulky,6,100,65,Merino 100%,merino,10.0,15.0,label,7,11,cyc,,,2,https://www.ravelry.com/yarns/library/pryazha-ot-vizell-chanky,ravelry_api
+160836,Vizell,Lace,,Lace,0,100,750,Merino,merino,1.5,3.5,label,33,40,cyc,,,1,https://www.ravelry.com/yarns/library/pryazha-ot-vizell-lace,ravelry_api
+184735,Vizell,Major,,Worsted,4,100,175,Merino 100%,merino,4.0,5.0,label,19.7,19.7,label,,,2,https://www.ravelry.com/yarns/library/pryazha-ot-vizell-major,ravelry_api
+193855,Vizell,Samba Wool,,Sport,2,100,330,Acrylic 80%; Merino 20%,acrylic,3.75,4.0,label,23.6,23.6,label,,True,,https://www.ravelry.com/yarns/library/vizell-samba-wool,ravelry_api
+107608,Vizell,Super Etamin,,Lace,0,30,140,Acrylic 100%,acrylic,3.0,3.5,label,29.5,37.4,label,,False,,https://www.ravelry.com/yarns/library/vizell-super-etamin,ravelry_api
+165804,Vizell,TENDY LF,,Light Fingering,1,100,450,Merino 100%,merino,2.0,3.0,label,31.5,31.5,label,,,,https://www.ravelry.com/yarns/library/pryazha-ot-vizell-tendy-lf,ravelry_api
+170867,Vizell,Bamboo,,Fingering,1,100,350,Bamboo 50%; Merino 50%,bamboo,2.5,3.5,label,23.6,33.5,label,,,,https://www.ravelry.com/yarns/library/pryazha-ot-vizell-bamboo,ravelry_api
+184738,Vizell,"Brushed - light, warm, fluffy yarn",,Sport,2,50,97,Alpaca 50%; Merino 40%; Nylon 10%,alpaca,4.0,6.0,label,23,26,cyc,,,,https://www.ravelry.com/yarns/library/pryazha-ot-vizell-brushed---light-warm-fluffy-yarn,ravelry_api
+202837,Vizell,KidLace,,Lace,0,50,450,Mohair 70%; Nylon 30%,mohair,2.0,3.5,label,33,40,cyc,,,,https://www.ravelry.com/yarns/library/pryazha-ot-vizell-kidlace,ravelry_api
+244056,Vizell,Camel Merino,,Lace,0,100,800,Merino 70%; Camel 30%,merino,1.5,2.5,label,29.5,31.5,label,,,,https://www.ravelry.com/yarns/library/pryazha-ot-vizell-camel-merino,ravelry_api
