@@ -1,0 +1,408 @@
+{
+  "YarnArt": {
+    "listed_on_ravelry": 276,
+    "inspected": 30,
+    "discontinued_in_inspected": 0,
+    "field_completeness_active": {
+      "weight": 1.0,
+      "fibres": 1.0,
+      "fibre_percentages": 1.0,
+      "needle_size": 0.97,
+      "gauge": 0.93,
+      "grams": 1.0,
+      "yardage": 1.0
+    },
+    "weights": {
+      "Sport": 7,
+      "Fingering": 7,
+      "Lace": 1,
+      "Cobweb": 1,
+      "Thread": 3,
+      "Worsted": 1,
+      "Super Bulky": 2,
+      "DK": 5,
+      "Aran": 2,
+      "Light Fingering": 1
+    },
+    "main_fibres": {
+      "Cotton": 12,
+      "Acrylic": 7,
+      "Wool": 5,
+      "Mohair": 2,
+      "Microfiber": 1
+    },
+    "examples": [
+      "Jeans (Джинс)",
+      "Crazy Color",
+      "Baby",
+      "Summer",
+      "Wool"
+    ]
+  },
+  "Alize": {
+    "listed_on_ravelry": 199,
+    "inspected": 30,
+    "discontinued_in_inspected": 1,
+    "field_completeness_active": {
+      "weight": 1.0,
+      "fibres": 1.0,
+      "fibre_percentages": 0.97,
+      "needle_size": 1.0,
+      "gauge": 0.9,
+      "grams": 1.0,
+      "yardage": 1.0
+    },
+    "weights": {
+      "Sport": 5,
+      "Aran": 3,
+      "Light Fingering": 5,
+      "Lace": 5,
+      "Fingering": 6,
+      "DK": 3,
+      "Super Bulky": 1,
+      "Thread": 1
+    },
+    "main_fibres": {
+      "Acrylic": 12,
+      "Wool": 6,
+      "Cotton": 6,
+      "Rayon": 2,
+      "Microfiber": 2
+    },
+    "examples": [
+      "Cashmira",
+      "Lanagold Classic",
+      "Superwash",
+      "Angora Gold Batik ",
+      "Burcum Batik"
+    ]
+  },
+  "Himalaya": {
+    "listed_on_ravelry": 165,
+    "inspected": 30,
+    "discontinued_in_inspected": 12,
+    "field_completeness_active": {
+      "weight": 1.0,
+      "fibres": 1.0,
+      "fibre_percentages": 1.0,
+      "needle_size": 1.0,
+      "gauge": 0.94,
+      "grams": 1.0,
+      "yardage": 1.0
+    },
+    "weights": {
+      "Worsted": 3,
+      "Aran": 4,
+      "DK": 3,
+      "Super Bulky": 4,
+      "Cobweb": 1,
+      "Fingering": 2,
+      "Sport": 1
+    },
+    "main_fibres": {
+      "Acrylic": 9,
+      "Polyester": 3,
+      "Wool": 2,
+      "Cotton": 1,
+      "Metallic": 1
+    },
+    "examples": [
+      "Perlina 50/50",
+      "Ultra Kaşmir",
+      "Everyday Bebe",
+      "Everyday",
+      "Everyday Big"
+    ]
+  },
+  "Nako": {
+    "listed_on_ravelry": 211,
+    "inspected": 30,
+    "discontinued_in_inspected": 1,
+    "field_completeness_active": {
+      "weight": 1.0,
+      "fibres": 1.0,
+      "fibre_percentages": 1.0,
+      "needle_size": 1.0,
+      "gauge": 0.93,
+      "grams": 1.0,
+      "yardage": 1.0
+    },
+    "weights": {
+      "DK": 8,
+      "Sport": 5,
+      "Lace": 3,
+      "Worsted": 4,
+      "Aran": 4,
+      "Bulky": 2,
+      "Fingering": 3
+    },
+    "main_fibres": {
+      "Acrylic": 18,
+      "Wool": 4,
+      "Cotton": 4,
+      "Bamboo": 1,
+      "Rayon": 1
+    },
+    "examples": [
+      "Nakolen",
+      "Pirlanta",
+      "Bambino",
+      "Mohair Delicate",
+      "Superlambs Special"
+    ]
+  },
+  "Gazzal": {
+    "listed_on_ravelry": 68,
+    "inspected": 30,
+    "discontinued_in_inspected": 2,
+    "field_completeness_active": {
+      "weight": 1.0,
+      "fibres": 1.0,
+      "fibre_percentages": 1.0,
+      "needle_size": 0.96,
+      "gauge": 0.93,
+      "grams": 1.0,
+      "yardage": 1.0
+    },
+    "weights": {
+      "Sport": 11,
+      "Aran": 2,
+      "Fingering": 5,
+      "DK": 3,
+      "Lace": 2,
+      "Worsted": 3,
+      "Super Bulky": 1,
+      "Cobweb": 1
+    },
+    "main_fibres": {
+      "Merino": 13,
+      "Cotton": 8,
+      "Alpaca": 2,
+      "Mohair": 2,
+      "Acrylic": 1
+    },
+    "examples": [
+      "Artic",
+      "Galla",
+      "Dennis",
+      "Baby Wool",
+      "Riva"
+    ]
+  },
+  "Kartopu": {
+    "listed_on_ravelry": 138,
+    "inspected": 30,
+    "discontinued_in_inspected": 7,
+    "field_completeness_active": {
+      "weight": 1.0,
+      "fibres": 1.0,
+      "fibre_percentages": 1.0,
+      "needle_size": 0.96,
+      "gauge": 0.91,
+      "grams": 1.0,
+      "yardage": 1.0
+    },
+    "weights": {
+      "Lace": 1,
+      "Sport": 5,
+      "Bulky": 2,
+      "Aran": 1,
+      "DK": 10,
+      "Super Bulky": 1,
+      "Light Fingering": 2,
+      "Worsted": 1
+    },
+    "main_fibres": {
+      "Acrylic": 15,
+      "Wool": 3,
+      "Cotton": 2,
+      "Merino": 1,
+      "Bamboo": 1
+    },
+    "examples": [
+      "Kristal",
+      "Flora",
+      "Gonca",
+      "Benekli Bebe",
+      "Ak-Soft "
+    ]
+  },
+  "Madame Tricote": {
+    "listed_on_ravelry": 82,
+    "inspected": 30,
+    "discontinued_in_inspected": 1,
+    "field_completeness_active": {
+      "weight": 1.0,
+      "fibres": 1.0,
+      "fibre_percentages": 1.0,
+      "needle_size": 0.93,
+      "gauge": 0.83,
+      "grams": 1.0,
+      "yardage": 1.0
+    },
+    "weights": {
+      "Sport": 10,
+      "Fingering": 3,
+      "Thread": 3,
+      "Worsted": 4,
+      "Lace": 5,
+      "Bulky": 1,
+      "Super Bulky": 1,
+      "DK": 2
+    },
+    "main_fibres": {
+      "Acrylic": 16,
+      "Cotton": 9,
+      "Mohair": 1,
+      "Wool": 1,
+      "Angora": 1
+    },
+    "examples": [
+      "Camilla",
+      "Almina 8/4",
+      "Perle 8",
+      "Maxi",
+      "Lorena"
+    ]
+  },
+  "DROPS": {
+    "listed_on_ravelry": 123,
+    "inspected": 30,
+    "discontinued_in_inspected": 4,
+    "field_completeness_active": {
+      "weight": 1.0,
+      "fibres": 1.0,
+      "fibre_percentages": 1.0,
+      "needle_size": 1.0,
+      "gauge": 1.0,
+      "grams": 1.0,
+      "yardage": 1.0
+    },
+    "weights": {
+      "Aran": 6,
+      "DK": 11,
+      "Sport": 4,
+      "Fingering": 2,
+      "Lace": 1,
+      "Super Bulky": 2
+    },
+    "main_fibres": {
+      "Wool": 9,
+      "Cotton": 6,
+      "Alpaca": 6,
+      "Merino": 4,
+      "Mohair": 1
+    },
+    "examples": [
+      "DROPS Alaska ",
+      "DROPS Karisma ",
+      "DROPS Paris",
+      "DROPS Safran",
+      "DROPS Muskat"
+    ]
+  },
+  "Lana Grossa": {
+    "listed_on_ravelry": 499,
+    "inspected": 30,
+    "discontinued_in_inspected": 12,
+    "field_completeness_active": {
+      "weight": 1.0,
+      "fibres": 1.0,
+      "fibre_percentages": 1.0,
+      "needle_size": 1.0,
+      "gauge": 1.0,
+      "grams": 1.0,
+      "yardage": 1.0
+    },
+    "weights": {
+      "DK": 2,
+      "Fingering": 4,
+      "Aran": 2,
+      "Worsted": 1,
+      "Sport": 6,
+      "Lace": 2,
+      "Light Fingering": 1
+    },
+    "main_fibres": {
+      "Merino": 7,
+      "Cotton": 4,
+      "Wool": 3,
+      "Alpaca": 2,
+      "Mohair": 1
+    },
+    "examples": [
+      "Meilenweit 6-fach",
+      "Meilenweit Tweed",
+      "Bingo",
+      "Cool Wool Big",
+      "Elastico"
+    ]
+  },
+  "Fibra Natura": {
+    "listed_on_ravelry": 66,
+    "inspected": 30,
+    "discontinued_in_inspected": 26,
+    "field_completeness_active": {
+      "weight": 1.0,
+      "fibres": 1.0,
+      "fibre_percentages": 1.0,
+      "needle_size": 1.0,
+      "gauge": 1.0,
+      "grams": 1.0,
+      "yardage": 1.0
+    },
+    "weights": {
+      "Sport": 2,
+      "DK": 2
+    },
+    "main_fibres": {
+      "Linen": 1,
+      "Merino": 1,
+      "Cotton": 1,
+      "Wool": 1
+    },
+    "examples": [
+      "Flax",
+      "Cobblestone",
+      "Papyrus",
+      "Kingston Tweed"
+    ]
+  },
+  "Etrofil": {
+    "listed_on_ravelry": 50,
+    "inspected": 30,
+    "discontinued_in_inspected": 2,
+    "field_completeness_active": {
+      "weight": 1.0,
+      "fibres": 1.0,
+      "fibre_percentages": 1.0,
+      "needle_size": 0.93,
+      "gauge": 0.86,
+      "grams": 1.0,
+      "yardage": 1.0
+    },
+    "weights": {
+      "Sport": 5,
+      "DK": 6,
+      "Fingering": 6,
+      "Light Fingering": 5,
+      "Lace": 2,
+      "Worsted": 1,
+      "Super Bulky": 3
+    },
+    "main_fibres": {
+      "Wool": 10,
+      "Cotton": 7,
+      "Merino": 6,
+      "Nylon": 2,
+      "Angora": 1
+    },
+    "examples": [
+      "Bambino Organic",
+      "Savona",
+      "Rainbow",
+      "Rustik",
+      "Baby Cashmere"
+    ]
+  }
+}

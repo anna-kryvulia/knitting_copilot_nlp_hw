@@ -142,8 +142,8 @@ knitting stage: [row tracker] (code) · charts · explain
 - **Ravelry patterns** are copyrighted. Store PDFs/text only in `data/private/` (git-ignored).
   The repo keeps only our annotations, the Ravelry URL, designer and licence note. Use them for evaluation only.
 - **Yarns**: brands popular on the Ukrainian market (e.g. YarnArt, Alize, Himalaya, Nako, Gazzal,
-  Kartopu, Madame Tricote, DROPS, Lana Grossa, Fibra Natura, Etrofil). No brands from Russian producers.
-  Source: Ravelry API + shop pages; record the source per row.
+  Kartopu, Madame Tricote, DROPS, Lana Grossa, Etrofil, Vizell). No brands from Russian producers.
+  Source: Ravelry API + shop pages; record the source per row. Active (not discontinued) yarns only.
 - **Knowledge-base text** (abbreviations, techniques, fibres) is written in our own words; cite the
   reference (e.g. Craft Yarn Council) per entry.
 - Synthetic patterns come from `src/knit_copilot/data/generator.py` with gold IR and gold counts.
