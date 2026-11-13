@@ -10,7 +10,7 @@ import pandas as pd
 import streamlit as st
 
 from knit_copilot import kb
-from knit_copilot.components import explainer, parser
+from knit_copilot.components import explainer, parser, yarn_advisor, yarn_linker
 from knit_copilot.config import ROOT, settings
 from knit_copilot.display import row_lines
 from knit_copilot.retrieval import search as kbsearch
@@ -63,7 +63,7 @@ with st.sidebar:
                "LLM: no OPENROUTER_API_KEY — grammar parser only")
 
 st.title("🧶 Knitting Copilot")
-tab_pattern, = st.tabs(["Pattern"])
+tab_pattern, tab_yarn = st.tabs(["Pattern", "Yarn"])
 
 # ---------- Pattern tab ----------
 with tab_pattern:
@@ -148,3 +148,56 @@ with tab_pattern:
                         st.markdown(exp.text)
                         with st.expander("Facts the explanation is based on (computed by code)"):
                             st.code(exp.facts, language=None)
+
+# ---------- Yarn tab (UC3) ----------
+with tab_yarn:
+    st.caption("Type a yarn name (brands sold in Ukraine) — or describe the fibre and weight.")
+    c1, c2 = st.columns([3, 2])
+    with c1:
+        yarn_text = st.text_input("Yarn", placeholder="YarnArt Jeans, gazal baby wool, Drops Karisma …")
+        question = st.text_input("Question", value="What needles and gauge should I expect?")
+    with c2:
+        fibre = st.selectbox("…or fibre", ["—"] + sorted(kb.fibres()))
+        weight = st.selectbox("…and weight", ["—", "Lace", "Light Fingering", "Fingering", "Sport", "DK",
+                                              "Worsted", "Aran", "Bulky", "Super Bulky"])
+    yarn_row = None
+    if yarn_text:
+        link = yarn_linker.run(yarn_linker.LinkerInput(text=yarn_text))
+        if link.status == "match":
+            yarn_row = next(y for y in yarn_linker.yarns() if int(y["yarn_id"]) == link.yarn_id)
+            st.success(f"Found: **{yarn_row['brand']} {yarn_row['name']}** · {yarn_row['weight']} · {yarn_row['fibres']}")
+        elif link.status == "ambiguous":
+            options = [f"{c.brand} {c.name}" for c in link.candidates]
+            pick = st.radio("Several yarns have this name — which one?", options)
+            cand = link.candidates[options.index(pick)]
+            yarn_row = next(y for y in yarn_linker.yarns() if int(y["yarn_id"]) == cand.yarn_id)
+        else:
+            st.warning("This yarn is not in our table. Choose the fibre and weight instead."
+                       + (f" Closest: {', '.join(c.brand + ' ' + c.name for c in link.candidates[:2] if c.score > 0.5)}"
+                          if any(c.score > 0.5 for c in link.candidates) else ""))
+    use_fibre = fibre != "—" and weight != "—"
+    if yarn_row or use_fibre:
+        f = yarn_advisor.yarn_facts(yarn_row, None if yarn_row else fibre, None if yarn_row else weight)
+        m = st.columns(3)
+        m[0].metric("Needles", f"{f.needle_mm[0]:g}–{f.needle_mm[1]:g} mm" if f.needle_mm[0] != f.needle_mm[1]
+                    else f"{f.needle_mm[0]:g} mm")
+        m[1].metric("Gauge / 10 cm", f"{f.gauge_sts_10cm[0]:g}–{f.gauge_sts_10cm[1]:g} sts"
+                    if f.gauge_sts_10cm[0] != f.gauge_sts_10cm[1] else f"{f.gauge_sts_10cm[0]:g} sts")
+        m[2].metric("Start with", f"{f.suggested_needle_mm:g} mm")
+        if f.warn_gauge:
+            st.warning("The label gauge doesn't fit this yarn's weight category — knit a swatch and trust it.")
+        if st.button("Ask the advisor", type="primary", disabled=not settings.openrouter_api_key):
+            with st.spinner("Asking (free models can take up to a minute)…"):
+                try:
+                    st.session_state["advice"] = yarn_advisor.run(yarn_advisor.AdvisorInput(
+                        yarn_id=int(yarn_row["yarn_id"]) if yarn_row else None,
+                        fibre=None if yarn_row else fibre, weight=None if yarn_row else weight, question=question))
+                except (RuntimeError, ValueError) as e:
+                    st.error(f"Could not get advice: {e}")
+        adv = st.session_state.get("advice")
+        if adv is not None and adv.status == "answered":
+            if adv.violations:
+                st.warning("Some details could not be verified: " + "; ".join(adv.violations[:3]))
+            st.markdown(adv.answer)
+        with st.expander("Facts used (computed by code from the yarn label, CYC table and fibre KB)"):
+            st.code(f.as_text(), language=None)

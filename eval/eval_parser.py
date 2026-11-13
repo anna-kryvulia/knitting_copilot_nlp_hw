@@ -7,6 +7,7 @@ Metrics (docs/01_business_understanding.md §1.8):
 - op_f1             micro F1 over stitch operations per aligned row (multiset overlap)
 - exact_match       every row has the same ops and counts
 - side_accuracy     RS/WS on numbered flat rows whose text states a side
+- answered / exact_when_answered  availability (any IR returned) vs accuracy on the answered patterns
 Comparison is on simulation output, so equivalent notations ("k to end" vs "k44") count as equal.
 
 Run: python -m eval.eval_parser --parser grammar|llm|hybrid --split dev
@@ -33,7 +34,7 @@ def score_case(case: dict, parse_fn) -> dict:
     size = case["input"]["size"]
     gold = simulate(Pattern.model_validate(case["expected"]["ir"]), size)
     res = parse_fn(case["input"]["text"])
-    out = {"id": case["id"], "tags": case["tags"], "warnings": res.warnings[:3],
+    out = {"id": case["id"], "tags": case["tags"], "warnings": res.warnings[:3], "answered": res.ok,
            "parse_success": False, "total_rows_match": False, "exact_match": False,
            "rows_gold": len(gold.rows), "rows_matched_count": 0, "op_tp": 0, "op_pred": 0, "op_gold": 0,
            "side_total": 0, "side_correct": 0, "first_diff": None}
@@ -72,8 +73,13 @@ def aggregate(rows: list[dict]) -> dict:
     tp, pp, gg = (sum(r[k] for r in rows) for k in ("op_tp", "op_pred", "op_gold"))
     prec, rec = (tp / pp if pp else 0.0), (tp / gg if gg else 0.0)
     side_t = sum(r["side_total"] for r in rows)
+    answered = [r for r in rows if r["answered"]]
     return {
         "n": len(rows),
+        # availability (did the parser return any IR at all — for the LLM: quota, rate limits, time budget)
+        # is reported apart from accuracy on the patterns it did answer
+        "answered": round(len(answered) / n, 3),
+        "exact_when_answered": round(sum(r["exact_match"] for r in answered) / len(answered), 3) if answered else None,
         "parse_success": round(sum(r["parse_success"] for r in rows) / n, 3),
         "total_rows_match": round(sum(r["total_rows_match"] for r in rows) / n, 3),
         "row_count_agreement": round(sum(r["rows_matched_count"] for r in rows) / max(1, sum(r["rows_gold"] for r in rows)), 3),
@@ -114,7 +120,8 @@ def main() -> None:
     path = write_results(f"parser_{args.parser}", args.split, args.version, metrics, len(scored), failures,
                          model=None if args.parser == "grammar" else app_model())
     o = metrics["overall"]
-    print(f"\n{args.parser} on {args.split} (n={o['n']}): parse_success={o['parse_success']} "
+    print(f"\n{args.parser} on {args.split} (n={o['n']}): answered={o['answered']} "
+          f"exact_when_answered={o['exact_when_answered']} parse_success={o['parse_success']} "
           f"row_count_agreement={o['row_count_agreement']} op_f1={o['op_f1']} exact={o['exact_match']} "
           f"side={o['side_accuracy']}\n-> {path}")
 

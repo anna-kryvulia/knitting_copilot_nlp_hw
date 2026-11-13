@@ -1,0 +1,28 @@
+{
+  "component": "yarn_linker",
+  "split": "test",
+  "version": "v2",
+  "model": "none",
+  "date": "2026-11-13",
+  "metrics": {
+    "overall": {
+      "n": 16,
+      "accuracy": 1.0,
+      "top1_accuracy": 1.0,
+      "none_precision": 1.0,
+      "none_recall": 1.0,
+      "ambiguous_recall": 1.0
+    },
+    "by_tag": {
+      "ambiguous": 1.0,
+      "colour_in_name": 1.0,
+      "exact": 1.0,
+      "partial": 1.0,
+      "spacing": 1.0,
+      "typo": 1.0,
+      "unknown_yarn": 1.0
+    }
+  },
+  "n": 16,
+  "failures": []
+}

@@ -65,3 +65,12 @@ def test_search_lookup_and_retrieval():
     assert lookup_exact("How do I make a left-leaning decrease?") is None
     assert {_stem("slipping"), _stem("slips"), _stem("slipped")} == {"slip"} and _stem("stitches") == "stitch"
     assert retrieve("Which decrease leans to the right?", "bm25", 3)[0].id in {"k2tog", "p2tog", "k3tog", "p3tog"}
+
+
+def test_yarn_linker_cases():
+    from knit_copilot.components.yarn_linker import LinkerInput, run
+    assert run(LinkerInput(text="gazal baby wool")).status == "match"
+    assert run(LinkerInput(text="Jeans")).status == "ambiguous"
+    assert run(LinkerInput(text="Rowan Felted Tweed")).status == "none"
+    a, b = run(LinkerInput(text="Garnstudio Drops Air")), run(LinkerInput(text="DROPS Air"))
+    assert a.status == "match" and a.yarn_id == b.yarn_id

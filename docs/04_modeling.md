@@ -9,7 +9,10 @@ before the next starts. This document grows with every component.
 | 2 | LLM / hybrid parser (`components/parser.py`) | LLM + simulator check | ✅ built, ⏳ eval needs `OPENROUTER_API_KEY` | `--parser llm`, `--parser hybrid` |
 | 3 | KB search (`retrieval/search.py`): exact + fuzzy lookup, BM25 / dense / hybrid retrieval | retrieval | ✅ default hybrid | `eval/eval_kb.py` |
 | 4 | Row display (`display.py`) | code | ✅ | `tests/test_display.py` |
-| 5 | Streamlit UI: Pattern tab + lookup | UI | ✅ first version | manual check |
+| 5 | Streamlit UI: Pattern (Rows / Explanation) + Yarn tabs, KB search sidebar | UI | ✅ | manual check |
+| 6 | Explainer (`components/explainer.py`, `facts.py`) | code facts + LLM + grounding check | ✅ built, ⏳ eval needs quota | `eval/eval_explainer.py` |
+| 7 | Yarn linker (`components/yarn_linker.py`) | string-based entity linking | ✅ | `eval/eval_yarn_linker.py` |
+| 8 | Yarn advisor (`components/yarn_advisor.py`) | code facts + LLM + grounding check | ✅ built, ⏳ eval needs quota | `eval/eval_yarn_advisor.py` |
 
 ## 4.1 Parsers
 
@@ -90,3 +93,26 @@ A rate-limited or timed-out model is retried once, then the next model is tried.
 the user gets a clear message (and, in hybrid mode, whatever the grammar could read). Separate target added
 for the report: **pattern reading ≤ 60 s** (one-time setup step), distinct from ≤ 15 s per chat turn.
 Check: cable scarf via LLM → correct in 32 s on the first attempt.
+
+## 4.4 Explainer (UC1)
+`facts.py` builds a **fact sheet** from the IR and the simulation: overview (construction, cast-on, total
+rows, gauge), one block per step (each written row described with `display.describe_row`, start → end
+stitches, change, stated vs computed count; for repeats: the rule and how many repeats/rows it means at the
+gauge), and the KB definition of every abbreviation used. `components/explainer.py` sends it to the LLM
+(`prompts/explainer.md`: beginner-friendly, one section per step, cite abbreviations as `[k2tog]`, use only
+the facts). **Grounding check in code:** every standalone number in the answer must be in the fact sheet,
+every citation must be an abbreviation the pattern uses; violations are sent back once, remaining ones are
+shown to the user as a warning. Optional focus ("Row 3", "the crown") explains one part only.
+
+## 4.5 Yarn advisor (UC3)
+- **Linker** (no LLM): normalisation → fuzzy brand detection (incl. shop vs Ravelry names, a brand named
+  twice) → name scoring (exact > all typed words contained, fewest extra words, plain variants such as
+  "Solids"/"Classic" preferred > fuzzy ratio; colour numbers tried with and without) → match / ambiguous
+  (same name in two brands, no brand given) / none.
+- **Facts** (code): CYC category, needle and gauge range with their source (label or CYC), the CYC
+  guideline, a suggested starting needle (midpoint, plus the fibre's needle adjustment, rounded to a
+  standard size), the Q9 gauge warning, and the fibre KB entry.
+- **Advisor** (LLM, `prompts/yarn_advisor.md`) answers the question from the facts; same number/citation
+  check as the explainer (citations `[yarn:id]`, `[cyc:n]`, `[fibre:x]`).
+- UI: the Yarn tab shows the linked yarn and the code-computed numbers immediately; the LLM is only called
+  for the written answer.

@@ -1,0 +1,455 @@
+{
+  "component": "parser_llm",
+  "split": "dev",
+  "version": "v1",
+  "model": "nvidia/nemotron-3.5-super-vl:free",
+  "date": "2026-11-13",
+  "metrics": {
+    "overall": {
+      "n": 36,
+      "answered": 0.556,
+      "exact_when_answered": 1.0,
+      "parse_success": 0.556,
+      "total_rows_match": 0.556,
+      "row_count_agreement": 0.594,
+      "op_precision": 1.0,
+      "op_recall": 0.56,
+      "op_f1": 0.718,
+      "exact_match": 0.556,
+      "side_accuracy": 1.0
+    },
+    "by_source": {
+      "synthetic": {
+        "n": 36,
+        "answered": 0.556,
+        "exact_when_answered": 1.0,
+        "parse_success": 0.556,
+        "total_rows_match": 0.556,
+        "row_count_agreement": 0.594,
+        "op_precision": 1.0,
+        "op_recall": 0.56,
+        "op_f1": 0.718,
+        "exact_match": 0.556,
+        "side_accuracy": 1.0
+      }
+    },
+    "by_style": {
+      "+typo": {
+        "n": 8,
+        "answered": 0.625,
+        "exact_when_answered": 1.0,
+        "parse_success": 0.625,
+        "total_rows_match": 0.625,
+        "row_count_agreement": 0.688,
+        "op_precision": 1.0,
+        "op_recall": 0.722,
+        "op_f1": 0.838,
+        "exact_match": 0.625,
+        "side_accuracy": 1.0
+      },
+      "brackets": {
+        "n": 8,
+        "answered": 0.625,
+        "exact_when_answered": 1.0,
+        "parse_success": 0.625,
+        "total_rows_match": 0.625,
+        "row_count_agreement": 0.777,
+        "op_precision": 1.0,
+        "op_recall": 0.807,
+        "op_f1": 0.893,
+        "exact_match": 0.625,
+        "side_accuracy": 1.0
+      },
+      "imperial": {
+        "n": 6,
+        "answered": 0.167,
+        "exact_when_answered": 1.0,
+        "parse_success": 0.167,
+        "total_rows_match": 0.167,
+        "row_count_agreement": 0.093,
+        "op_precision": 1.0,
+        "op_recall": 0.211,
+        "op_f1": 0.348,
+        "exact_match": 0.167,
+        "side_accuracy": 1.0
+      },
+      "terse": {
+        "n": 7,
+        "answered": 0.714,
+        "exact_when_answered": 1.0,
+        "parse_success": 0.714,
+        "total_rows_match": 0.714,
+        "row_count_agreement": 0.737,
+        "op_precision": 1.0,
+        "op_recall": 0.723,
+        "op_f1": 0.839,
+        "exact_match": 0.714,
+        "side_accuracy": 1.0
+      },
+      "uk": {
+        "n": 7,
+        "answered": 0.571,
+        "exact_when_answered": 1.0,
+        "parse_success": 0.571,
+        "total_rows_match": 0.571,
+        "row_count_agreement": 0.339,
+        "op_precision": 1.0,
+        "op_recall": 0.364,
+        "op_f1": 0.534,
+        "exact_match": 0.571,
+        "side_accuracy": 1.0
+      },
+      "verbose": {
+        "n": 8,
+        "answered": 0.625,
+        "exact_when_answered": 1.0,
+        "parse_success": 0.625,
+        "total_rows_match": 0.625,
+        "row_count_agreement": 0.775,
+        "op_precision": 1.0,
+        "op_recall": 0.583,
+        "op_f1": 0.737,
+        "exact_match": 0.625,
+        "side_accuracy": 1.0
+      }
+    },
+    "by_template": {
+      "bias_dishcloth": {
+        "n": 4,
+        "answered": 0.5,
+        "exact_when_answered": 1.0,
+        "parse_success": 0.5,
+        "total_rows_match": 0.5,
+        "row_count_agreement": 0.527,
+        "op_precision": 1.0,
+        "op_recall": 0.554,
+        "op_f1": 0.713,
+        "exact_match": 0.5,
+        "side_accuracy": 1.0
+      },
+      "bordered_blanket": {
+        "n": 4,
+        "answered": 0.5,
+        "exact_when_answered": 1.0,
+        "parse_success": 0.5,
+        "total_rows_match": 0.5,
+        "row_count_agreement": 0.455,
+        "op_precision": 1.0,
+        "op_recall": 0.408,
+        "op_f1": 0.58,
+        "exact_match": 0.5,
+        "side_accuracy": 1.0
+      },
+      "cable_scarf": {
+        "n": 4,
+        "answered": 0.5,
+        "exact_when_answered": 1.0,
+        "parse_success": 0.5,
+        "total_rows_match": 0.5,
+        "row_count_agreement": 0.491,
+        "op_precision": 1.0,
+        "op_recall": 0.455,
+        "op_f1": 0.625,
+        "exact_match": 0.5,
+        "side_accuracy": 1.0
+      },
+      "eyelet_scarf": {
+        "n": 4,
+        "answered": 0.25,
+        "exact_when_answered": 1.0,
+        "parse_success": 0.25,
+        "total_rows_match": 0.25,
+        "row_count_agreement": 0.226,
+        "op_precision": 1.0,
+        "op_recall": 0.178,
+        "op_f1": 0.303,
+        "exact_match": 0.25,
+        "side_accuracy": 1.0
+      },
+      "feather_fan": {
+        "n": 4,
+        "answered": 0.5,
+        "exact_when_answered": 1.0,
+        "parse_success": 0.5,
+        "total_rows_match": 0.5,
+        "row_count_agreement": 0.499,
+        "op_precision": 1.0,
+        "op_recall": 0.546,
+        "op_f1": 0.707,
+        "exact_match": 0.5,
+        "side_accuracy": 1.0
+      },
+      "garter_scarf": {
+        "n": 4,
+        "answered": 0.75,
+        "exact_when_answered": 1.0,
+        "parse_success": 0.75,
+        "total_rows_match": 0.75,
+        "row_count_agreement": 0.796,
+        "op_precision": 1.0,
+        "op_recall": 0.813,
+        "op_f1": 0.897,
+        "exact_match": 0.75,
+        "side_accuracy": 1.0
+      },
+      "rib_scarf": {
+        "n": 4,
+        "answered": 1.0,
+        "exact_when_answered": 1.0,
+        "parse_success": 1.0,
+        "total_rows_match": 1.0,
+        "row_count_agreement": 1.0,
+        "op_precision": 1.0,
+        "op_recall": 1.0,
+        "op_f1": 1.0,
+        "exact_match": 1.0,
+        "side_accuracy": 1.0
+      },
+      "ribbed_hat": {
+        "n": 4,
+        "answered": 0.25,
+        "exact_when_answered": 1.0,
+        "parse_success": 0.25,
+        "total_rows_match": 0.25,
+        "row_count_agreement": 0.257,
+        "op_precision": 1.0,
+        "op_recall": 0.282,
+        "op_f1": 0.44,
+        "exact_match": 0.25,
+        "side_accuracy": null
+      },
+      "seed_cowl": {
+        "n": 4,
+        "answered": 0.75,
+        "exact_when_answered": 1.0,
+        "parse_success": 0.75,
+        "total_rows_match": 0.75,
+        "row_count_agreement": 0.699,
+        "op_precision": 1.0,
+        "op_recall": 0.715,
+        "op_f1": 0.834,
+        "exact_match": 0.75,
+        "side_accuracy": null
+      }
+    }
+  },
+  "n": 36,
+  "failures": [
+    {
+      "id": "parse-005",
+      "tags": [
+        "eyelet_scarf",
+        "imperial",
+        "flat"
+      ],
+      "why": "no IR: llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']; llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']",
+      "warnings": [
+        "llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']",
+        "llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']"
+      ]
+    },
+    {
+      "id": "parse-040",
+      "tags": [
+        "ribbed_hat",
+        "imperial",
+        "round",
+        "multi_size"
+      ],
+      "why": "no IR: llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']; llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']",
+      "warnings": [
+        "llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']",
+        "llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']"
+      ]
+    },
+    {
+      "id": "parse-049",
+      "tags": [
+        "ribbed_hat",
+        "uk",
+        "round",
+        "multi_size",
+        "typo"
+      ],
+      "why": "no IR: llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']; llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']",
+      "warnings": [
+        "llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']",
+        "llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']"
+      ]
+    },
+    {
+      "id": "parse-050",
+      "tags": [
+        "eyelet_scarf",
+        "imperial",
+        "flat"
+      ],
+      "why": "no IR: llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']; llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']",
+      "warnings": [
+        "llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']",
+        "llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']"
+      ]
+    },
+    {
+      "id": "parse-051",
+      "tags": [
+        "feather_fan",
+        "terse",
+        "flat"
+      ],
+      "why": "no IR: llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']; llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']",
+      "warnings": [
+        "llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']",
+        "llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']"
+      ]
+    },
+    {
+      "id": "parse-052",
+      "tags": [
+        "cable_scarf",
+        "brackets",
+        "flat",
+        "typo"
+      ],
+      "why": "no IR: llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']; llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']",
+      "warnings": [
+        "llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']",
+        "llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']"
+      ]
+    },
+    {
+      "id": "parse-053",
+      "tags": [
+        "bias_dishcloth",
+        "verbose",
+        "flat"
+      ],
+      "why": "no IR: llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']; llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']",
+      "warnings": [
+        "llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']",
+        "llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']"
+      ]
+    },
+    {
+      "id": "parse-054",
+      "tags": [
+        "bordered_blanket",
+        "uk",
+        "flat",
+        "multi_size"
+      ],
+      "why": "no IR: llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']; llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']",
+      "warnings": [
+        "llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']",
+        "llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']"
+      ]
+    },
+    {
+      "id": "parse-055",
+      "tags": [
+        "garter_scarf",
+        "imperial",
+        "flat"
+      ],
+      "why": "no IR: llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']; llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']",
+      "warnings": [
+        "llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']",
+        "llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']"
+      ]
+    },
+    {
+      "id": "parse-057",
+      "tags": [
+        "seed_cowl",
+        "brackets",
+        "round"
+      ],
+      "why": "no IR: llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']; llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']",
+      "warnings": [
+        "llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']",
+        "llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']"
+      ]
+    },
+    {
+      "id": "parse-058",
+      "tags": [
+        "ribbed_hat",
+        "verbose",
+        "round",
+        "multi_size"
+      ],
+      "why": "no IR: llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']; llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']",
+      "warnings": [
+        "llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']",
+        "llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']"
+      ]
+    },
+    {
+      "id": "parse-059",
+      "tags": [
+        "eyelet_scarf",
+        "uk",
+        "flat"
+      ],
+      "why": "no IR: llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']; llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']",
+      "warnings": [
+        "llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']",
+        "llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']"
+      ]
+    },
+    {
+      "id": "parse-060",
+      "tags": [
+        "feather_fan",
+        "imperial",
+        "flat",
+        "typo"
+      ],
+      "why": "no IR: llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']; llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']",
+      "warnings": [
+        "llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']",
+        "llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']"
+      ]
+    },
+    {
+      "id": "parse-061",
+      "tags": [
+        "cable_scarf",
+        "terse",
+        "flat"
+      ],
+      "why": "no IR: llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']; llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']",
+      "warnings": [
+        "llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']",
+        "llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']"
+      ]
+    },
+    {
+      "id": "parse-062",
+      "tags": [
+        "bias_dishcloth",
+        "brackets",
+        "flat"
+      ],
+      "why": "no IR: llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']; llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']",
+      "warnings": [
+        "llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']",
+        "llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']"
+      ]
+    },
+    {
+      "id": "parse-063",
+      "tags": [
+        "bordered_blanket",
+        "verbose",
+        "flat",
+        "multi_size"
+      ],
+      "why": "no IR: llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']; llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']",
+      "warnings": [
+        "llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']",
+        "llm: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nvidia/nemotron-3-ultra-550b-a55b:free', 'dots-studio/dots-3-note-preview:free']"
+      ]
+    }
+  ]
+}

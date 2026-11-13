@@ -135,3 +135,20 @@ Running log of decisions. Newest entries at the bottom. Format:
   Xingchen failed instantly. App model → Nemotron 3.5 Super; judge → Dots 3 Note (other family).
   Cable scarf via LLM: correct in 32 s. New target in doc 01: pattern reading ≤ 60 s. 118 tests pass.
 - Next: full LLM/hybrid parser eval on dev (36 cases; ~20–40 min with free models), then explainer (UC1).
+
+## 2026-11-13 — 5. Evaluation — LLM parser on dev; free-tier quota
+- What: `eval_parser --parser llm|hybrid` on dev (36); eval now separates availability from accuracy.
+- Result / numbers: LLM answered 20/36, **all 20 exact**; 13 failures = OpenRouter 429 "free-models-per-day"
+  (limit 50 requests/day, resets 00:00 UTC), 3 = 60 s budget. Hybrid 36/36 exact.
+- Decision: hybrid stays the default; LLM evals must be planned around the 50/day quota (or $10 credit →
+  1000/day, user's decision).
+- Next: re-run the 16 missing LLM cases + explainer eval after the quota resets; meanwhile build UC3 without LLM calls.
+
+## 2026-11-13 — 4/5. Modeling + Evaluation — Explainer (UC1) and yarn advisor (UC3)
+- What: `facts.py` + `components/explainer.py` (fact sheet by code, LLM wording, number/citation check with
+  1 repair); `components/yarn_linker.py` (entity linking, no LLM); `components/yarn_advisor.py` (yarn facts by
+  code + LLM answer + check); eval scripts for all three, judge prompts; UI: Explanation and Yarn tabs.
+- Result / numbers: yarn linker dev 1.000 (after 1 fix), test 0.938 clean → 1.000 after a fix found on test.
+  Explainer/advisor evals waiting for LLM quota (free tier 50/day used up; $10 credit pending). 126 tests pass.
+- Next: when quota is available: re-run 16 LLM parser cases, explainer and advisor evals (+ judge
+  calibration); then UC2 gauge adjustment.
