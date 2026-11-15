@@ -135,7 +135,7 @@ def main() -> None:
         "judge_mean": round(sum(scores) / len(scores), 2) if scores else None,
         "median_seconds": sorted(r["seconds"] for r in ok)[len(ok) // 2] if ok else None}}
     path = write_results("explainer", args.split, args.version, metrics, len(rows), failures,
-                         model=settings.llm_model, extra={"judge_model": settings.judge_model if args.judge else None,
+                         model=settings.llm_model, extra={"judge_model": settings.judge_model if scores else None,   # only when the judge actually scored
                                                           "cases": rows})
     print(metrics["overall"], "\n->", path)
 

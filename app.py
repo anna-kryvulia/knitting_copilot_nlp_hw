@@ -289,7 +289,7 @@ with tab_pattern:
                     every = st.toggle("Show every row", value=False,
                                       help="Off: repeated rows are grouped into one line. On: one line per row worked.")
                     df = pd.DataFrame([{
-                        "Rows": ln.rows, "Instruction": ln.instruction, "Side": ln.side, "Stitches": ln.stitches,
+                        "Rows": ln.rows, "Pattern row": ln.instruction, "Side": ln.side, "Stitches": ln.stitches,
                         "Stated": ln.stated, "Worked as": ln.worked_as}
                         for ln in row_lines(p, sim, grouped=not every)])
                     st.dataframe(df, hide_index=True, use_container_width=True, height=520,
@@ -724,9 +724,11 @@ def knitting_view(pr: project.Project) -> None:
         pat = pr.working.pattern
         with st.expander("📜 Working pattern (adjusted to your gauge)"):
             sim = simulate(pat, None)
-            st.dataframe(pd.DataFrame([{"Rows": ln.rows, "Instruction": ln.instruction, "Stitches": ln.stitches}
+            st.dataframe(pd.DataFrame([{"Rows": ln.rows, "What to knit": ln.worked_as, "Stitches": ln.stitches,
+                                        "Pattern row": ln.instruction}
                                        for ln in row_lines(pat, sim, grouped=True)]),
-                         hide_index=True, use_container_width=True)
+                         hide_index=True, use_container_width=True,
+                         column_config={"What to knit": st.column_config.TextColumn(width="large")})
         with st.expander("🟥 Chart"):
             st.image(charts.render_png(charts.build(pat, None)))
         with st.expander("🔒 Setup (locked) · start over"):
