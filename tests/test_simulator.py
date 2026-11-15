@@ -69,10 +69,34 @@ def test_row_with_unworked_stitches_and_unknown_op():
 
 
 def test_cable_and_markers_keep_count():
-    row = {"label": "Row 1", "side": "RS", "ops": [
-        {"op": "p", "n": 2}, {"op": "pm"}, {"op": "c6b"}, {"op": "sm"}, {"op": "p", "n": 2}]}
-    res = simulate(_pattern(10, [{"type": "rows", "rows": [row]}]))
-    assert res.ok and res.final_count == 10
+    rows = [{"label": "Row 1", "side": "RS", "ops": [
+                {"op": "p", "n": 2}, {"op": "pm"}, {"op": "c6b"}, {"op": "pm"}, {"op": "p", "n": 2}]},
+            {"label": "Row 2", "side": "WS", "ops": [                  # markers come back mirrored: 2 and 8
+                {"op": "k", "n": 2}, {"op": "sm"}, {"op": "p", "n": 6}, {"op": "sm"}, {"op": "k", "n": 2}]}]
+    res = simulate(_pattern(10, [{"type": "rows", "rows": rows}]))
+    assert res.ok, res.errors
+    assert res.final_count == 10 and res.rows[1].markers == [2, 8]
+
+
+def test_knit_to_marker_and_crown_decreases_with_markers():
+    # 4 sections of 10; "*k1, k2tog, k to 3 before marker, ssk, k1, sm; rep from * to end" in the round
+    setup = {"label": "Set-up rnd", "side": "round", "ops": [
+        {"repeat": [{"op": "k", "n": 10}, {"op": "pm"}], "times": 3}, {"op": "k", "n": 10}]}
+    dec = {"label": "Dec rnd", "side": "round", "ops": [{"repeat": [
+        {"op": "k"}, {"op": "k2tog"}, {"repeat": [{"op": "k"}], "until": {"remaining": 3, "marker": True}},
+        {"op": "ssk"}, {"op": "k"}, {"op": "sm"}], "until": {"remaining": 0}}]}
+    p = _pattern(40, [{"type": "rows", "rows": [setup, dec]},
+                      {"type": "repeat_rows", "rows_ref": ["Dec rnd"], "until_count": 16}], construction="round")
+    res = simulate(p)
+    assert res.ok, res.errors
+    assert [r.end_count for r in res.rows] == [40, 32, 24, 16]
+    assert res.rows[1].markers == [10, 20, 30] and res.rows[2].markers == [8, 16, 24]
+    assert res.rows[1].rec[0]["times"] == 4                      # the outer repeat ran 4 times
+
+
+def test_to_marker_without_marker_is_an_error_flat():
+    row = {"label": "Row 1", "side": "RS", "ops": [{"repeat": [{"op": "k"}], "until": {"remaining": 0, "marker": True}}]}
+    assert "no marker ahead" in simulate(_pattern(10, [{"type": "rows", "rows": [row]}])).errors[0]
 
 
 def test_repeat_rows_until_count_bias_dishcloth():
@@ -97,3 +121,12 @@ def test_repeat_rows_until_count_that_moves_away_is_an_error():
     p = _pattern(10, [{"type": "rows", "rows": [inc]},
                       {"type": "repeat_rows", "rows_ref": ["Row 1"], "until_count": 4}])
     assert "never reaches" in simulate(p).errors[0]
+
+
+def test_increase_at_marker_stays_before_it():
+    rows = [{"label": "Row 1", "side": "RS", "ops": [{"op": "k", "n": 3}, {"op": "pm"}, {"op": "k", "n": 3}]},
+            {"label": "Row 2", "side": "WS", "ops": [{"op": "p", "n": 3}, {"op": "sm"}, {"op": "p", "n": 3}]},
+            {"label": "Row 3", "side": "RS", "ops": [{"op": "k", "n": 3}, {"op": "m1r"}, {"op": "sm"}, {"op": "m1l"},
+                                                     {"op": "k", "n": 3}]}]
+    res = simulate(_pattern(6, [{"type": "rows", "rows": rows}]))
+    assert res.ok, res.errors and res.final_count == 8

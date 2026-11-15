@@ -88,7 +88,7 @@ def build(pattern: Pattern, size: str | None = None, rows_per_10cm: float | None
                 r = first_start.get(row.label)
                 if r is None:
                     continue
-                how = describe_row(row, r.start_count, size)
+                how = describe_row(row, r.start_count, size, r.rec)
                 side = {"RS": "right side", "WS": "wrong side"}.get(r.side, "")
                 change = r.end_count - r.start_count
                 delta = "no change" if change == 0 else (f"{change:+d} stitches")

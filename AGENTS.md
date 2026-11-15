@@ -139,8 +139,9 @@ knitting stage: [row tracker] (code) · charts · explain
 
 ## 6. Data rules
 
-- **Ravelry patterns** are copyrighted. Store PDFs/text only in `data/private/` (git-ignored).
-  The repo keeps only our annotations, the Ravelry URL, designer and licence note. Use them for evaluation only.
+- **Ravelry patterns** are copyrighted. PDFs, extracted text **and the gold annotations** (a gold IR is a
+  structured copy of the pattern) stay in `data/private/` (git-ignored). The repo keeps only the metadata
+  index (`data/eval/ravelry/patterns.yaml`: URL, designer, year, role, coverage) and aggregate eval results.
 - **Yarns**: brands popular on the Ukrainian market (e.g. YarnArt, Alize, Himalaya, Nako, Gazzal,
   Kartopu, Madame Tricote, DROPS, Lana Grossa, Etrofil, Vizell). No brands from Russian producers.
   Source: Ravelry API + shop pages; record the source per row. Active (not discontinued) yarns only.

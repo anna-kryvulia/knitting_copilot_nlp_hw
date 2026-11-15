@@ -12,7 +12,8 @@
   - Kerchief
   role: in_scope
   file: data/private/ravelry/sherbet-bandana.pdf
-  annotated: false
+  annotated: true
+  coverage: full
 - slug: stickjournalens-headscarf
   title: stickjournalen's headscarf
   designer: stickjournalen
@@ -23,7 +24,8 @@
   - Kerchief
   role: in_scope
   file: data/private/ravelry/stickjournalens-headscarf.pdf
-  annotated: false
+  annotated: true
+  coverage: partial (first repeat)
 - slug: blueberry-bandana
   title: Blueberry Bandana
   designer: Anouska Knits
@@ -34,7 +36,8 @@
   - Kerchief
   role: in_scope
   file: data/private/ravelry/blueberry-bandana.pdf
-  annotated: false
+  annotated: true
+  coverage: partial (triangle body)
 - slug: the-sigrid-scarf
   title: The Sigrid Scarf
   designer: Ida Väyrynen
@@ -45,7 +48,8 @@
   - Scarf
   role: in_scope
   file: data/private/ravelry/the-sigrid-scarf.pdf
-  annotated: false
+  annotated: true
+  coverage: full
 - slug: sister-scarf
   title: Sister Scarf
   designer: PetiteKnit
@@ -56,7 +60,8 @@
   - Scarf
   role: in_scope
   file: data/private/ravelry/sister-scarf.pdf
-  annotated: false
+  annotated: true
+  coverage: full
 - slug: double-hat
   title: Double Hat
   designer: SuviKnits
@@ -67,7 +72,8 @@
   - Beanie, Toque
   role: in_scope
   file: data/private/ravelry/double-hat.pdf
-  annotated: false
+  annotated: true
+  coverage: partial (outer hat)
 - slug: nick-chopper
   title: Nick Chopper
   designer: Noriko Ho
@@ -78,7 +84,8 @@
   - Beanie, Toque
   role: in_scope
   file: data/private/ravelry/nick-chopper.pdf
-  annotated: false
+  annotated: true
+  coverage: full
 - slug: feeling-good-legwarmers
   title: Feeling Good Legwarmers
   designer: nathalie denys
@@ -89,7 +96,8 @@
   - Legwarmers
   role: in_scope
   file: data/private/ravelry/feeling-good-legwarmers.pdf
-  annotated: false
+  annotated: true
+  coverage: full
 - slug: heidi-leg-warmers
   title: Heidi Leg Warmers
   designer: Irene Lin
@@ -98,9 +106,11 @@
   projects: 111
   category:
   - Legwarmers
-  role: in_scope
+  role: limit_probe
   file: data/private/ravelry/heidi-leg-warmers.pdf
   annotated: false
+  coverage: probe only (no gold)
+  note: 'brioche-type stitches (sl1yo/ktog) and flat → round: out of scope'
 - slug: moose-balaclava
   title: Moose Balaclava
   designer: slow stuff knitwear
@@ -111,7 +121,9 @@
   - Balaclava
   role: in_scope
   file: data/private/ravelry/moose-balaclava.pdf
-  annotated: false
+  annotated: true
+  coverage: partial (top rectangle)
+  note: picked-up sections (Should tier); only the top rectangle is annotated
 - slug: 3x1-hood
   title: 3x1 Hood
   designer: sophia.knit
@@ -122,7 +134,9 @@
   - Balaclava
   role: in_scope
   file: data/private/ravelry/3x1-hood.pdf
-  annotated: false
+  annotated: true
+  coverage: partial (top rectangle)
+  note: picked-up sections (Should tier); only the top rectangle is annotated
 - slug: warm-and-simple
   title: Warm and simple
   designer: Sandrine Vos
@@ -134,6 +148,7 @@
   role: borderline
   file: data/private/ravelry/warm-and-simple.pdf
   annotated: false
+  coverage: probe only (no gold)
 - slug: garten-pullover
   title: Garten - pullover
   designer: Ellen Furderer
@@ -145,6 +160,7 @@
   role: limit_probe
   file: data/private/ravelry/garten-pullover.pdf
   annotated: false
+  coverage: probe only (no gold)
 - slug: picnic-folks-top
   title: Picnic Folks Top
   designer: Wan Cheng Phua
@@ -156,3 +172,4 @@
   role: limit_probe
   file: data/private/ravelry/picnic-folks-top.pdf
   annotated: false
+  coverage: probe only (no gold)

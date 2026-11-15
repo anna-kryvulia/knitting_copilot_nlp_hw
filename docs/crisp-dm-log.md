@@ -200,3 +200,13 @@ Running log of decisions. Newest entries at the bottom. Format:
   data/private/ravelry/ (git-ignored) with slug names; index `data/eval/ravelry/patterns.yaml`.
 - Why dropped: near-duplicates (4th kerchief, 3rd hood, 3rd scarf, 3rd garment) and one image-only PDF.
 - Next: annotate the 11 in-scope patterns (gold IR + counts), then run parser/explainer/charts on real text.
+
+## 2026-11-15 — 3 ↔ 4. Data Preparation (part D) + Modeling — Real-pattern gold, marker support
+- What: text extracted for 14 PDFs (layout mode for one); scope triage; gold IR written by hand for 10
+  (5 full, 5 partial) in private `build_gold.py`; review sheet; markers in IR + simulator; display/charts/facts
+  read recorded repeat counts; AGENTS.md + skill: gold stays private.
+- Result / numbers: all 10 gold IRs simulate and match every count the designers print (rows and prose).
+  Real-pattern needs found: markers (3 patterns), shifting motifs, pick-ups, i-cord edgings, brioche.
+  2 simulator bugs fixed. 139 tests pass; chart + grammar-parser evals unchanged (no regressions).
+- Next: author reviews REVIEW.md; then run parser (grammar/llm/hybrid), charts, explainer on the real text
+  (parser needs marker syntax: "to marker", "sm", "pm").

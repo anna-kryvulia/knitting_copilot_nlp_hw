@@ -159,3 +159,15 @@ left) with WS symbols (a knit on the WS is drawn as a purl bump •). Legend fro
 - UI: Pattern → Chart tab (rows multiselect, auto / full width / one repeat, PNG download).
 - Fixes during development: default-row selection compared a score with a count (picked border rows);
   piece row numbers replaced by pattern row numbers; feather & fan plain rows misaligned in motif mode.
+
+## 4.9 Markers (added for real patterns)
+Real patterns shape with markers ("knit to 3 sts before the next marker", "[k1, p1] to last 4 sts before m").
+- IR: `Until(remaining, marker=True)` — the repeat stops `remaining` stitches before the next marker.
+- Simulator: per row, marker positions on the left needle (row-start coordinates) and on the right needle;
+  `pm` places, `sm` slips, `rm` removes; knitting past a marker moves it implicitly, but **only when a stitch
+  is consumed** (an increase at a marker stays before it); flat rows mirror marker positions, in the round the
+  end of the round counts as the beginning-of-round marker; repeats whose length depends on the position
+  (nested "to marker" inside "rep to end") run dynamically and must land exactly.
+- Each worked row stores a record of the real repeat counts; display, fact sheets and charts read it instead
+  of recomputing (which is impossible once stops depend on markers).
+- Stated counts are checked on the first time a row is worked only.

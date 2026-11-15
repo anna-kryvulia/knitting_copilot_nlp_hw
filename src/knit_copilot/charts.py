@@ -61,24 +61,21 @@ class Chart(BaseModel):
     legend: dict[str, tuple[str, str]]   # op id -> (symbol, name)
 
 
-def _cells(items: list[Item], left: int, size: str | None, side: str, out: list[Cell],
-           rep: int | None = None, top: bool = True, single: bool = False) -> int:
-    for it in items:
+def _cells(items: list[Item], rec: list, size: str | None, side: str, out: list[Cell],
+           rep: int | None = None, top: bool = True, single: bool = False) -> None:
+    """Chart cells for `items`, using the simulator's record `rec` for the real repeat counts."""
+    for it, r in zip(items, rec):
         if isinstance(it, Op):
             a = kb.stitch_op(it.op)
             for _ in range(resolve(it.n, size)):
-                left -= a.consumes
                 if a.produces > 0:
                     sym = (a.chart_symbol_ws if side == "WS" else a.chart_symbol) or ""
                     out.append(Cell(op=a.id, symbol=sym, width=a.produces, rep=rep, single=single))
             continue
-        block = _static_consumption(it.repeat, size)
-        times = resolve(it.times, size) if it.times is not None else (left - resolve(it.until.remaining, size)) // block
         one = top and len(it.repeat) == 1 and isinstance(it.repeat[0], Op)
-        for i in range(times):
-            left = _cells(it.repeat, left, size, side, out, rep=(i + 1) if top else rep, top=False,
-                          single=one if top else single)
-    return left
+        for i, inner in enumerate(r["iters"]):
+            _cells(it.repeat, inner, size, side, out, rep=(i + 1) if top else rep, top=False,
+                   single=one if top else single)
 
 
 def _repeat_count(cells: list[Cell]) -> int | None:
@@ -122,7 +119,7 @@ def build(pattern: Pattern, size: str | None = None, labels: list[str] | None = 
     rows: list[ChartRow] = []
     for row_ir, start, state in picked:
         cells: list[Cell] = []
-        _cells(row_ir.ops, start, size, state.side, cells)
+        _cells(row_ir.ops, state.rec, size, state.side, cells)
         m = re.fullmatch(r"(?:Row|Rnd) (\d+)", state.label)     # chart rows use the pattern's row numbers
         rows.append(ChartRow(number=int(m.group(1)) if m else state.number, label=state.label, side=state.side,
                              cells=cells))

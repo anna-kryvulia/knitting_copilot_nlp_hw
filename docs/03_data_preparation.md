@@ -7,7 +7,7 @@ CRISP-DM phase 3. Turns the sources from Phase 2 into the data the components us
 | **A** | Pattern IR schema, unit conversion, knowledge bases, yarn table | ✅ done |
 | **B** | Stitch simulator + synthetic pattern generator with gold labels | ✅ done |
 | **C** | Hand-written eval sets (intents, setup dialogues, KB queries, yarn mentions, yarn advice) | ✅ done |
-| D | Annotations of 12 real Ravelry patterns | next — waits for the PDFs in `data/private/ravelry/` |
+| **D** | Annotations of real Ravelry patterns | ✅ gold written (10 of 14), ⏳ author review |
 
 ## 3.1 Part A
 
@@ -195,11 +195,45 @@ Not built yet (they need components from Phase 4 to exist first): gauge-adjustme
 (gold derived from the generator + simulator), explainer facts, and the judge-calibration set (needs real
 model outputs to rate).
 
-## 3.4 Reproduce
+## 3.4 Part D: real Ravelry patterns
+
+Set: 14 patterns chosen with the author (doc 02 §2.5), PDFs + text in git-ignored `data/private/ravelry/`.
+Text: `pypdf`; one design-tool PDF (Blueberry Bandana) gave one character per line → re-extracted with
+`extraction_mode="layout"`; one image-only PDF (MONOKROM) was dropped earlier.
+
+**Scope triage after reading every pattern:**
+
+| Group | Patterns | Why |
+|---|---|---|
+| full gold (5) | Sherbet Bandana, Sister Scarf, Feeling Good, Sigrid Scarf, Nick Chopper (3 sizes) | one piece, in scope |
+| partial gold (5) | Double Hat (outer hat), Stickjournalen (first repeat), Blueberry (triangle body), Moose Balaclava & 3x1 Hood (top rectangle) | later sections pick up stitches, use an applied i-cord, or a motif that shifts by design |
+| probes, no gold (4) | Heidi (brioche-type stitches, flat → round), Warm and simple (thumb on hold), Garten (raglan), Picnic Folks Top | out of Must scope; used to show where the system stops |
+
+**Gold annotation** (`data/private/ravelry/gold/build_gold.py`, private): written by hand from the text,
+never from the parser (no label leakage). Reading decisions are recorded per pattern (e.g. "until the desired
+length" → stated finished length; Sigrid gives no row gauge → 28 rows/10 cm assumed; section-restarting row
+numbers made unique). **Check:** every gold IR simulates, and every stitch/row count the designers print
+matches — row counts (Double Hat 104 → 16 → 8; Nick Chopper all 3 sizes), and counts stated in prose
+(Blueberry "you now have 7 sts", Moose "23 (25) rows", Nick Chopper "64 (56, 64)" then "56").
+
+**What real patterns needed that synthetic ones did not (loop 3 → 4):**
+1. **Markers** — "knit to 3 sts before the next marker" (Double Hat, Nick Chopper, Sigrid). The IR got
+   `until: {marker: true}`; the simulator tracks markers (pm/sm/rm, implicit passing, mirrored on flat rows,
+   end of round = BOR marker) and records real repeat counts for display and charts.
+2. Two simulator bugs found by the gold: an increase made right at a marker (k3, M1R, sm) must stay before
+   it; a printed count describes the first time a row is worked, not its repeats.
+3. Not representable (documented, not modelled): motifs that shift as a triangle shrinks, picked-up sections,
+   applied i-cord edgings, brioche-type stitches, partial rows with turns.
+
+**Author review:** `data/private/ravelry/gold/REVIEW.md` lists every row (readable form + counts) with a
+checkbox; corrections go back into `build_gold.py`.
+
+## 3.5 Reproduce
 
 ```bash
 python -m knit_copilot.data.build_yarns   # uses cached Ravelry responses in .cache/ravelry/
 python -m knit_copilot.data.generator     # data/eval/parse_cases.jsonl (seed 7, 63 cases)
 python -m knit_copilot.data.build_eval_sets  # hand-written eval sets + 20% review sample
+python data/private/ravelry/gold/build_gold.py  # private gold for the real patterns (needs the PDFs)
 pytest -q
 ```

@@ -34,6 +34,8 @@ class RowState(BaseModel):
     end_count: int
     ops: list[str]                   # expanded stitch operations in working order, one per op instance
     stated_count: int | None = None
+    markers: list[int] = []          # marker positions on the needle when the row starts
+    rec: list = []                   # actual repeat counts (see _run), for display and charts
 
 
 class SimulationResult(BaseModel):
@@ -59,6 +61,7 @@ class SimulationResult(BaseModel):
 # ---------- row expansion ----------
 
 def _static_consumption(items: list[Item], size: str | None) -> int:
+    """Stitches one pass over `items` uses; ValueError if it depends on the position (nested 'until')."""
     total = 0
     for it in items:
         if isinstance(it, Op):
@@ -70,41 +73,125 @@ def _static_consumption(items: list[Item], size: str | None) -> int:
     return total
 
 
-def _run(items: list[Item], left: int, size: str | None, out: list[str], label: str) -> int:
-    """Work `items` with `left` stitches on the left needle; append op ids to `out`; return stitches left."""
+class _Row:
+    """Working state of one row: stitches left, position, markers on both needles, expanded ops.
+
+    Markers are positions between stitches. `markers` = on the left needle, in row-start coordinates
+    (number of stitches worked when the marker is reached); `out_markers` = on the right needle, in
+    produced-stitch coordinates. Knitting past a marker moves it across implicitly; `sm` does so
+    explicitly, `pm` places one, `rm` removes one. In the round, the end of the round counts as the
+    beginning-of-round marker.
+    """
+
+    def __init__(self, start: int, size: str | None, label: str, markers: list[int], in_round: bool):
+        self.start, self.left, self.consumed, self.produced = start, start, 0, 0
+        self.size, self.label, self.in_round = size, label, in_round
+        self.markers = sorted(markers)
+        self.out_markers: list[int] = []
+        self.ops: list[str] = []
+
+    def error(self, msg: str) -> SimulationError:
+        return SimulationError(self.label, msg)
+
+    def _at_marker(self) -> bool:
+        return bool(self.markers) and self.markers[0] == self.consumed
+
+    def pass_markers(self) -> None:
+        while self._at_marker():
+            self.markers.pop(0)
+            self.out_markers.append(self.produced)
+
+    def next_marker(self) -> int:
+        for m in self.markers:
+            if m >= self.consumed:
+                return m
+        if self.in_round:
+            return self.start
+        raise self.error("'to marker' but there is no marker ahead")
+
+    def op(self, op_id: str) -> None:
+        a = kb.stitch_op(op_id)
+        if a.id == "pm":
+            self.out_markers.append(self.produced)
+        elif a.id in ("sm", "rm"):
+            if self._at_marker():
+                m = self.markers.pop(0)
+                if a.id == "sm":
+                    self.out_markers.append(self.produced)
+            elif not (self.in_round and self.consumed == self.start):     # end of round = BOR marker
+                raise self.error(f"{a.id}: there is no marker here (after {self.consumed} sts)")
+        else:
+            if a.consumes > 0:          # an increase made right at a marker (k3, M1R, sm) stays before it
+                self.pass_markers()
+            if a.consumes > self.left:
+                raise self.error(f"{a.id} needs {a.consumes} st(s) but only {self.left} left")
+            self.left -= a.consumes
+            self.consumed += a.consumes
+            self.produced += a.produces
+        self.ops.append(a.id)
+
+
+def _run(items: list[Item], row: _Row) -> list:
+    """Work `items`; return a record parallel to `items` (None for an op; for a repeat
+    {"times": n, "iters": [record per iteration]}) used by display and charts to show real repeat counts."""
+    rec: list = []
     for it in items:
         if isinstance(it, Op):
-            a = kb.stitch_op(it.op)
-            for _ in range(resolve(it.n, size)):
-                if a.consumes > left:
-                    raise SimulationError(label, f"{a.id} needs {a.consumes} st(s) but only {left} left")
-                left -= a.consumes
-                out.append(a.id)
-        elif isinstance(it, Repeat):
-            if it.times is not None:
-                for _ in range(resolve(it.times, size)):
-                    left = _run(it.repeat, left, size, out, label)
-            else:
-                target = resolve(it.until.remaining, size)
-                block = _static_consumption(it.repeat, size)
-                if block == 0:
-                    raise SimulationError(label, "repeat consumes no stitches, cannot repeat 'until'")
-                while left - target >= block:
-                    left = _run(it.repeat, left, size, out, label)
-                if left != target:
-                    raise SimulationError(label, f"repeat does not fit: {left - target} st(s) left over "
-                                                 f"before the last {target} (block uses {block})")
-    return left
+            for _ in range(resolve(it.n, row.size)):
+                row.op(it.op)
+            rec.append(None)
+            continue
+        iters = []
+        if it.times is not None:
+            for _ in range(resolve(it.times, row.size)):
+                iters.append(_run(it.repeat, row))
+            rec.append({"times": len(iters), "iters": iters})
+            continue
+        target = resolve(it.until.remaining, row.size)
+        stop = row.next_marker() if it.until.marker else None
+
+        def room() -> int:                       # stitches that may still be worked by this repeat
+            return (stop - row.consumed if stop is not None else row.left) - target
+        try:
+            block = _static_consumption(it.repeat, row.size)
+        except ValueError:
+            block = None                         # block size depends on position (nested 'until')
+        if block == 0:
+            raise row.error("repeat consumes no stitches, cannot repeat 'until'")
+        while room() > 0 if block is None else room() >= block:
+            before = row.consumed
+            iters.append(_run(it.repeat, row))
+            if row.consumed == before:
+                raise row.error("repeat makes no progress")
+        if room() != 0:
+            where = f"the last {target}" if stop is None else f"{target} before the marker"
+            raise row.error(f"repeat does not fit: {room()} st(s) left over before {where}"
+                            + (f" (block uses {block})" if block else ""))
+        rec.append({"times": len(iters), "iters": iters})
+    return rec
+
+
+def work_row(row: Row, start_count: int, size: str | None = None, markers: list[int] | None = None,
+             in_round: bool = False) -> tuple[_Row, list]:
+    """Work one row; returns the row state (ops, produced count, markers) and the repeat record."""
+    r = _Row(start_count, size, row.label, markers or [], in_round or row.side == "round")
+    rec = _run(row.ops, r)
+    r.pass_markers()
+    if r.left != 0:
+        raise SimulationError(row.label, f"row ends with {r.left} unworked st(s)")
+    return r, rec
 
 
 def expand_row(row: Row, start_count: int, size: str | None = None) -> tuple[list[str], int]:
     """Expanded op ids and the end count for one row. Raises SimulationError if the row doesn't fit."""
-    out: list[str] = []
-    left = _run(row.ops, start_count, size, out, row.label)
-    if left != 0:
-        raise SimulationError(row.label, f"row ends with {left} unworked st(s)")
-    produced = sum(kb.stitch_op(o).produces for o in out)
-    return out, produced
+    r, _ = work_row(row, start_count, size)
+    return r.ops, r.produced
+
+
+def _next_markers(r: _Row) -> list[int]:
+    """Markers for the next row: same positions in the round, mirrored when the work is turned."""
+    inner = [m for m in r.out_markers if 0 < m < r.produced]
+    return sorted(set(inner if r.in_round else [r.produced - m for m in inner]))
 
 
 # ---------- piece simulation ----------
@@ -119,14 +206,18 @@ def simulate(pattern: Pattern, size: str | None = None, piece: int = 0,
     rows_gauge = rows_per_10cm or (pattern.gauge.rows_per_10cm if pattern.gauge else None)
     by_label = pattern.rows_by_label(piece)
     result = SimulationResult(piece=p.name, size=size, cast_on=count, rows=[])
+    markers: list[int] = []
+    in_round = pattern.construction == "round"
 
     def work(row: Row, step: int, repeat: int | None) -> None:
-        nonlocal count
-        ops, end = expand_row(row, count, size)
+        nonlocal count, markers
+        r, rec = work_row(row, count, size, markers, in_round)
         result.rows.append(RowState(number=len(result.rows) + 1, label=row.label, side=row.side, step=step,
-                                    repeat=repeat, start_count=count, end_count=end, ops=ops,
-                                    stated_count=resolve(row.stated_count, size)))
-        count = end
+                                    repeat=repeat, start_count=count, end_count=r.produced, ops=r.ops,
+                                    # a printed count describes the first time the row is worked
+                                    stated_count=resolve(row.stated_count, size) if repeat is None else None,
+                                    markers=markers, rec=rec))
+        count, markers = r.produced, _next_markers(r)
 
     try:
         for i, step in enumerate(p.steps):

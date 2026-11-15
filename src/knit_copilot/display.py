@@ -14,7 +14,7 @@ from pydantic import BaseModel
 
 from knit_copilot import kb
 from knit_copilot.ir import Item, Op, Pattern, Row, resolve
-from knit_copilot.simulator import RowState, SimulationResult, _static_consumption
+from knit_copilot.simulator import RowState, SimulationResult, work_row
 
 BASIC = {"k", "p"}
 
@@ -25,32 +25,31 @@ def _op_text(op: str, n: int) -> str:
     return op if n == 1 else f"{op} ×{n}"
 
 
-def _describe(items: list[Item], left: int, size: str | None) -> tuple[str, int]:
+def _describe(items: list[Item], rec: list, size: str | None) -> str:
+    """Text for `items`, with repeat counts taken from the simulator's record (`rec`, see simulator._run)."""
     parts = []
-    for it in items:
+    for it, r in zip(items, rec):
         if isinstance(it, Op):
-            n = resolve(it.n, size)
-            parts.append(_op_text(kb.stitch_op(it.op).id, n))
-            left -= kb.stitch_op(it.op).consumes * n
+            parts.append(_op_text(kb.stitch_op(it.op).id, resolve(it.n, size)))
             continue
-        block = _static_consumption(it.repeat, size)
-        times = resolve(it.times, size) if it.times is not None else \
-            (left - resolve(it.until.remaining, size)) // block if block else 0
-        left -= block * times
+        times = r["times"]
         single = len(it.repeat) == 1 and isinstance(it.repeat[0], Op)
         if single:                                   # "k to end" → k88, "(k2tog) 3 times" → k2tog ×3
             op = kb.stitch_op(it.repeat[0].op).id
             parts.append(_op_text(op, times * resolve(it.repeat[0].n, size)))
-        else:
-            inner, _ = _describe(it.repeat, block, size)
-            parts.append(f"({inner}) ×{times}")
-    return ", ".join(parts), left
+        elif times == 0:
+            continue
+        else:                                        # show the first iteration (later ones may differ in length)
+            parts.append(f"({_describe(it.repeat, r['iters'][0], size)}) ×{times}")
+    return ", ".join(p for p in parts if p)
 
 
-def describe_row(row: Row, start_count: int, size: str | None = None) -> str:
-    """'K2, *yo, k2tog, k3; rep from * to last 2 sts, k2' with 34 sts → 'k2, (yo, k2tog, k3) ×6, k2'."""
-    text, _ = _describe(row.ops, start_count, size)
-    return text
+def describe_row(row: Row, start_count: int, size: str | None = None, rec: list | None = None) -> str:
+    """'K2, *yo, k2tog, k3; rep from * to last 2 sts, k2' with 34 sts → 'k2, (yo, k2tog, k3) ×6, k2'.
+    Pass the simulator's `rec` for rows that depend on markers; otherwise the row is worked on its own."""
+    if rec is None:
+        _, rec = work_row(row, start_count, size)
+    return _describe(row.ops, rec, size)
 
 
 class RowLine(BaseModel):
@@ -87,7 +86,7 @@ def row_lines(pattern: Pattern, sim: SimulationResult, grouped: bool = True) -> 
     def single(r: RowState, show_times: bool) -> RowLine:
         seen[r.label] += 1
         ir_row = by_label.get(r.label)
-        how = describe_row(ir_row, r.start_count, sim.size) if ir_row else f"bind off {r.start_count} sts"
+        how = describe_row(ir_row, r.start_count, sim.size, r.rec) if ir_row else f"bind off {r.start_count} sts"
         times = f" (time {seen[r.label]} of {totals[r.label]})" if show_times and totals[r.label] > 1 else ""
         return RowLine(rows=f"{word} {r.number}", instruction=r.label + times, side=r.side,
                        stitches=f"{r.start_count} → {r.end_count}",
@@ -111,7 +110,8 @@ def row_lines(pattern: Pattern, sim: SimulationResult, grouped: bool = True) -> 
         labels = list(dict.fromkeys(x.label for x in block))
         reps = block[-1].repeat
         name = labels[0] if len(labels) == 1 else _label_range(labels)
-        how = "; ".join(f"{lb}: {describe_row(by_label[lb], next(x.start_count for x in block if x.label == lb), sim.size)}"
+        firsts = {lb: next(x for x in block if x.label == lb) for lb in labels}
+        how = "; ".join(f"{lb}: {describe_row(by_label[lb], firsts[lb].start_count, sim.size, firsts[lb].rec)}"
                         for lb in labels if lb in by_label)
         for x in block:
             seen[x.label] += 1

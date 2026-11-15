@@ -41,8 +41,10 @@ class Op(_Strict):
 
 
 class Until(_Strict):
-    """Repeat until `remaining` stitches are left on the left needle (0 = to the end of the row)."""
+    """Repeat until `remaining` stitches are left on the left needle (0 = to the end of the row), or, with
+    `marker`, until `remaining` stitches are left before the next marker ("knit to 3 sts before marker")."""
     remaining: SizedInt = 0
+    marker: bool = False
 
 
 class Repeat(_Strict):
