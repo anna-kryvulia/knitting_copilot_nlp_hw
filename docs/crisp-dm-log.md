@@ -257,3 +257,10 @@ Running log of decisions. Newest entries at the bottom. Format:
   agent final state 1.0 on dev (18) and test (12), tool sequence 0.94 / 0.92, arguments 0.91 / 0.88. Every case
   answered. Remaining errors: borderline labels, short rows not known as out of scope (test only, not fixed).
 - Next: explainer on the real patterns (LLM + judge), report.
+
+## 2026-11-15 — 5. Evaluation — Explainer on the real patterns
+- What: `eval_explainer.py --split ravelry` (gold IR of the 10 real patterns; explanation text not saved).
+- Result / numbers: fact coverage 0.992, citation recall 0.975, grounded 0.9, structure 1.0, median 4.1 s
+  (Gemini 3.5 Flash-Lite). The one ungrounded case is a correct number the model derived itself (7-stitch repeat),
+  so the check is strict (precision over recall). Judge pending: OpenRouter free quota used up.
+- Next: judge run after the quota resets; report.

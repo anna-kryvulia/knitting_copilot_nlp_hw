@@ -11,6 +11,8 @@ LLM judge (--judge): 1–5 score from JUDGE_MODEL (different family from the app
   must be calibrated against human ratings before it is trusted (data/eval/judge_calibration.jsonl).
 
 Run: python -m eval.eval_explainer --split dev [--judge]
+     python -m eval.eval_explainer --split ravelry [--judge]   (gold IR of the 10 real patterns; the explanation
+     text is not saved, because it restates a copyrighted pattern)
 """
 
 import argparse
@@ -58,6 +60,10 @@ def covered(kind: str, value: str, text: str) -> bool:
 
 
 def pick_cases(split: str) -> list[dict]:
+    if split == "ravelry":
+        from eval.eval_parser_real import gold_cases
+        return [{"id": g["slug"], "tags": [g["coverage"]], "expected": {"ir": g["gold_ir"], "size": g["eval_size"]}}
+                for g in gold_cases()]
     seen, out = set(), []
     for c in load_cases("parse_cases.jsonl", split):
         if c["tags"][0] not in seen:
@@ -100,7 +106,8 @@ def main() -> None:
                "violations": out.violations, "fact_coverage": sum(hit) / len(req),
                "missing": [f"{k}:{v}" for (k, v), h in zip(req, hit) if not h],
                "citation_recall": (len(set(out.citations) & set(used)) / len(used)) if used else 1.0,
-               "structure_ok": steps_written == len(sheet.steps), "text": out.text}
+               "structure_ok": steps_written == len(sheet.steps),
+               "text": out.text if args.split != "ravelry" else f"({len(out.text)} chars, not saved)"}
         if args.judge:
             try:
                 j = judge(out.facts, out.text)

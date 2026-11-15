@@ -1,0 +1,208 @@
+{
+  "component": "explainer",
+  "split": "ravelry",
+  "version": "v4-judge",
+  "model": "gemini-3.5-flash-lite",
+  "date": "2026-11-15",
+  "metrics": {
+    "overall": {
+      "n": 10,
+      "answered": 1.0,
+      "grounded_first": 0.9,
+      "grounded_final": 0.9,
+      "fact_coverage": 0.992,
+      "citation_recall": 0.975,
+      "structure_ok": 1.0,
+      "judge_mean": null,
+      "median_seconds": 0.1
+    }
+  },
+  "n": 10,
+  "failures": [
+    {
+      "id": "double-hat",
+      "why": "citation:[sm]"
+    },
+    {
+      "id": "stickjournalens-headscarf",
+      "why": "number 7 is not in the fact sheet"
+    }
+  ],
+  "judge_model": "dots-studio/dots-3-note-preview:free",
+  "cases": [
+    {
+      "id": "3x1-hood",
+      "template": "partial",
+      "seconds": 0.1,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "fact_coverage": 1.0,
+      "missing": [],
+      "citation_recall": 1.0,
+      "structure_ok": true,
+      "text": "(1328 chars, not saved)",
+      "judge_score": null,
+      "judge_errors": [
+        "judge failed: All models failed: ['dots-studio/dots-3-note-preview:free']"
+      ]
+    },
+    {
+      "id": "blueberry-bandana",
+      "template": "partial",
+      "seconds": 0.0,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "fact_coverage": 1.0,
+      "missing": [],
+      "citation_recall": 1.0,
+      "structure_ok": true,
+      "text": "(1914 chars, not saved)",
+      "judge_score": null,
+      "judge_errors": [
+        "judge failed: All models failed: ['dots-studio/dots-3-note-preview:free']"
+      ]
+    },
+    {
+      "id": "double-hat",
+      "template": "partial",
+      "seconds": 0.1,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "fact_coverage": 0.9166666666666666,
+      "missing": [
+        "citation:[sm]"
+      ],
+      "citation_recall": 0.75,
+      "structure_ok": true,
+      "text": "(2609 chars, not saved)",
+      "judge_score": null,
+      "judge_errors": [
+        "judge failed: All models failed: ['dots-studio/dots-3-note-preview:free']"
+      ]
+    },
+    {
+      "id": "feeling-good-legwarmers",
+      "template": "full",
+      "seconds": 0.1,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "fact_coverage": 1.0,
+      "missing": [],
+      "citation_recall": 1.0,
+      "structure_ok": true,
+      "text": "(1002 chars, not saved)",
+      "judge_score": null,
+      "judge_errors": [
+        "judge failed: All models failed: ['dots-studio/dots-3-note-preview:free']"
+      ]
+    },
+    {
+      "id": "moose-balaclava",
+      "template": "partial",
+      "seconds": 0.0,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "fact_coverage": 1.0,
+      "missing": [],
+      "citation_recall": 1.0,
+      "structure_ok": true,
+      "text": "(1146 chars, not saved)",
+      "judge_score": null,
+      "judge_errors": [
+        "judge failed: All models failed: ['dots-studio/dots-3-note-preview:free']"
+      ]
+    },
+    {
+      "id": "nick-chopper",
+      "template": "full",
+      "seconds": 0.1,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "fact_coverage": 1.0,
+      "missing": [],
+      "citation_recall": 1.0,
+      "structure_ok": true,
+      "text": "(3517 chars, not saved)",
+      "judge_score": null,
+      "judge_errors": [
+        "judge failed: All models failed: ['dots-studio/dots-3-note-preview:free']"
+      ]
+    },
+    {
+      "id": "sherbet-bandana",
+      "template": "full",
+      "seconds": 0.0,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "fact_coverage": 1.0,
+      "missing": [],
+      "citation_recall": 1.0,
+      "structure_ok": true,
+      "text": "(3321 chars, not saved)",
+      "judge_score": null,
+      "judge_errors": [
+        "judge failed: All models failed: ['dots-studio/dots-3-note-preview:free']"
+      ]
+    },
+    {
+      "id": "sister-scarf",
+      "template": "full",
+      "seconds": 0.1,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "fact_coverage": 1.0,
+      "missing": [],
+      "citation_recall": 1.0,
+      "structure_ok": true,
+      "text": "(3135 chars, not saved)",
+      "judge_score": null,
+      "judge_errors": [
+        "judge failed: All models failed: ['dots-studio/dots-3-note-preview:free']"
+      ]
+    },
+    {
+      "id": "stickjournalens-headscarf",
+      "template": "partial",
+      "seconds": 0.0,
+      "grounded_first": false,
+      "grounded_final": false,
+      "violations": [
+        "number 7 is not in the fact sheet"
+      ],
+      "fact_coverage": 1.0,
+      "missing": [],
+      "citation_recall": 1.0,
+      "structure_ok": true,
+      "text": "(1915 chars, not saved)",
+      "judge_score": null,
+      "judge_errors": [
+        "judge failed: All models failed: ['dots-studio/dots-3-note-preview:free']"
+      ]
+    },
+    {
+      "id": "the-sigrid-scarf",
+      "template": "full",
+      "seconds": 0.0,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "fact_coverage": 1.0,
+      "missing": [],
+      "citation_recall": 1.0,
+      "structure_ok": true,
+      "text": "(2305 chars, not saved)",
+      "judge_score": null,
+      "judge_errors": [
+        "judge failed: All models failed: ['dots-studio/dots-3-note-preview:free']"
+      ]
+    }
+  ]
+}

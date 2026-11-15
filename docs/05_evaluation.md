@@ -312,3 +312,25 @@ also much longer than synthetic ones, so PARSE_TIME_BUDGET_S may need to be rais
 symbol_match and direction_ok are 1.0. 3 patterns are charted in motif mode, all aligned, and every default chart
 shows the stitch work. The chart builder works on real constructions (markers, size-dependent repeats, shifting
 increases) as well as on synthetic ones.
+
+### Explainer (UC1) on the gold IR
+`python -m eval.eval_explainer --split ravelry`. Input is the hand-made gold IR, so explanation quality is measured
+apart from parser errors. Gemini 3.5 Flash-Lite. The explanation text is not saved (it restates a copyrighted pattern).
+
+| Version | Answered | Fact coverage | Citation recall | Grounded (first / final) | Structure | Median time |
+|---|---|---|---|---|---|---|
+| v4 | 10 / 10 | **0.992** | 0.975 | 0.9 / 0.9 | 1.0 | 4.1 s |
+
+The synthetic dev set (5.4) scored 1.0 / 1.0 / 0.889 → 1.0; the real patterns are longer (up to 267 rows) and use
+markers, slipped edges and size-dependent repeats, and scores stay close.
+
+**Error analysis.**
+- Double Hat: the slip-marker abbreviation `[sm]` was used but not cited (coverage 0.92, citation recall 0.75).
+- stickjournalen's headscarf, not grounded after the repair round: the explanation says "do this group of 7
+  stitches 12 times". This is **correct** (k2tog, k1, yo, k1, yo, k1, sl1-k1-psso uses 7 sts; 12 × 7 + 2 = 86), but
+  7 is not on the fact sheet, so the strict number check rejects it. The check favours precision: it also blocks
+  correct numbers that the model works out itself. Fix for a next version: put each repeat block's stitch count on
+  the fact sheet. Not changed here, to keep the test run honest.
+- LLM judge: pending. The judge runs on OpenRouter (a different model family from Gemini), and its free quota
+  (50 requests/day) was used up on the day of the run.
+
