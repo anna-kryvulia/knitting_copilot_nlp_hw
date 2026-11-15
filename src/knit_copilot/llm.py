@@ -18,11 +18,12 @@ from openai import OpenAI
 from pydantic import BaseModel, ValidationError
 
 from knit_copilot.config import settings
+from knit_copilot.tracing import note_llm_call
 
 log = logging.getLogger(__name__)
 T = TypeVar("T", bound=BaseModel)
 
-_client: OpenAI | None = None
+_clients: dict[tuple[str, str], OpenAI] = {}
 
 
 class LLMConfigError(RuntimeError):
@@ -38,14 +39,25 @@ class LLMTimeout(RuntimeError):
 _pool = cf.ThreadPoolExecutor(max_workers=4, thread_name_prefix="llm")
 
 
-def client() -> OpenAI:
-    global _client
-    if _client is None:
-        if not settings.openrouter_api_key:
-            raise LLMConfigError("OPENROUTER_API_KEY is not set. Copy .env.example to .env and add your key.")
-        _client = OpenAI(base_url=settings.base_url, api_key=settings.openrouter_api_key,
-                         timeout=settings.timeout_s, max_retries=0)
-    return _client
+def _call_summary(out: dict, messages: list[dict], cached: bool) -> dict:
+    """Short record of one model call for the trace (no prompt text beyond the last message's start)."""
+    last = messages[-1].get("content") or ""
+    return {"model": out.get("model"), "cached": cached, "latency_s": 0.0 if cached else out.get("latency_s"),
+            "tokens": (out.get("usage") or {}).get("total_tokens"), "last_message": str(last)[:160],
+            "tool_calls": [tc["function"]["name"] for tc in out.get("tool_calls") or []],
+            "answer": (out.get("content") or "")[:200]}
+
+
+def client(model: str | None = None) -> OpenAI:
+    """OpenAI-compatible client; the judge model uses the judge endpoint (JUDGE_BASE_URL / JUDGE_API_KEY)."""
+    judge = model is not None and model == settings.judge_model
+    url, key = ((settings.judge_base_url, settings.judge_api_key) if judge
+                else (settings.base_url, settings.openrouter_api_key))
+    if (url, key) not in _clients:
+        if not key:
+            raise LLMConfigError("No API key: set LLM_API_KEY (or OPENROUTER_API_KEY) in .env, see .env.example.")
+        _clients[(url, key)] = OpenAI(base_url=url, api_key=key, timeout=settings.timeout_s, max_retries=0)
+    return _clients[(url, key)]
 
 
 # ---------- prompts ----------
@@ -90,7 +102,9 @@ def chat(messages: list[dict[str, Any]], *, model: str | None = None, tools: lis
     for m in models:
         path = _cache_path({"model": m, "messages": messages, **params})
         if use_cache and path.exists():
-            return json.loads(path.read_text(encoding="utf-8"))
+            out = json.loads(path.read_text(encoding="utf-8"))
+            note_llm_call(_call_summary(out, messages, cached=True))
+            return out
 
         for attempt in range(settings.max_retries):
             remaining = None if deadline is None else deadline - time.monotonic()
@@ -99,7 +113,7 @@ def chat(messages: list[dict[str, Any]], *, model: str | None = None, tools: lis
             per_request = settings.timeout_s if remaining is None else min(settings.timeout_s, remaining)
             try:
                 t0 = time.perf_counter()
-                future = _pool.submit(client().chat.completions.create, model=m, messages=messages, **params)
+                future = _pool.submit(client(m).chat.completions.create, model=m, messages=messages, **params)
                 try:
                     resp = future.result(timeout=per_request)
                 except cf.TimeoutError:
@@ -120,6 +134,7 @@ def chat(messages: list[dict[str, Any]], *, model: str | None = None, tools: lis
                 if use_cache:
                     path.parent.mkdir(parents=True, exist_ok=True)
                     path.write_text(json.dumps(out, ensure_ascii=False), encoding="utf-8")
+                note_llm_call(_call_summary(out, messages, cached=False))
                 return out
             except (openai.RateLimitError, openai.APIConnectionError, openai.APITimeoutError,
                     openai.InternalServerError, ValueError) as e:

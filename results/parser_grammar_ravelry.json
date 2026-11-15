@@ -1,0 +1,254 @@
+{
+  "component": "parser_grammar",
+  "split": "ravelry",
+  "version": "v1",
+  "model": "grammar",
+  "date": "2026-11-15",
+  "metrics": {
+    "overall": {
+      "n": 10,
+      "answered": 0.5,
+      "simulates": 0.2,
+      "rows_to_divergence": 0.0,
+      "row_count_agreement": 0.0,
+      "op_f1": 0.0,
+      "total_rows_match": 0.0,
+      "exact": 0.0
+    },
+    "full": {
+      "n": 5,
+      "answered": 0.4,
+      "simulates": 0.2,
+      "rows_to_divergence": 0.0,
+      "row_count_agreement": 0.0,
+      "op_f1": 0.0,
+      "total_rows_match": 0.0,
+      "exact": 0.0
+    },
+    "partial": {
+      "n": 5,
+      "answered": 0.6,
+      "simulates": 0.2,
+      "rows_to_divergence": 0.0,
+      "row_count_agreement": 0.0,
+      "op_f1": 0.0,
+      "total_rows_match": 0.0,
+      "exact": 0.0
+    }
+  },
+  "n": 10,
+  "failures": [
+    {
+      "slug": "3x1-hood",
+      "why": "no IR"
+    },
+    {
+      "slug": "blueberry-bandana",
+      "why": "no IR"
+    },
+    {
+      "slug": "double-hat",
+      "why": "row 1 (Rib rnd) missing | simulation error: step 1: repeat refers to undefined rows ['Decrease round on every 2nd round']"
+    },
+    {
+      "slug": "feeling-good-legwarmers",
+      "why": "no IR"
+    },
+    {
+      "slug": "moose-balaclava",
+      "why": "row 1 (Row 1) missing"
+    },
+    {
+      "slug": "nick-chopper",
+      "why": "no IR"
+    },
+    {
+      "slug": "sherbet-bandana",
+      "why": "no IR"
+    },
+    {
+      "slug": "sister-scarf",
+      "why": "row 1 (DK row 1) missing | simulation error: step 1: repeat refers to undefined rows ['Row 1', 'Row 2']"
+    },
+    {
+      "slug": "stickjournalens-headscarf",
+      "why": "row 1 (Set-up row) missing | simulation error: step 1: repeat refers to undefined rows ['Row 1', 'Row 2', 'Row 3', 'Row 4']"
+    },
+    {
+      "slug": "the-sigrid-scarf",
+      "why": "row 1 (Row 1) missing"
+    }
+  ],
+  "patterns": [
+    {
+      "slug": "3x1-hood",
+      "coverage": "partial",
+      "rows_gold": 58,
+      "answered": false,
+      "simulates": false,
+      "same_prefix": 0,
+      "count_hits": 0,
+      "op_tp": 0,
+      "op_pred": 0,
+      "op_gold": 2376,
+      "total_rows_match": false,
+      "exact": false,
+      "first_diff": "no IR",
+      "rows_pred": 0,
+      "warnings": 23
+    },
+    {
+      "slug": "blueberry-bandana",
+      "coverage": "partial",
+      "rows_gold": 76,
+      "answered": false,
+      "simulates": false,
+      "same_prefix": 0,
+      "count_hits": 0,
+      "op_tp": 0,
+      "op_pred": 0,
+      "op_gold": 3116,
+      "total_rows_match": false,
+      "exact": false,
+      "first_diff": "no IR",
+      "rows_pred": 0,
+      "warnings": 14
+    },
+    {
+      "slug": "double-hat",
+      "coverage": "partial",
+      "rows_gold": 77,
+      "answered": true,
+      "simulates": false,
+      "same_prefix": 0,
+      "count_hits": 0,
+      "op_tp": 0,
+      "op_pred": 0,
+      "op_gold": 7664,
+      "total_rows_match": false,
+      "exact": false,
+      "first_diff": "row 1 (Rib rnd) missing | simulation error: step 1: repeat refers to undefined rows ['Decrease round on every 2nd round']",
+      "rows_pred": 0,
+      "warnings": 7
+    },
+    {
+      "slug": "feeling-good-legwarmers",
+      "coverage": "full",
+      "rows_gold": 174,
+      "answered": false,
+      "simulates": false,
+      "same_prefix": 0,
+      "count_hits": 0,
+      "op_tp": 0,
+      "op_pred": 0,
+      "op_gold": 11136,
+      "total_rows_match": false,
+      "exact": false,
+      "first_diff": "no IR",
+      "rows_pred": 0,
+      "warnings": 1
+    },
+    {
+      "slug": "moose-balaclava",
+      "coverage": "partial",
+      "rows_gold": 23,
+      "answered": true,
+      "simulates": true,
+      "same_prefix": 0,
+      "count_hits": 0,
+      "op_tp": 0,
+      "op_pred": 0,
+      "op_gold": 437,
+      "total_rows_match": false,
+      "exact": false,
+      "first_diff": "row 1 (Row 1) missing",
+      "rows_pred": 0,
+      "warnings": 5
+    },
+    {
+      "slug": "nick-chopper",
+      "coverage": "full",
+      "rows_gold": 97,
+      "answered": false,
+      "simulates": false,
+      "same_prefix": 0,
+      "count_hits": 0,
+      "op_tp": 0,
+      "op_pred": 0,
+      "op_gold": 10475,
+      "total_rows_match": false,
+      "exact": false,
+      "first_diff": "no IR",
+      "rows_pred": 0,
+      "warnings": 19
+    },
+    {
+      "slug": "sherbet-bandana",
+      "coverage": "full",
+      "rows_gold": 267,
+      "answered": false,
+      "simulates": false,
+      "same_prefix": 0,
+      "count_hits": 0,
+      "op_tp": 0,
+      "op_pred": 0,
+      "op_gold": 6245,
+      "total_rows_match": false,
+      "exact": false,
+      "first_diff": "no IR",
+      "rows_pred": 0,
+      "warnings": 8
+    },
+    {
+      "slug": "sister-scarf",
+      "coverage": "full",
+      "rows_gold": 573,
+      "answered": true,
+      "simulates": false,
+      "same_prefix": 0,
+      "count_hits": 0,
+      "op_tp": 0,
+      "op_pred": 0,
+      "op_gold": 18909,
+      "total_rows_match": false,
+      "exact": false,
+      "first_diff": "row 1 (DK row 1) missing | simulation error: step 1: repeat refers to undefined rows ['Row 1', 'Row 2']",
+      "rows_pred": 0,
+      "warnings": 10
+    },
+    {
+      "slug": "stickjournalens-headscarf",
+      "coverage": "partial",
+      "rows_gold": 5,
+      "answered": true,
+      "simulates": false,
+      "same_prefix": 0,
+      "count_hits": 0,
+      "op_tp": 0,
+      "op_pred": 0,
+      "op_gold": 422,
+      "total_rows_match": false,
+      "exact": false,
+      "first_diff": "row 1 (Set-up row) missing | simulation error: step 1: repeat refers to undefined rows ['Row 1', 'Row 2', 'Row 3', 'Row 4']",
+      "rows_pred": 0,
+      "warnings": 9
+    },
+    {
+      "slug": "the-sigrid-scarf",
+      "coverage": "full",
+      "rows_gold": 81,
+      "answered": true,
+      "simulates": true,
+      "same_prefix": 0,
+      "count_hits": 0,
+      "op_tp": 0,
+      "op_pred": 0,
+      "op_gold": 6653,
+      "total_rows_match": false,
+      "exact": false,
+      "first_diff": "row 1 (Row 1) missing",
+      "rows_pred": 0,
+      "warnings": 9
+    }
+  ]
+}

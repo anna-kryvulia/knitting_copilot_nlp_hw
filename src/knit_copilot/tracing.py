@@ -14,6 +14,12 @@ from knit_copilot.config import ROOT
 
 TRACE_DIR = ROOT / ".cache" / "traces"
 _memory: dict[str, list[dict[str, Any]]] = {}
+_llm_calls: list[dict[str, Any]] = []          # every model call (llm.chat), attached to the node that made it
+
+
+def note_llm_call(summary: dict[str, Any]) -> None:
+    _llm_calls.append(summary)
+    del _llm_calls[:-500]
 
 
 @dataclass
@@ -23,6 +29,7 @@ class TraceRecord:
     input: Any
     output: Any = None
     error: str | None = None
+    llm_calls: list = field(default_factory=list)
     latency_s: float = 0.0
     ts: float = field(default_factory=time.time)
 
@@ -31,6 +38,7 @@ class TraceRecord:
 def trace(thread_id: str, node: str, inp: Any) -> Iterator[TraceRecord]:
     rec = TraceRecord(thread_id=thread_id, node=node, input=inp)
     t0 = time.perf_counter()
+    first = len(_llm_calls)
     try:
         yield rec
     except Exception as e:
@@ -38,6 +46,7 @@ def trace(thread_id: str, node: str, inp: Any) -> Iterator[TraceRecord]:
         raise
     finally:
         rec.latency_s = round(time.perf_counter() - t0, 3)
+        rec.llm_calls = _llm_calls[first:] if len(_llm_calls) >= first else []
         d = asdict(rec)
         _memory.setdefault(thread_id, []).append(d)
         TRACE_DIR.mkdir(parents=True, exist_ok=True)

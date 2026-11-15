@@ -1,0 +1,22 @@
+# Light theme with a red accent (yarn red).
+[theme]
+base = "light"
+primaryColor = "#C8283C"
+backgroundColor = "#FBF7F2"
+secondaryBackgroundColor = "#F3EBE2"
+textColor = "#2E2522"
+linkColor = "#A81F31"
+borderColor = "#E6D9CC"
+showWidgetBorder = true
+baseRadius = "0.6rem"
+font = "'Nunito Sans', sans-serif"
+headingFont = "'Fraunces', serif"
+codeFont = "'JetBrains Mono', monospace"
+
+[theme.sidebar]
+backgroundColor = "#F6EFE7"
+secondaryBackgroundColor = "#FFFFFF"
+borderColor = "#E6D9CC"
+
+[server]
+headless = true

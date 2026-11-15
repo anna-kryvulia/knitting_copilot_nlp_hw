@@ -16,8 +16,14 @@ def _list(name: str) -> list[str]:
 
 @dataclass(frozen=True)
 class Settings:
-    openrouter_api_key: str = os.getenv("OPENROUTER_API_KEY", "")
-    base_url: str = "https://openrouter.ai/api/v1"
+    # any OpenAI-compatible endpoint; OpenRouter by default (LLM_API_KEY falls back to OPENROUTER_API_KEY)
+    openrouter_api_key: str = os.getenv("LLM_API_KEY") or os.getenv("OPENROUTER_API_KEY", "")
+    base_url: str = os.getenv("LLM_BASE_URL", "https://openrouter.ai/api/v1")
+    # the judge may live on another provider (it must be a different model family than the app model)
+    judge_base_url: str = os.getenv("JUDGE_BASE_URL") or os.getenv("LLM_BASE_URL", "https://openrouter.ai/api/v1")
+    judge_api_key: str = os.getenv("JUDGE_API_KEY") or (
+        os.getenv("OPENROUTER_API_KEY", "") if "openrouter.ai" in (os.getenv("JUDGE_BASE_URL") or "")
+        else os.getenv("LLM_API_KEY") or os.getenv("OPENROUTER_API_KEY", ""))
     llm_model: str = os.getenv("LLM_MODEL", "nvidia/nemotron-3.5-super-vl:free")
     fallback_models: list[str] = field(default_factory=lambda: _list("LLM_FALLBACK_MODELS"))
     judge_model: str = os.getenv("JUDGE_MODEL", "dots-studio/dots-3-note-preview:free")

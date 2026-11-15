@@ -11,6 +11,7 @@ Default charts (stitch-pattern block, motif mode when wide):
   default_has_work the default chart shows rows with stitch work beyond knit/purl whenever the pattern has any
 
 Run: python -m eval.eval_charts --split dev
+     python -m eval.eval_charts --split ravelry   (gold IR of the real patterns, data/private/ravelry/gold/)
 """
 
 import argparse
@@ -28,7 +29,12 @@ def main() -> None:
     args = ap.parse_args()
     rows_total = ops_ok = width_ok = sym_ok = dir_ok = 0
     pat_rows, failures = [], []
-    for c in load_cases("parse_cases.jsonl", args.split):
+    if args.split == "ravelry":
+        from eval.eval_parser_real import gold_cases
+        cases = [{"id": g["slug"], "expected": {"ir": g["gold_ir"], "size": g["eval_size"]}} for g in gold_cases()]
+    else:
+        cases = load_cases("parse_cases.jsonl", args.split)
+    for c in cases:
         p, size = Pattern.model_validate(c["expected"]["ir"]), c["expected"]["size"]
         sim = simulate(p, size)
         first = {}

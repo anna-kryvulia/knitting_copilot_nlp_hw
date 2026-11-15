@@ -81,7 +81,7 @@ def test_chat_deadline_is_enforced(monkeypatch):
 
     class FakeClient:
         chat = type("C", (), {"completions": SlowCompletions()})()
-    monkeypatch.setattr(llm, "client", lambda: FakeClient())
+    monkeypatch.setattr(llm, "client", lambda model=None: FakeClient())
     t0 = _t.monotonic()
     try:
         llm.chat([{"role": "user", "content": "x"}], use_cache=False, fallback=False, deadline=_t.monotonic() + 1.5)

@@ -197,3 +197,37 @@ and `--mode llm`, dev then test).
 Set: `data/eval/setup_cases.jsonl` (30 dialogues). Metrics: tool sequence, argument accuracy, project state after
 the dialogue (gold computed by code), no-tool messages. Unit test with a mocked model passes (calls executed,
 US 8 → 5.0 mm and 18 sts / 4 in → 17.7 per 10 cm converted by code). **LLM run pending: free quota.**
+
+## 5.11 Real Ravelry patterns (reported apart from synthetic)
+Set: 10 annotated free Ravelry patterns (5 full, 5 partial; `data/eval/ravelry/patterns.yaml`). The input is the
+text extracted from the PDF, as a knitter would paste it. The gold IR was written by hand and simulates to every
+count the designers print. Both stay private (copyright). Script: `eval/eval_parser_real.py`.
+For partial patterns only the annotated section is scored.
+
+### Parser
+| Version | Parser | Answered | Simulates | Rows to divergence | Row-count agreement | Op F1 | Exact |
+|---|---|---|---|---|---|---|---|
+| v1 | grammar | 0.5 | 0.2 | 0.0 | 0.0 | 0.0 | 0 / 10 |
+| — | llm / hybrid | pending (free quota used up) | | | | | |
+
+**Error analysis (grammar).** The grammar reads synthetic notation perfectly (dev 36/36, test 27/27, markers 20/20)
+and fails on every real pattern. Causes, from the parser warnings:
+1. Stitches written in words: "Knit one, purl until the last stitch", "slip 1 stitch purl-wise with the yarn
+   held in front", "SL 1 PWISE WYIF" (Sigrid, Sister Scarf, Sherbet).
+2. Whole-row phrases: "P all stitches", "purl all sts", "K until 2 sts remain", "P4 (K1, P3) until 1 st remains"
+   (Blueberry, headscarf, 3x1 Hood).
+3. Lengths and repeats in prose: "Work then in Stockinette stitch until the hat measures …", "Work 9.5 cm in
+   (k1, p1) ribbing", "Repeat row 1 and 2 until the work measures …" (Double Hat, Moose).
+4. Layout: PDF line breaks split one instruction over two lines; colour labels in row headers
+   ("Rounds 1-4 (Color A):"); a cast-on written inside a sentence (Legwarmers, Nick Chopper).
+
+The grammar was **not** tuned on these patterns: they are the parser's test set. The result is the
+expected one and shows why the system needs a language model: the variety of real wording cannot be covered by
+hand-written rules. The LLM and hybrid runs are the main real-pattern result and are pending. Real patterns are
+also much longer than synthetic ones, so PARSE_TIME_BUDGET_S may need to be raised for them; record it if so.
+
+### Charts (UC4) on the gold IR
+`python -m eval.eval_charts --split ravelry`: 10 patterns, 66 written rows. ops_match, width_match,
+symbol_match and direction_ok are 1.0. 3 patterns are charted in motif mode, all aligned, and every default chart
+shows the stitch work. The chart builder works on real constructions (markers, size-dependent repeats, shifting
+increases) as well as on synthetic ones.

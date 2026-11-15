@@ -1,6 +1,7 @@
 """Knitting Copilot — Streamlit UI.
 
-Phase 4 (in progress): Pattern tab (paste → parse → row-by-row simulation) and abbreviation lookup.
+Tabs: My project (setup → working pattern → row tracker, chat via the LangGraph graph), Pattern explorer,
+Yarn; sidebar: abbreviation lookup. Theme: .streamlit/config.toml + the CSS below.
 Run: streamlit run app.py
 """
 
@@ -16,8 +17,42 @@ from knit_copilot.config import ROOT, settings
 from knit_copilot.display import row_lines
 from knit_copilot.retrieval import search as kbsearch
 from knit_copilot.simulator import simulate
+from knit_copilot.tracing import get_trace
 
 st.set_page_config(page_title="Knitting Copilot", page_icon="🧶", layout="wide")
+
+# Look: light, warm background with a yarn-red accent (colours in .streamlit/config.toml).
+st.markdown("""
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,650&family=Nunito+Sans:wght@400;600;700&display=swap');
+:root { --kc-red: #C8283C; --kc-red-soft: #F8E1E3; --kc-line: #E6D9CC; --kc-card: #FFFFFF; }
+.block-container { padding-top: 3.4rem; max-width: 1280px; }
+h1, h2, h3 { letter-spacing: -0.01em; }
+.kc-hero { display: flex; align-items: center; gap: 1rem; padding: 1.1rem 1.4rem; margin-bottom: 0.6rem;
+  background: var(--kc-card); border: 1px solid var(--kc-line); border-left: 6px solid var(--kc-red);
+  border-radius: 0.9rem; box-shadow: 0 2px 10px rgba(80, 40, 30, 0.05); }
+.kc-hero .kc-ball { font-size: 2.4rem; line-height: 1; }
+.kc-hero h1 { font-family: 'Fraunces', serif; font-size: 2rem; margin: 0; padding: 0; color: #2E2522; }
+.kc-hero p { margin: 0.15rem 0 0; color: #7A6A62; font-size: 0.98rem; }
+.kc-hero .kc-tag { margin-left: auto; background: var(--kc-red-soft); color: #A81F31; font-weight: 700;
+  font-size: 0.78rem; padding: 0.3rem 0.7rem; border-radius: 999px; white-space: nowrap; }
+/* tabs: red underline and bold active tab */
+.stTabs [data-baseweb="tab-list"] { gap: 0.4rem; border-bottom: 1px solid var(--kc-line); }
+.stTabs [data-baseweb="tab"] { padding: 0.5rem 0.9rem; border-radius: 0.6rem 0.6rem 0 0; }
+.stTabs [aria-selected="true"] { background: var(--kc-red-soft); }
+.stTabs [aria-selected="true"] p { color: #A81F31; font-weight: 700; }
+/* cards: bordered containers, expanders, metrics, chat */
+[data-testid="stVerticalBlockBorderWrapper"] { background: var(--kc-card); }
+[data-testid="stExpander"] details { background: var(--kc-card); border-radius: 0.7rem; }
+[data-testid="stMetric"] { background: var(--kc-card); border: 1px solid var(--kc-line); border-radius: 0.7rem;
+  padding: 0.6rem 0.8rem; }
+[data-testid="stMetricValue"] { color: var(--kc-red); }
+[data-testid="stChatMessage"] { background: var(--kc-card); border: 1px solid var(--kc-line); border-radius: 0.9rem; }
+[data-testid="stSidebar"] h2 { font-family: 'Fraunces', serif; }
+.stButton button[kind="primary"] { box-shadow: 0 2px 6px rgba(200, 40, 60, 0.25); }
+.stProgress > div > div > div > div { background-color: var(--kc-red); }
+</style>
+""", unsafe_allow_html=True)
 
 
 @st.cache_data
@@ -63,7 +98,14 @@ with st.sidebar:
     st.caption(f"LLM: {settings.llm_model}" if settings.openrouter_api_key else
                "LLM: no OPENROUTER_API_KEY — grammar parser only")
 
-st.title("🧶 Knitting Copilot")
+st.markdown("""
+<div class="kc-hero">
+  <div class="kc-ball">🧶</div>
+  <div><h1>Knitting Copilot</h1>
+  <p>Reads your pattern, fits it to your yarn and gauge, draws the chart and keeps count of your rows.</p></div>
+  <div class="kc-tag">every number checked by code</div>
+</div>
+""", unsafe_allow_html=True)
 tab_project, tab_pattern, tab_yarn = st.tabs(["My project", "Pattern explorer", "Yarn"])
 
 # ---------- Pattern tab ----------
@@ -287,7 +329,7 @@ with tab_project:
         choice = st.selectbox("Project", ["+ New project"] + list(names), format_func=lambda x: names.get(x, x))
         if choice == "+ New project":
             new_name = st.text_input("Name", value="My project")
-            if st.button("Create project"):
+            if st.button("Create project", type="primary"):
                 pr = project.new_project(new_name)
                 db.save(pr)
                 st.rerun()
@@ -338,18 +380,19 @@ with tab_project:
 
     with right_col:
         if pr.stage == "knitting":
-            v = tracker.view(pr)
-            st.progress(v.percent / 100, text=f"{'Round' if v.side == 'round' else 'Row'} {v.number} of {v.total}"
-                                              + (f" · {v.label} ({v.time_of})" if v.time_of else f" · {v.label}"))
-            st.markdown(f"#### {v.instruction}")
-            st.caption(f"Stitches {v.start_count} → **{v.end_count}**"
-                       + (f" · the pattern says {v.stated_count}" if v.stated_count is not None else "")
-                       + f" · {v.rows_left} row{'' if v.rows_left == 1 else 's'} left")
-            b1, b2, _ = st.columns([1, 1, 3])
-            if b1.button("◀ Previous row"):
-                tracker.prev_row(pr); db.save(pr); st.rerun()
-            if b2.button("Next row ▶", type="primary"):
-                tracker.next_row(pr); db.save(pr); st.rerun()
+            with st.container(border=True):
+                v = tracker.view(pr)
+                st.progress(v.percent / 100, text=f"{'Round' if v.side == 'round' else 'Row'} {v.number} of {v.total}"
+                                                  + (f" · {v.label} ({v.time_of})" if v.time_of else f" · {v.label}"))
+                st.markdown(f"#### {v.instruction}")
+                st.caption(f"Stitches {v.start_count} → **{v.end_count}**"
+                           + (f" · the pattern says {v.stated_count}" if v.stated_count is not None else "")
+                           + f" · {v.rows_left} row{'' if v.rows_left == 1 else 's'} left")
+                b1, b2, _ = st.columns([1, 1, 2])
+                if b1.button("◀ Previous row", use_container_width=True):
+                    tracker.prev_row(pr); db.save(pr); st.rerun()
+                if b2.button("Next row ▶", type="primary", use_container_width=True):
+                    tracker.next_row(pr); db.save(pr); st.rerun()
         st.divider()
         hist = st.session_state.setdefault(f"chat-{pr.id}", [])
         for m in hist[-12:]:
@@ -357,16 +400,30 @@ with tab_project:
                 st.markdown(m["content"])
                 if m.get("chart"):
                     st.image(m["chart"])
+                if m.get("trace"):
+                    with st.expander("LLM trace"):
+                        for rec in m["trace"]:
+                            st.markdown(f"**node `{rec['node']}`** · {rec['latency_s']} s"
+                                        + (f" · error: {rec['error']}" if rec.get("error") else ""))
+                            for c in rec.get("llm_calls") or []:
+                                st.markdown(f"- model call `{c['model']}` · "
+                                            + ("cached" if c["cached"] else f"{c['latency_s']} s")
+                                            + (f" · {c['tokens']} tokens" if c.get("tokens") else "")
+                                            + (f" · tool calls: {', '.join(c['tool_calls'])}" if c["tool_calls"] else ""))
+                            if not rec.get("llm_calls"):
+                                st.caption("no model call (code only)")
+                            st.json(rec.get("output"), expanded=False)
         msg = st.chat_input("Ask about your pattern, yarn or stitches — or tell me your yarn, needles and gauge")
         if msg:
             with st.spinner("Thinking…"):
+                n_before = len(get_trace(pr.id))
                 try:
                     out = chat_graph.chat(pr.id, msg)
                     reply, show = out["reply"], out.get("show")
                     reply += f"\n\n_routed to {out['intent']} ({out['route_method']})_"
                 except (RuntimeError, ValueError) as e:
                     reply, show = f"Sorry, that did not work: {e}", ""
-            entry = {"role": "assistant", "content": reply}
+            entry = {"role": "assistant", "content": reply, "trace": get_trace(pr.id)[n_before:]}
             if show == "chart":
                 pr2 = db.load(pr.id)
                 pat = pr2.working.pattern if pr2.stage == "knitting" and pr2.working else pr2.pattern

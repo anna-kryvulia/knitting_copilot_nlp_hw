@@ -190,8 +190,11 @@ def generate_working_pattern(p: Project) -> ToolResult:
         return ToolResult(ok=False, message="Could not adjust the pattern: " + " ".join(a.notes))
     p.working, p.stage, p.row_index = a, "knitting", 0
     p.history.append(f"v{p.version}: generated for {p.gauge_sts_10cm:g} sts/10 cm, cast on {a.chosen_stitches}")
+    from knit_copilot import tracker                    # same row count the tracker shows (bind off included)
+    total = tracker.view(p).total
+    unit = "rounds" if a.pattern.construction == "round" else "rows"
     return ToolResult(ok=True, message=f"Working pattern v{p.version} ready: cast on {a.chosen_stitches} sts, "
-                                       f"{a.after.rows} rows. The project is now locked.",
+                                       f"{total} {unit} including the bind off. The project is now locked.",
                       data={"cast_on": a.chosen_stitches, "notes": a.notes})
 
 

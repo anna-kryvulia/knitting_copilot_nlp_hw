@@ -227,3 +227,14 @@ Running log of decisions. Newest entries at the bottom. Format:
   Router hybrid dev: 35/36 correct where answered; 19 LLM calls failed (daily free quota). Browser check: "I finished
   round 4" → round 5 of 6, (k6, k2tog) ×11, 88 → 77.
 - Next: re-run router hybrid/llm and the setup-agent eval when quota allows; then the real-pattern evaluation.
+
+## 2026-11-15 — 5. Evaluation — Real Ravelry patterns (code parts); quota investigation
+- What: `eval/eval_parser_real.py` (pattern text → IR vs hand-made gold, partial patterns scored on the annotated
+  section); chart eval `--split ravelry`; LLM endpoint configurable (`LLM_BASE_URL`, `LLM_API_KEY`, judge endpoint).
+- Why: real patterns are a Must in the evaluation. The OpenRouter key is free tier with 0 credit (61/50 free requests
+  used today), so LLM runs are blocked; another OpenAI-compatible free provider can be used without code changes.
+- Result / numbers: grammar parser 0/10 exact on real text (0.5 answered) versus 100% on synthetic: words instead of
+  abbreviations, whole-row phrases, prose lengths, PDF layout. Not tuned (test set). Charts on real gold: all 1.0
+  (66 rows). 147 tests pass.
+- Next: LLM + hybrid parser on real patterns, explainer on real patterns, setup agent and router LLM evals — as
+  soon as an LLM endpoint with quota is available.
