@@ -218,3 +218,12 @@ Running log of decisions. Newest entries at the bottom. Format:
   built from standard notation and checked on new synthetic data instead.
 - Result / numbers: grammar marker set dev 12/12, test 8/8; original set unchanged (36/36, 27/27). Found: named
   rows were silently skipped before. LLM on the marker set (dev): 5/12 answered, all 5 exact; 7 time-outs.
+
+## 2026-11-15 — 4/5. Modeling + Evaluation — UC5: project workflow, tracker, router, setup agent, chat graph
+- What: `project.py` + `db.py` (SQLite, setup → lock → start over as version N+1), `tracker.py`, hybrid router
+  (rules + LLM), setup agent (OpenAI-style tool calls into project.py), LangGraph chat graph (`graph.py`, 10 nodes,
+  diagram in docs/diagrams/chat_graph.md), "My project" tab in the app (checklist, generate/start over, tracker, chat).
+- Result / numbers: 147 tests pass. Router rules: dev coverage 0.436 / precision 1.0, test 0.515 / 0.941.
+  Router hybrid dev: 35/36 correct where answered; 19 LLM calls failed (daily free quota). Browser check: "I finished
+  round 4" → round 5 of 6, (k6, k2tog) ×11, 88 → 77.
+- Next: re-run router hybrid/llm and the setup-agent eval when quota allows; then the real-pattern evaluation.

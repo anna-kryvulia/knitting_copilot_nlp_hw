@@ -1,0 +1,245 @@
+{
+  "component": "router_rules",
+  "split": "test",
+  "version": "v2",
+  "model": "none",
+  "date": "2026-11-15",
+  "metrics": {
+    "overall": {
+      "n": 33,
+      "accuracy": 0.485,
+      "macro_f1": 0.552,
+      "rule_coverage": 0.515,
+      "rule_precision": 0.941,
+      "llm_calls": 0
+    },
+    "per_intent_f1": {
+      "setup": 0.667,
+      "adjust_pattern": 0.8,
+      "explain": 0.0,
+      "yarn_advice": 0.0,
+      "abbreviation_lookup": 0.8,
+      "knitting_question": 0.0,
+      "chart": 1.0,
+      "tracker": 0.8,
+      "validate": 0.5,
+      "out_of_scope": 0.5,
+      "smalltalk": 1.0
+    },
+    "confusion": {
+      "setup": {
+        "unknown": 1,
+        "setup": 2
+      },
+      "adjust_pattern": {
+        "adjust_pattern": 2,
+        "unknown": 1
+      },
+      "explain": {
+        "unknown": 3
+      },
+      "yarn_advice": {
+        "unknown": 3
+      },
+      "abbreviation_lookup": {
+        "abbreviation_lookup": 2,
+        "unknown": 1
+      },
+      "knitting_question": {
+        "unknown": 3
+      },
+      "chart": {
+        "chart": 3
+      },
+      "tracker": {
+        "tracker": 2,
+        "unknown": 1
+      },
+      "validate": {
+        "unknown": 1,
+        "setup": 1,
+        "validate": 1
+      },
+      "out_of_scope": {
+        "unknown": 2,
+        "out_of_scope": 1
+      },
+      "smalltalk": {
+        "smalltalk": 3
+      }
+    }
+  },
+  "n": 33,
+  "failures": [
+    {
+      "id": "intent-001",
+      "text": "I'm going to use YarnArt Jeans for this",
+      "gold": "setup",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "easy"
+      ]
+    },
+    {
+      "id": "intent-014",
+      "text": "I'm ready, make my version of the pattern",
+      "gold": "adjust_pattern",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "indirect"
+      ]
+    },
+    {
+      "id": "intent-019",
+      "text": "I don't understand the part with rep from * to last 2 sts",
+      "gold": "explain",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "easy"
+      ]
+    },
+    {
+      "id": "intent-020",
+      "text": "Can you walk me through the crown decreases?",
+      "gold": "explain",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "easy"
+      ]
+    },
+    {
+      "id": "intent-023",
+      "text": "Why does the stitch count go down in round 3?",
+      "gold": "explain",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "indirect"
+      ]
+    },
+    {
+      "id": "intent-025",
+      "text": "What needle size should I use for Alize Cotton Gold?",
+      "gold": "yarn_advice",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "easy"
+      ]
+    },
+    {
+      "id": "intent-027",
+      "text": "What gauge does Nako Calico usually give?",
+      "gold": "yarn_advice",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "easy"
+      ]
+    },
+    {
+      "id": "intent-028",
+      "text": "Can I machine wash DROPS Nepal?",
+      "gold": "yarn_advice",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "easy"
+      ]
+    },
+    {
+      "id": "intent-036",
+      "text": "what's the difference between skp and ssk",
+      "gold": "abbreviation_lookup",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "easy"
+      ]
+    },
+    {
+      "id": "intent-041",
+      "text": "How do I join in the round without twisting?",
+      "gold": "knitting_question",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "easy"
+      ]
+    },
+    {
+      "id": "intent-046",
+      "text": "how to read RS and WS",
+      "gold": "knitting_question",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "typo"
+      ]
+    },
+    {
+      "id": "intent-047",
+      "text": "Why do my edges look messy?",
+      "gold": "knitting_question",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "indirect"
+      ]
+    },
+    {
+      "id": "intent-062",
+      "text": "I ripped back 3 rows, go back please",
+      "gold": "tracker",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "indirect"
+      ]
+    },
+    {
+      "id": "intent-066",
+      "text": "Check whether the stitch counts add up",
+      "gold": "validate",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "easy"
+      ]
+    },
+    {
+      "id": "intent-067",
+      "text": "Row 12 says 64 sts but I get 62, is the pattern wrong?",
+      "gold": "validate",
+      "pred": "setup",
+      "method": "rule:numbers",
+      "tags": [
+        "ambiguous"
+      ]
+    },
+    {
+      "id": "intent-075",
+      "text": "Where can I buy YarnArt Jeans cheapest?",
+      "gold": "out_of_scope",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "indirect"
+      ]
+    },
+    {
+      "id": "intent-077",
+      "text": "Write me a poem about sheep",
+      "gold": "out_of_scope",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "easy"
+      ]
+    }
+  ]
+}

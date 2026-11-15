@@ -1,0 +1,387 @@
+{
+  "component": "router_rules",
+  "split": "dev",
+  "version": "v2",
+  "model": "none",
+  "date": "2026-11-15",
+  "metrics": {
+    "overall": {
+      "n": 55,
+      "accuracy": 0.436,
+      "macro_f1": 0.538,
+      "rule_coverage": 0.436,
+      "rule_precision": 1.0,
+      "llm_calls": 0
+    },
+    "per_intent_f1": {
+      "setup": 0.571,
+      "adjust_pattern": 0.75,
+      "explain": 0.0,
+      "yarn_advice": 0.0,
+      "abbreviation_lookup": 0.75,
+      "knitting_question": 0.0,
+      "chart": 0.889,
+      "tracker": 0.889,
+      "validate": 0.75,
+      "out_of_scope": 0.75,
+      "smalltalk": 0.571
+    },
+    "confusion": {
+      "setup": {
+        "setup": 2,
+        "unknown": 3
+      },
+      "adjust_pattern": {
+        "adjust_pattern": 3,
+        "unknown": 2
+      },
+      "explain": {
+        "unknown": 5
+      },
+      "yarn_advice": {
+        "unknown": 5
+      },
+      "abbreviation_lookup": {
+        "abbreviation_lookup": 3,
+        "unknown": 2
+      },
+      "knitting_question": {
+        "unknown": 5
+      },
+      "chart": {
+        "chart": 4,
+        "unknown": 1
+      },
+      "tracker": {
+        "tracker": 4,
+        "unknown": 1
+      },
+      "validate": {
+        "validate": 3,
+        "unknown": 2
+      },
+      "out_of_scope": {
+        "out_of_scope": 3,
+        "unknown": 2
+      },
+      "smalltalk": {
+        "unknown": 3,
+        "smalltalk": 2
+      }
+    }
+  },
+  "n": 55,
+  "failures": [
+    {
+      "id": "intent-006",
+      "text": "Actually I switched to Drops Karisma",
+      "gold": "setup",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "indirect"
+      ]
+    },
+    {
+      "id": "intent-007",
+      "text": "I have some merino DK at home, that's what I'll knit with",
+      "gold": "setup",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "indirect"
+      ]
+    },
+    {
+      "id": "intent-008",
+      "text": "Gauge is 22/30 in stockinette after blocking",
+      "gold": "setup",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "easy"
+      ]
+    },
+    {
+      "id": "intent-011",
+      "text": "My gauge is different from the pattern, what should I cast on?",
+      "gold": "adjust_pattern",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "ambiguous"
+      ]
+    },
+    {
+      "id": "intent-015",
+      "text": "how many stitches do I need with my gauge for the same width",
+      "gold": "adjust_pattern",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "indirect"
+      ]
+    },
+    {
+      "id": "intent-017",
+      "text": "What does row 3 mean?",
+      "gold": "explain",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "easy"
+      ]
+    },
+    {
+      "id": "intent-018",
+      "text": "Explain this pattern to me step by step",
+      "gold": "explain",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "easy"
+      ]
+    },
+    {
+      "id": "intent-021",
+      "text": "what am I supposed to do in Row 5 (RS)",
+      "gold": "explain",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "typo"
+      ]
+    },
+    {
+      "id": "intent-022",
+      "text": "K2, *yo, k2tog, k3; rep from * to last 2 sts, k2 — what does this do?",
+      "gold": "explain",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "easy"
+      ]
+    },
+    {
+      "id": "intent-024",
+      "text": "Is the border knitted on every row?",
+      "gold": "explain",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "indirect"
+      ]
+    },
+    {
+      "id": "intent-026",
+      "text": "Is cotton a good yarn for a winter hat?",
+      "gold": "yarn_advice",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "easy"
+      ]
+    },
+    {
+      "id": "intent-029",
+      "text": "Would mohair work for this cabled scarf?",
+      "gold": "yarn_advice",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "indirect"
+      ]
+    },
+    {
+      "id": "intent-030",
+      "text": "which yarn weight is himalaya everyday",
+      "gold": "yarn_advice",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "typo"
+      ]
+    },
+    {
+      "id": "intent-031",
+      "text": "My acrylic project looks uneven, will blocking help?",
+      "gold": "yarn_advice",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "indirect"
+      ]
+    },
+    {
+      "id": "intent-032",
+      "text": "Is Gazzal Baby Wool soft enough for a baby blanket?",
+      "gold": "yarn_advice",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "easy"
+      ]
+    },
+    {
+      "id": "intent-037",
+      "text": "What does yfwd mean in a UK pattern?",
+      "gold": "abbreviation_lookup",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "easy"
+      ]
+    },
+    {
+      "id": "intent-039",
+      "text": "C6B — how do I do that?",
+      "gold": "abbreviation_lookup",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "ambiguous"
+      ]
+    },
+    {
+      "id": "intent-042",
+      "text": "How do I make a left-leaning decrease?",
+      "gold": "knitting_question",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "indirect"
+      ]
+    },
+    {
+      "id": "intent-043",
+      "text": "What's the stretchiest bind off for ribbing?",
+      "gold": "knitting_question",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "easy"
+      ]
+    },
+    {
+      "id": "intent-044",
+      "text": "How do I weave in ends on garter stitch?",
+      "gold": "knitting_question",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "easy"
+      ]
+    },
+    {
+      "id": "intent-045",
+      "text": "What is blocking and do I need to do it?",
+      "gold": "knitting_question",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "easy"
+      ]
+    },
+    {
+      "id": "intent-048",
+      "text": "Should I slip the first stitch of every row?",
+      "gold": "knitting_question",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "easy"
+      ]
+    },
+    {
+      "id": "intent-055",
+      "text": "What does the stitch pattern look like visually?",
+      "gold": "chart",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "indirect"
+      ]
+    },
+    {
+      "id": "intent-064",
+      "text": "how many sts should i have now",
+      "gold": "tracker",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "typo",
+        "context"
+      ]
+    },
+    {
+      "id": "intent-069",
+      "text": "does the repeat fit the cast on number",
+      "gold": "validate",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "typo"
+      ]
+    },
+    {
+      "id": "intent-071",
+      "text": "Are all abbreviations in this pattern defined?",
+      "gold": "validate",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "indirect"
+      ]
+    },
+    {
+      "id": "intent-079",
+      "text": "Translate this pattern into French",
+      "gold": "out_of_scope",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "indirect"
+      ]
+    },
+    {
+      "id": "intent-080",
+      "text": "What's the weather tomorrow?",
+      "gold": "out_of_scope",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "easy"
+      ]
+    },
+    {
+      "id": "intent-084",
+      "text": "you're great",
+      "gold": "smalltalk",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "easy"
+      ]
+    },
+    {
+      "id": "intent-087",
+      "text": "Who are you?",
+      "gold": "smalltalk",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "indirect"
+      ]
+    },
+    {
+      "id": "intent-088",
+      "text": "lol my cat just stole my yarn",
+      "gold": "smalltalk",
+      "pred": "unknown",
+      "method": "none",
+      "tags": [
+        "indirect"
+      ]
+    }
+  ]
+}

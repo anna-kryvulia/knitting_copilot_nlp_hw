@@ -16,6 +16,11 @@ before the next starts. This document grows with every component.
 | 9 | Gauge adjustment (`gauge.py`) | code | ✅ | `eval/eval_gauge.py`, `tests/test_gauge.py` |
 | 10 | Rewriter (`components/rewriter.py`) | code edit list + LLM + re-parse check, code fallback | ✅ built, ⏳ eval needs quota | `eval/eval_rewriter.py` |
 | 11 | Charts (`charts.py`) | code | ✅ | `eval/eval_charts.py`, `tests/test_charts.py` |
+| 12 | Project workflow (`project.py`, `db.py`) | code | ✅ | `tests/test_project.py` |
+| 13 | Row tracker (`tracker.py`) | code | ✅ | `tests/test_project.py` |
+| 14 | Router (`components/router.py`) | rules + LLM (hybrid) | ✅ | `eval/eval_router.py` |
+| 15 | Setup agent (`components/setup_agent.py`) | LLM tool calls → project.py | ✅ built, ⏳ eval needs quota | `eval/eval_setup_agent.py` |
+| 16 | Chat graph (`graph.py`) | LangGraph | ✅ | smoke test; diagram `docs/diagrams/chat_graph.md` |
 
 ## 4.1 Parsers
 
@@ -179,3 +184,35 @@ Real patterns shape with markers ("knit to 3 sts before the next marker", "[k1, 
   a repeated name gets " (2)". **No silent drops:** any "Name: instruction" line the grammar cannot read is
   now a warning (before, lines like "Dec rnd: …" were skipped without a warning — found on the marker set).
 - LLM prompt (`prompts/parser.md`): marker ops, `"marker": true` stops, named rows.
+
+## 4.10 Project workflow, tracker, router, setup agent, chat graph (UC5)
+
+**Project** (`project.py`, stored as JSON in SQLite by `db.py`): business rules BR1–BR3 in plain code.
+`setup` stage: yarn (linked with the yarn linker; ambiguous names → ask), needles, gauge, pattern (parsed),
+size are editable; `missing()` lists what is needed (pattern, size if the pattern has sizes, gauge, needles —
+yarn optional). `generate_working_pattern` runs gauge adjustment and locks the project (`knitting` stage);
+every setter then refuses with a message. `start_over` creates version N+1 and resets progress. Units are
+converted here (US 8 → 5.0 mm; 18 sts over 4 in → 17.7 per 10 cm), never by the LLM.
+
+**Tracker** (`tracker.py`, code): position in the worked rows of the locked pattern; view = row number of
+total, label, "time 3 of 14", instruction (from the simulator's repeat record), start → end stitches, stated
+count, rows left; next / previous / go to.
+
+**Router** (`components/router.py`): hybrid — precise rules written from the intent definitions (greetings,
+crochet/colourwork/sewing, chart, validate, tracker phrases, adjust, numbers with mm/sts, bare abbreviation or
+"what is X" with X in the KB) decide first; the LLM (`prompts/router.md`, intent definitions only, no eval
+examples) decides the rest. Unknown → knitting question.
+
+**Setup agent** (`components/setup_agent.py`, `prompts/setup_agent.md`): the LLM gets the 7 tools of
+CONVENTIONS § Setup tools and the current project status; it passes numbers/units exactly as written;
+`project.py` validates, converts and answers; tool results go back to the model for the reply
+(e.g. "Several yarns are called Jeans: YarnArt Jeans, Etrofil Jeans — which one?"). ≤ 3 tool rounds per turn.
+
+**Chat graph** (`graph.py`, LangGraph `StateGraph` + `InMemorySaver`, thread = project): `route` → one of
+`setup`, `adjust`, `explain`, `yarn`, `lookup`, `chart`, `tracker`, `validate`, `other` → END. Nodes are thin
+adapters around the components and write trace records. Diagram generated from the code:
+`docs/diagrams/chat_graph.md`.
+
+**UI** (`app.py`, "My project" tab): project picker; setup checklist + form (same functions as the tools);
+"Generate working pattern" (enabled when complete) / "Start over" (with confirmation); tracker panel with
+progress and previous/next; chat through the graph, showing which node answered (and charts inline).

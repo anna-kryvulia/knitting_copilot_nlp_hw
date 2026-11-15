@@ -9,8 +9,8 @@ import json
 import pandas as pd
 import streamlit as st
 
-from knit_copilot import kb
-from knit_copilot import charts, gauge
+from knit_copilot import charts, db, gauge, kb, project, tracker
+from knit_copilot import graph as chat_graph
 from knit_copilot.components import explainer, parser, rewriter, yarn_advisor, yarn_linker
 from knit_copilot.config import ROOT, settings
 from knit_copilot.display import row_lines
@@ -64,7 +64,7 @@ with st.sidebar:
                "LLM: no OPENROUTER_API_KEY — grammar parser only")
 
 st.title("🧶 Knitting Copilot")
-tab_pattern, tab_yarn = st.tabs(["Pattern", "Yarn"])
+tab_project, tab_pattern, tab_yarn = st.tabs(["My project", "Pattern explorer", "Yarn"])
 
 # ---------- Pattern tab ----------
 with tab_pattern:
@@ -276,3 +276,100 @@ with tab_yarn:
             st.markdown(adv.answer)
         with st.expander("Facts used (computed by code from the yarn label, CYC table and fibre KB)"):
             st.code(f.as_text(), language=None)
+
+
+# ---------- My project tab (UC5: setup → lock → knitting) ----------
+with tab_project:
+    projects = db.list_projects()
+    left_col, right_col = st.columns([1, 2])
+    with left_col:
+        names = {pid: f"{name} ({updated[:10]})" for pid, name, updated in projects}
+        choice = st.selectbox("Project", ["+ New project"] + list(names), format_func=lambda x: names.get(x, x))
+        if choice == "+ New project":
+            new_name = st.text_input("Name", value="My project")
+            if st.button("Create project"):
+                pr = project.new_project(new_name)
+                db.save(pr)
+                st.rerun()
+            st.stop()
+        pr = db.load(choice)
+
+        def apply(result):
+            db.save(pr)
+            (st.success if result.ok else st.warning)(result.message)
+
+        st.caption(f"Stage: **{pr.stage}** · version {pr.version}")
+        locked = pr.stage == "knitting"
+        with st.expander("Setup", expanded=not locked):
+            need = project.missing(pr)
+            st.markdown(" · ".join(("⬜ " if f in need else "✅ ") + f for f in ["pattern", "size", "gauge", "needles"])
+                        + f" · {'✅' if pr.yarn else '◻️'} yarn (optional)")
+            y = st.text_input("Yarn", value=(pr.yarn.label or pr.yarn.text or "") if pr.yarn else "", disabled=locked)
+            if st.button("Set yarn", disabled=locked or not y):
+                apply(project.set_yarn(pr, y))
+            c1, c2, c3 = st.columns(3)
+            n = c1.number_input("Needles (mm)", 1.0, 25.0, value=pr.needle_mm or 4.0, step=0.25, disabled=locked)
+            gs = c2.number_input("sts / 10 cm", 1.0, 60.0, value=pr.gauge_sts_10cm or 20.0, step=0.5, disabled=locked)
+            gr = c3.number_input("rows / 10 cm", 0.0, 80.0, value=pr.gauge_rows_10cm or 0.0, step=0.5, disabled=locked,
+                                 help="0 = not measured")
+            if st.button("Save needles and gauge", disabled=locked):
+                project.set_needles(pr, n)
+                apply(project.set_gauge(pr, gs, gr or None))
+            text = st.text_area("Pattern text", value=pr.pattern_text or "", height=160, disabled=locked)
+            if st.button("Read pattern into project", disabled=locked or not text.strip()):
+                with st.spinner("Reading the pattern…"):
+                    apply(project.set_pattern(pr, text))
+            if pr.pattern and pr.pattern.sizes:
+                sz = st.selectbox("Size", pr.pattern.sizes, disabled=locked,
+                                  index=pr.pattern.sizes.index(pr.size) if pr.size in pr.pattern.sizes else 0)
+                if st.button("Choose size", disabled=locked):
+                    apply(project.select_size(pr, sz))
+        if not locked:
+            if st.button("Generate working pattern", type="primary", disabled=bool(project.missing(pr))):
+                apply(project.generate_working_pattern(pr))
+                st.rerun()
+        else:
+            confirm = st.checkbox("I understand my progress will be reset")
+            if st.button("Start over from setup", disabled=not confirm):
+                apply(project.start_over(pr))
+                st.rerun()
+        if pr.history:
+            st.caption("History: " + " · ".join(pr.history[-3:]))
+
+    with right_col:
+        if pr.stage == "knitting":
+            v = tracker.view(pr)
+            st.progress(v.percent / 100, text=f"{'Round' if v.side == 'round' else 'Row'} {v.number} of {v.total}"
+                                              + (f" · {v.label} ({v.time_of})" if v.time_of else f" · {v.label}"))
+            st.markdown(f"#### {v.instruction}")
+            st.caption(f"Stitches {v.start_count} → **{v.end_count}**"
+                       + (f" · the pattern says {v.stated_count}" if v.stated_count is not None else "")
+                       + f" · {v.rows_left} row{'' if v.rows_left == 1 else 's'} left")
+            b1, b2, _ = st.columns([1, 1, 3])
+            if b1.button("◀ Previous row"):
+                tracker.prev_row(pr); db.save(pr); st.rerun()
+            if b2.button("Next row ▶", type="primary"):
+                tracker.next_row(pr); db.save(pr); st.rerun()
+        st.divider()
+        hist = st.session_state.setdefault(f"chat-{pr.id}", [])
+        for m in hist[-12:]:
+            with st.chat_message(m["role"]):
+                st.markdown(m["content"])
+                if m.get("chart"):
+                    st.image(m["chart"])
+        msg = st.chat_input("Ask about your pattern, yarn or stitches — or tell me your yarn, needles and gauge")
+        if msg:
+            with st.spinner("Thinking…"):
+                try:
+                    out = chat_graph.chat(pr.id, msg)
+                    reply, show = out["reply"], out.get("show")
+                    reply += f"\n\n_routed to {out['intent']} ({out['route_method']})_"
+                except (RuntimeError, ValueError) as e:
+                    reply, show = f"Sorry, that did not work: {e}", ""
+            entry = {"role": "assistant", "content": reply}
+            if show == "chart":
+                pr2 = db.load(pr.id)
+                pat = pr2.working.pattern if pr2.stage == "knitting" and pr2.working else pr2.pattern
+                entry["chart"] = charts.render_png(charts.build(pat, None if pr2.stage == "knitting" else pr2.size))
+            hist += [{"role": "user", "content": msg}, entry]
+            st.rerun()

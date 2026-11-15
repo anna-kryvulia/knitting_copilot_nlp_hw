@@ -177,3 +177,23 @@ came back passed the row-by-row check. The LLM keeps the original style much bet
 (similarity to the original text 0.71 vs 0.55; e.g. bias dishcloth 0.96 vs 0.02, because the code render uses
 terse notation where the original was verbose). Robustness fix found in the log: during verification the
 LLM parser once returned `gauge.stitch_pattern: null`, rejected by the schema → field made optional.
+
+## 5.9 Router (intent classification)
+Set: `data/eval/intents.jsonl` (dev 55, test 33, 11 intents). Rules are written from the intent definitions,
+not from eval cases.
+
+| Version | Split | Mode | Accuracy | Macro-F1 | Rule coverage | Rule precision | Note |
+|---|---|---|---|---|---|---|---|
+| v1 | dev | rules | — | — | 0.436 | 1.000 | 24 of 55 decided by rules, all correct; rest unknown |
+| v1 | test | rules | — | — | 0.515 | 0.941 | 1 misfire: "Row 12 says 64 sts but I get 62…" → setup (numbers rule) |
+| v2 | dev | hybrid | 0.636 | 0.724 | 0.436 | 1.000 | 12 LLM calls answered (11 correct); **19 calls failed: daily free quota (50/day) used up** |
+
+Accuracy over answered cases (v2 dev): 35 / 36 = 0.972. The one LLM error: "how many stitches do I need with
+my gauge for the same width" → setup (gold adjust_pattern). The question mentions "my gauge", which the
+definitions tie to setup. The 0.636 measures availability, not quality. Re-run when quota allows (`--mode hybrid`
+and `--mode llm`, dev then test).
+
+## 5.10 Setup agent (tool calls)
+Set: `data/eval/setup_cases.jsonl` (30 dialogues). Metrics: tool sequence, argument accuracy, project state after
+the dialogue (gold computed by code), no-tool messages. Unit test with a mocked model passes (calls executed,
+US 8 → 5.0 mm and 18 sts / 4 in → 17.7 per 10 cm converted by code). **LLM run pending: free quota.**
