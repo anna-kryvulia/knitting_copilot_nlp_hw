@@ -1,0 +1,259 @@
+{
+  "component": "parser_llm",
+  "split": "test",
+  "version": "v2-flash-lite",
+  "model": "gemini-3.5-flash-lite",
+  "date": "2026-11-15",
+  "metrics": {
+    "overall": {
+      "n": 27,
+      "answered": 1.0,
+      "exact_when_answered": 0.926,
+      "parse_success": 1.0,
+      "total_rows_match": 0.963,
+      "row_count_agreement": 0.995,
+      "op_precision": 1.0,
+      "op_recall": 1.0,
+      "op_f1": 1.0,
+      "exact_match": 0.926,
+      "side_accuracy": 1.0
+    },
+    "by_source": {
+      "synthetic": {
+        "n": 27,
+        "answered": 1.0,
+        "exact_when_answered": 0.926,
+        "parse_success": 1.0,
+        "total_rows_match": 0.963,
+        "row_count_agreement": 0.995,
+        "op_precision": 1.0,
+        "op_recall": 1.0,
+        "op_f1": 1.0,
+        "exact_match": 0.926,
+        "side_accuracy": 1.0
+      }
+    },
+    "by_style": {
+      "+typo": {
+        "n": 12,
+        "answered": 1.0,
+        "exact_when_answered": 1.0,
+        "parse_success": 1.0,
+        "total_rows_match": 1.0,
+        "row_count_agreement": 1.0,
+        "op_precision": 1.0,
+        "op_recall": 1.0,
+        "op_f1": 1.0,
+        "exact_match": 1.0,
+        "side_accuracy": 1.0
+      },
+      "brackets": {
+        "n": 5,
+        "answered": 1.0,
+        "exact_when_answered": 0.8,
+        "parse_success": 1.0,
+        "total_rows_match": 1.0,
+        "row_count_agreement": 1.0,
+        "op_precision": 1.0,
+        "op_recall": 1.0,
+        "op_f1": 1.0,
+        "exact_match": 0.8,
+        "side_accuracy": 1.0
+      },
+      "imperial": {
+        "n": 6,
+        "answered": 1.0,
+        "exact_when_answered": 1.0,
+        "parse_success": 1.0,
+        "total_rows_match": 1.0,
+        "row_count_agreement": 1.0,
+        "op_precision": 1.0,
+        "op_recall": 1.0,
+        "op_f1": 1.0,
+        "exact_match": 1.0,
+        "side_accuracy": 1.0
+      },
+      "terse": {
+        "n": 6,
+        "answered": 1.0,
+        "exact_when_answered": 0.833,
+        "parse_success": 1.0,
+        "total_rows_match": 0.833,
+        "row_count_agreement": 0.972,
+        "op_precision": 0.999,
+        "op_recall": 1.0,
+        "op_f1": 0.999,
+        "exact_match": 0.833,
+        "side_accuracy": 1.0
+      },
+      "uk": {
+        "n": 5,
+        "answered": 1.0,
+        "exact_when_answered": 1.0,
+        "parse_success": 1.0,
+        "total_rows_match": 1.0,
+        "row_count_agreement": 1.0,
+        "op_precision": 1.0,
+        "op_recall": 1.0,
+        "op_f1": 1.0,
+        "exact_match": 1.0,
+        "side_accuracy": 1.0
+      },
+      "verbose": {
+        "n": 5,
+        "answered": 1.0,
+        "exact_when_answered": 1.0,
+        "parse_success": 1.0,
+        "total_rows_match": 1.0,
+        "row_count_agreement": 1.0,
+        "op_precision": 1.0,
+        "op_recall": 1.0,
+        "op_f1": 1.0,
+        "exact_match": 1.0,
+        "side_accuracy": 1.0
+      }
+    },
+    "by_template": {
+      "bias_dishcloth": {
+        "n": 3,
+        "answered": 1.0,
+        "exact_when_answered": 0.667,
+        "parse_success": 1.0,
+        "total_rows_match": 0.667,
+        "row_count_agreement": 0.833,
+        "op_precision": 0.982,
+        "op_recall": 0.999,
+        "op_f1": 0.99,
+        "exact_match": 0.667,
+        "side_accuracy": 1.0
+      },
+      "bordered_blanket": {
+        "n": 3,
+        "answered": 1.0,
+        "exact_when_answered": 1.0,
+        "parse_success": 1.0,
+        "total_rows_match": 1.0,
+        "row_count_agreement": 1.0,
+        "op_precision": 1.0,
+        "op_recall": 1.0,
+        "op_f1": 1.0,
+        "exact_match": 1.0,
+        "side_accuracy": 1.0
+      },
+      "cable_scarf": {
+        "n": 3,
+        "answered": 1.0,
+        "exact_when_answered": 1.0,
+        "parse_success": 1.0,
+        "total_rows_match": 1.0,
+        "row_count_agreement": 1.0,
+        "op_precision": 1.0,
+        "op_recall": 1.0,
+        "op_f1": 1.0,
+        "exact_match": 1.0,
+        "side_accuracy": 1.0
+      },
+      "eyelet_scarf": {
+        "n": 3,
+        "answered": 1.0,
+        "exact_when_answered": 1.0,
+        "parse_success": 1.0,
+        "total_rows_match": 1.0,
+        "row_count_agreement": 1.0,
+        "op_precision": 1.0,
+        "op_recall": 1.0,
+        "op_f1": 1.0,
+        "exact_match": 1.0,
+        "side_accuracy": 1.0
+      },
+      "feather_fan": {
+        "n": 3,
+        "answered": 1.0,
+        "exact_when_answered": 1.0,
+        "parse_success": 1.0,
+        "total_rows_match": 1.0,
+        "row_count_agreement": 1.0,
+        "op_precision": 1.0,
+        "op_recall": 1.0,
+        "op_f1": 1.0,
+        "exact_match": 1.0,
+        "side_accuracy": 1.0
+      },
+      "garter_scarf": {
+        "n": 3,
+        "answered": 1.0,
+        "exact_when_answered": 1.0,
+        "parse_success": 1.0,
+        "total_rows_match": 1.0,
+        "row_count_agreement": 1.0,
+        "op_precision": 1.0,
+        "op_recall": 1.0,
+        "op_f1": 1.0,
+        "exact_match": 1.0,
+        "side_accuracy": 1.0
+      },
+      "rib_scarf": {
+        "n": 3,
+        "answered": 1.0,
+        "exact_when_answered": 1.0,
+        "parse_success": 1.0,
+        "total_rows_match": 1.0,
+        "row_count_agreement": 1.0,
+        "op_precision": 1.0,
+        "op_recall": 1.0,
+        "op_f1": 1.0,
+        "exact_match": 1.0,
+        "side_accuracy": 1.0
+      },
+      "ribbed_hat": {
+        "n": 3,
+        "answered": 1.0,
+        "exact_when_answered": 1.0,
+        "parse_success": 1.0,
+        "total_rows_match": 1.0,
+        "row_count_agreement": 1.0,
+        "op_precision": 1.0,
+        "op_recall": 1.0,
+        "op_f1": 1.0,
+        "exact_match": 1.0,
+        "side_accuracy": null
+      },
+      "seed_cowl": {
+        "n": 3,
+        "answered": 1.0,
+        "exact_when_answered": 0.667,
+        "parse_success": 1.0,
+        "total_rows_match": 1.0,
+        "row_count_agreement": 1.0,
+        "op_precision": 0.999,
+        "op_recall": 1.0,
+        "op_f1": 0.999,
+        "exact_match": 0.667,
+        "side_accuracy": null
+      }
+    }
+  },
+  "n": 27,
+  "failures": [
+    {
+      "id": "parse-012",
+      "tags": [
+        "seed_cowl",
+        "brackets",
+        "round"
+      ],
+      "why": null,
+      "warnings": []
+    },
+    {
+      "id": "parse-026",
+      "tags": [
+        "bias_dishcloth",
+        "terse",
+        "flat"
+      ],
+      "why": "row 38 (Dec row): 41 sts vs gold 39",
+      "warnings": []
+    }
+  ]
+}

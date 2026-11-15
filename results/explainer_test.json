@@ -1,0 +1,142 @@
+{
+  "component": "explainer",
+  "split": "test",
+  "version": "v4-flash-lite",
+  "model": "gemini-3.5-flash-lite",
+  "date": "2026-11-15",
+  "metrics": {
+    "overall": {
+      "n": 9,
+      "answered": 1.0,
+      "grounded_first": 1.0,
+      "grounded_final": 1.0,
+      "fact_coverage": 1.0,
+      "citation_recall": 1.0,
+      "structure_ok": 1.0,
+      "judge_mean": null,
+      "median_seconds": 4.1
+    }
+  },
+  "n": 9,
+  "failures": [],
+  "judge_model": null,
+  "cases": [
+    {
+      "id": "parse-010",
+      "template": "garter_scarf",
+      "seconds": 1.4,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "fact_coverage": 1.0,
+      "missing": [],
+      "citation_recall": 1.0,
+      "structure_ok": true,
+      "text": "## Overview\nHello! Welcome to your knitting project. This piece is knitted flat, back and forth in rows. We will cast on 34 stitches, and in total 437 rows are worked, including the bind-off. The pattern gauge is 17.7 stitches and 36.4 rows per 10 cm in garter, on 5.5 mm needles.\n\n## Step 1: Rows 1–2\nFor Row 1 (right side), work knit [k] 34 (knit [k]: Insert the right needle from front to back through the next stitch, wrap the yarn and pull a loop through); your stitch count goes from 34 to 34 stitches. For Row 2 (wrong side), work knit [k] 34; your stitch count goes from 34 to 34 stitches.\n\n## Step 2: Repeat Rows 1–2\nRepeat Rows 1–2 until the piece measures 119.4 cm. With the gauge used, that means 217 more repeats = 434 rows (rows 3–436 of the piece). The stitch count stays at 34 stitches.\n\n## Step 3: Finish\nBind off [bo] all 34 stitches (loose) (bind off [bo]: Work two stitches, lift the first over the second and off the needle; repeat to close stitches. In this system 'BO n' removes n stitches)."
+    },
+    {
+      "id": "parse-011",
+      "template": "rib_scarf",
+      "seconds": 4.5,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "fact_coverage": 1.0,
+      "missing": [],
+      "citation_recall": 1.0,
+      "structure_ok": true,
+      "text": "## Overview\nWelcome! We are going to make a lovely project together. It is knitted flat, back and forth in rows. We will cast on 34 stitches. In total 443 rows are worked, including the bind-off. Our pattern gauge is 24 stitches and 34 rows per 10 cm in 2x2 rib, unstretched, on 4 mm needles.\n\n## Step 1: Rows 1–2\nFor Row 1 (right side), work knit [k] (Insert the right needle from front to back through the next stitch, wrap the yarn and pull a loop through) 2, then work the group of 4 stitches `(p2, k2)` 8 times. We end up with 34 stitches, with no change in stitch count. For Row 2 (wrong side), work purl [p] (With the yarn in front, insert the right needle from back to front through the next stitch, wrap and pull the loop through to the back) 2, then work the group of 4 stitches `(k2, p2)` 8 times, leaving us with 34 stitches.\n\n## Step 2: Repeat Rows 1–2\nHere, we repeat Rows 1–2 until the piece measures 130 cm. With the gauge used, that means 220 more repeats = 440 rows (rows 3–442 of the piece). Throughout this, our stitch count remains at 34 stitches.\n\n## Step 3: Finish\nTo finish up, bind off [bo] (Work two stitches, lift the first over the second and off the needle; repeat to close stitches. In this system 'BO n' removes n stitches) all 34 stitches (in pattern)."
+    },
+    {
+      "id": "parse-012",
+      "template": "seed_cowl",
+      "seconds": 3.4,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "fact_coverage": 1.0,
+      "missing": [],
+      "citation_recall": 1.0,
+      "structure_ok": true,
+      "text": "## Overview\nWelcome! We are going to make this lovely piece together. It is knitted in the round. We will cast on 102 stitches. In total 43 rounds are worked, including the bind-off. The pattern gauge is 15 stitches and 21 rounds per 10 cm in seed stitch, on 6 mm needles.\n\n## Step 1: Rnds 1–2\nFor Round 1, work (knit [k] - Insert the right needle from front to back through the next stitch, wrap the yarn and pull a loop through, purl [p] - With the yarn in front, insert the right needle from back to front through the next stitch, wrap and pull the loop through to the back) 51 times; Rnd 1: 102 stitches. For Round 2, work (p1, k1) 51 times; Rnd 2: 102 stitches.\n\n## Step 2: Repeat Rnds 1–2\nRepeat Rnds 1–2 until the piece measures 20 cm. With the gauge used, that means 20 more repeats = 40 rounds (rounds 3–42 of the piece). Stitches remain at 102.\n\n## Step 3: Finish\nBind off [bo] - Work two stitches, lift the first over the second and off the needle; repeat to close stitches. In this system 'BO n' removes n stitches all 102 stitches (in pattern)."
+    },
+    {
+      "id": "parse-013",
+      "template": "ribbed_hat",
+      "seconds": 4.5,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "fact_coverage": 1.0,
+      "missing": [],
+      "citation_recall": 1.0,
+      "structure_ok": true,
+      "text": "## Overview\nHello! Let's work on this pattern together step by step. This piece is knitted in the round. We will cast on 88 stitches for size S (the available sizes are S, M, L). In total 56 rounds are worked, including the bind-off. Our pattern gauge is 21 stitches and 28 rounds per 10 cm in stockinette, on 4 mm needles.\n\n## Step 1: Rnd 1\nFor Rnd 1, work (knit [k] two, purl [p] two) 22 times. To knit [k], insert the right needle from front to back through the next stitch, wrap the yarn and pull a loop through. To purl [p], with the yarn in front, insert the right needle from back to front through the next stitch, wrap and pull the loop through to the back. Stitches go from 88 to 88 with no change.\n\n## Step 2: Repeat Rnd 1\nRepeat Rnd 1 until the piece measures 6 cm. With the gauge used, that means 16 more repeats = 16 rounds (rounds 2–17 of the piece). Stitches go from 88 to 88.\n\n## Step 3: Rnd 2\nFor Rnd 2, work knit [k] 88. Stitches go from 88 to 88 with no change.\n\n## Step 4: Repeat Rnd 2\nRepeat Rnd 2 until the piece measures 15 cm. With the gauge used, that means 24 more repeats = 24 rounds (rounds 19–42 of the piece). Stitches go from 88 to 88.\n\n## Step 5: Rnds 3–15\nFor Rnd 3, work (knit [k] six, knit two together [k2tog]) 11 times. Knit two together [k2tog] means to insert the right needle knitwise into the next two stitches at once and knit them as one. Rnd 3: 77 stitches; Rnd 4: work k77, 77 stitches; Rnd 5: work (k5, k2tog) ×11, 66 stitches; Rnd 6: work k66, 66 stitches; Rnd 7: work (k4, k2tog) ×11, 55 stitches; Rnd 8: work k55, 55 stitches; Rnd 9: work (k3, k2tog) ×11, 44 stitches; Rnd 10: work k44, 44 stitches; Rnd 11: work (k2, k2tog) ×11, 33 stitches; Rnd 12: work k33, 33 stitches; Rnd 13: work (k1, k2tog) ×11, 22 stitches; Rnd 14: work k22, 22 stitches; Rnd 15: work k2tog ×11, 11 stitches. The pattern states the expected stitch counts for all of these rounds, and they all match!\n\n## Step 6: Finish\nBreak the yarn and draw it through the remaining stitches."
+    },
+    {
+      "id": "parse-014",
+      "template": "eyelet_scarf",
+      "seconds": 4.3,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "fact_coverage": 1.0,
+      "missing": [],
+      "citation_recall": 1.0,
+      "structure_ok": true,
+      "text": "## Overview\nHello! Don't worry if this is your first time, we will take it nice and slow. This piece is knitted flat, back and forth in rows. We will cast on 34 stitches, and in total 405 rows are worked, including the bind-off. Our pattern gauge is 18 stitches and 25 rows per 10 cm in eyelet pattern, blocked, on 4.5 mm needles. We will be using metric measurements (cm, mm).\n\n## Step 1: Border row\nFor our border row (right side), work knit [k] 34 (Insert the right needle from front to back through the next stitch, wrap the yarn and pull a loop through). After this row, we have 34 stitches (no change).\n\n## Step 2: Repeat Border row\nNow, repeat the Border row 3 more times. With the gauge used, that means 3 more repeats, which equals 3 rows (rows 2–4 of the piece). We still have 34 stitches (no change).\n\n## Step 3: Rows 1–4\nFor Row 1 (right side), work k2, then do the group of 5 stitches inside the parentheses 6 times—meaning do yarn over [yo] (Wrap the yarn over the right needle once to make a new loop; it leaves a small decorative hole (an eyelet), the basis of lace), knit two together [k2tog] (Insert the right needle knitwise into the next two stitches at once and knit them as one), and knit 3—then finish with k2. This leaves us with 34 stitches (no change), and the pattern states 34 stitches, which matches! For Row 2 (wrong side), work k2, purl [p] 30 (With the yarn in front, insert the right needle from back to front through the next stitch, wrap and pull the loop through to the back), k2, giving us 34 stitches (no change). For Row 3 (right side), work k2, then do the group of 5 stitches inside the parentheses 6 times—knit 3, yo, slip, slip, knit [ssk] (Slip two stitches knitwise one at a time, put the left needle into their fronts and knit them together through the back loops)—and k2, leaving us with 34 stitches (no change). For Row 4 (wrong side), work k2, p30, k2, resulting in 34 stitches (no change).\n\n## Step 4: Repeat Rows 1–4\nRepeat Rows 1–4 until the piece measures 160 cm. With the gauge used, that means 98 more repeats, which is 392 rows (rows 9–400 of the piece). We maintain 34 stitches (no change).\n\n## Step 5: Final border row\nFor the final border row (right side), work k34. We have 34 stitches (no change).\n\n## Step 6: Repeat Final border row\nRepeat the final border row 3 more times. With the gauge used, that means 3 more repeats, equaling 3 rows (rows 402–404 of the piece). We have 34 stitches (no change).\n\n## Step 7: Finish\nBind off [bo] (Work two stitches, lift the first over the second and off the needle; repeat to close stitches. In this system 'BO n' removes n stitches) all 34 stitches loosely to finish your piece."
+    },
+    {
+      "id": "parse-015",
+      "template": "feather_fan",
+      "seconds": 3.5,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "fact_coverage": 1.0,
+      "missing": [],
+      "citation_recall": 1.0,
+      "structure_ok": true,
+      "text": "## Overview\nHello! Welcome to your knitting project. We will be knitting this piece flat, back and forth in rows. To get started, cast on 74 stitches. In total 457 rows are worked, including the bind-off. Our pattern gauge is 20.7 stitches and 26.6 rows per 10 cm in feather and fan, blocked, on 5 mm needles.\n\n## Step 1: Rows 1–4\n- Row 1 (right side): work knit [k] (Insert the right needle from front to back through the next stitch, wrap the yarn and pull a loop through) 74 times. Stitches 74 → 74 (no change).\n- Row 2 (wrong side): work purl [p] (With the yarn in front, insert the right needle from back to front through the next stitch, wrap and pull the loop through to the back) 74 times. Stitches 74 → 74 (no change).\n- Row 3 (right side): work k1, (knit two together [k2tog] (Insert the right needle knitwise into the next two stitches at once and knit them as one) ×3, (yarn over [yo] (Wrap the yarn over the right needle once to make a new loop; it leaves a small decorative hole (an eyelet), the basis of lace, k1) ×6, k2tog ×3) ×4, k1. (Note: \"(yo, k1) ×6\" means do this group of 2 stitches 6 times.) Stitches 74 → 74 (no change). The pattern states 74 stitches — matches.\n- Row 4 (wrong side): work k74. Stitches 74 → 74 (no change).\n\n## Step 2: Repeat Rows 1–4\nFor this step, repeat Rows 1–4 until the piece measures 170.2 cm. With the gauge used, that means 113 more repeats = 452 rows (rows 5–456 of the piece). Stitches 74 → 74.\n\n## Step 3: Finish\nBind off [bo] (Work two stitches, lift the first over the second and off the needle; repeat to close stitches. In this system 'BO n' removes n stitches) all 74 stitches (loose)."
+    },
+    {
+      "id": "parse-016",
+      "template": "cable_scarf",
+      "seconds": 4.0,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "fact_coverage": 1.0,
+      "missing": [],
+      "citation_recall": 1.0,
+      "structure_ok": true,
+      "text": "## Overview\nHello! Welcome to your knitting project. This piece is knitted flat, back and forth in rows. We will start by casting on 32 stitches. In total 441 rows are worked, including the bind-off. Our pattern gauge is 22 stitches and 29 rows per 10 cm in cable pattern, on 4 mm needles.\n\n## Step 1: Rows 1–8\nFor Row 1 on the right side, work knit [k] (insert the right needle from front to back through the next stitch, wrap the yarn and pull a loop through) 3, (purl [p] (with the yarn in front, insert the right needle from back to front through the next stitch, wrap and pull the loop through to the back) 2, k6) ×3 (do this group of 5 stitches 3 times), p2, k3; there are 32 stitches. For Row 2 on the wrong side, work k3, k2, (p6, k2) ×3, k3; 32 stitches. Rows 3 and 4 follow the same pattern as Rows 1 and 2, keeping 32 stitches.\n\nFor Row 5, work k3, (p2, 3/3 left cross [c6f] (slip three stitches to a cable needle held in front, knit three, then knit the three from the cable needle)) ×3, p2, k3; 32 stitches. Row 6 works k3, k2, (p6, k2) ×3, k3; 32 stitches. Finally, Rows 7 and 8 repeat the earlier row patterns, ending with 32 stitches.\n\n## Step 2: Repeat Rows 1–8\nRepeat Rows 1–8 until the piece measures 150 cm. With the gauge used, that means 54 more repeats = 432 rows (rows 9–440 of the piece). Throughout this section, the stitch count remains at 32 stitches.\n\n## Step 3: Finish\nBind off [bo] (work two stitches, lift the first over the second and off the needle; repeat to close stitches. In this system 'BO n' removes n stitches) all 32 stitches in pattern."
+    },
+    {
+      "id": "parse-017",
+      "template": "bias_dishcloth",
+      "seconds": 4.2,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "fact_coverage": 1.0,
+      "missing": [],
+      "citation_recall": 1.0,
+      "structure_ok": true,
+      "text": "## Overview\nHello! I am so excited to help you with this pattern. We will be knitting flat, back and forth in rows, starting by casting on 4 stitches. In total, 66 rows are worked, including the bind-off. The pattern gauge is 18 stitches and 36 rows per 10 cm in garter, on 4.5 mm needles.\n\n## Step 1: Row 1\nRow 1 (right side): work knit [k]. Knit means to insert the right needle from front to back through the next stitch, wrap the yarn and pull a loop through. Work k4, with no change to the stitch count.\n\n## Step 2: Inc row\nInc row (right side): work k2, yarn over [yo], k2. Yarn over means to wrap the yarn over the right needle once to make a new loop; it leaves a small decorative hole (an eyelet), the basis of lace. After this row, you will have 5 stitches (an increase of 1 stitch).\n\n## Step 3: Repeat Inc row\nRepeat the Inc row until there are 36 stitches. With the gauge used, that means 31 more repeats, which are rows 3–33 of the piece. After completing this step, you will have 36 stitches.\n\n## Step 4: Dec row\nDec row (right side): work k1, knit two together [k2tog], yo, k2tog, k31. Knit two together means to insert the right needle knitwise into the next two stitches at once and knit them as one. After this row, you will have 35 stitches (a decrease of 1 stitch).\n\n## Step 5: Repeat Dec row\nRepeat the Dec row until there are 4 stitches. With the gauge used, that means 31 more repeats, which are rows 35–65 of the piece. After completing this step, you will have 4 stitches.\n\n## Step 6: Finish\nBind off [bo] all 4 stitches using the standard method. Bind off means to work two stitches, lift the first over the second and off the needle, and repeat to close stitches."
+    },
+    {
+      "id": "parse-018",
+      "template": "bordered_blanket",
+      "seconds": 4.1,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "fact_coverage": 1.0,
+      "missing": [],
+      "citation_recall": 1.0,
+      "structure_ok": true,
+      "text": "## Overview\nHello! Welcome to your knitting project. We will be working this flat, back and forth in rows. To get started for the Crib size, cast on 130 stitches. In total, 251 rows are worked, including the bind-off. Our pattern gauge is 17 stitches and 24 rows per 10 cm in stockinette, on 5 mm needles.\n\n## Step 1: Border row\nFor the Border row (right side), you will knit [k] all 130 stitches. Knit means: Insert the right needle from front to back through the next stitch, wrap the yarn and pull a loop through. After this row, you will have 130 stitches (no change).\n\n## Step 2: Repeat Border row\nNow, repeat the Border row 9 more times. With the gauge used, that means 9 more repeats equalling 9 rows, which are rows 2–10 of the piece. You will still have 130 stitches.\n\n## Step 3: Rows 1–2\nFor Row 1 (right side), work knit [k] 130, ending with 130 stitches (no change). For Row 2 (wrong side), knit 5, purl [p] 120, knit 5. Purl means: With the yarn in front, insert the right needle from back to front through the next stitch, wrap and pull the loop through to the back. After Row 2, you have 130 stitches (no change).\n\n## Step 4: Repeat Rows 1–2\nRepeat Rows 1–2 until the piece measures 100 cm. With the gauge used, that means 114 more repeats equalling 228 rows, which are rows 13–240 of the piece. Your stitch count remains at 130 stitches.\n\n## Step 5: Top border row\nFor the Top border row (right side), work knit [k] 130. Your stitch count stays at 130 stitches (no change).\n\n## Step 6: Repeat Top border row\nRepeat the Top border row 9 more times. With the gauge used, that means 9 more repeats equalling 9 rows, which are rows 242–250 of the piece. You will have 130 stitches.\n\n## Step 7: Finish\nBind off [bo] all 130 stitches loosely. Bind off means: Work two stitches, lift the first over the second and off the needle; repeat to close stitches. In this system 'BO n' removes n stitches."
+    }
+  ]
+}

@@ -272,3 +272,12 @@ Running log of decisions. Newest entries at the bottom. Format:
 - Why: the assignment asks for a report with diagrams, business logic and eval results; reading `results/` keeps the
   report and the evals in sync.
 - Next: LLM judge after the OpenRouter quota resets; video.
+
+## 2026-11-15 — 5 → 4 → 5. Evaluation ↔ Modeling — Test splits for the remaining LLM components; one model
+- What: explainer, yarn advisor, rewriter and the LLM parser (synthetic) run on **test**; their dev re-run on the same
+  model (Gemini 3.5 Flash-Lite) so dev and test are comparable. Report lists the model behind every results file.
+- Result / numbers: explainer test all 1.0; rewriter dev/test 9/9 verified first try; LLM parser test 25/27 exact,
+  op F1 1.0. Yarn advisor regressed on the new model (answered narrowly: required facts 0.72, warnings 0.5 on dev) →
+  v5 prompt (always fibre + key property, needle and gauge) + swatch warning guaranteed by code → dev 0.92 / 1.0,
+  test 1.0 / 1.0 (test seen before v5, marked). 149 tests pass.
+- Next: video.

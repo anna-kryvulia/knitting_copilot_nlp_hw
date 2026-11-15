@@ -1,0 +1,206 @@
+{
+  "component": "yarn_advisor",
+  "split": "test",
+  "version": "v5-prompt",
+  "model": "gemini-3.5-flash-lite",
+  "date": "2026-11-15",
+  "metrics": {
+    "overall": {
+      "n": 9,
+      "answered": 1.0,
+      "facts_correct": 1.0,
+      "needle_mentioned": 1.0,
+      "must_mention": 1.0,
+      "warning_recall": 1.0,
+      "grounded_first": 0.778,
+      "grounded_final": 1.0,
+      "judge_mean": null
+    }
+  },
+  "n": 9,
+  "failures": [],
+  "cases": [
+    {
+      "id": "advice-002",
+      "tags": [
+        "suitability"
+      ],
+      "facts_ok": true,
+      "seconds": 0.0,
+      "asks_needles": false,
+      "needle_mentioned": false,
+      "must": [
+        true
+      ],
+      "missing": [],
+      "warn": false,
+      "warned": false,
+      "grounded_first": false,
+      "grounded_final": true,
+      "violations": [],
+      "answer": "Hello! Alize Cotton Gold Solids is indeed good for summer tops [yarn:77163]! Its main fibre is cotton [fibre:cotton], which has medium drape [yarn:77163]."
+    },
+    {
+      "id": "advice-005",
+      "tags": [
+        "suitability"
+      ],
+      "facts_ok": true,
+      "seconds": 0.0,
+      "asks_needles": false,
+      "needle_mentioned": true,
+      "must": [
+        true,
+        true
+      ],
+      "missing": [],
+      "warn": false,
+      "warned": false,
+      "grounded_first": false,
+      "grounded_final": true,
+      "violations": [],
+      "answer": "DROPS Alpaca is not well-suited for a ribbed hat because the main fibre is alpaca [fibre:alpaca], which has low elasticity [fibre:alpaca], making it less suited for ribbed cuffs that must hug [yarn:4507]. The yarn label specifies a needle size of 3 mm [yarn:4507] and an expected gauge of 23.6 stitches per 10 cm [yarn:4507], while the CYC guideline for this sport weight (CYC category 2) [cyc:2] suggests 23–26 stitches per 10 cm on 3.25–3.75 mm needles [cyc:2]. Its most important property is high warmth [fibre:alpaca], and it is generally good for scarves, shawls, cowls, and loose sweaters [yarn:4507]."
+    },
+    {
+      "id": "advice-010",
+      "tags": [
+        "care"
+      ],
+      "facts_ok": true,
+      "seconds": 0.0,
+      "asks_needles": false,
+      "needle_mentioned": false,
+      "must": [
+        true
+      ],
+      "missing": [],
+      "warn": false,
+      "warned": false,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "answer": "Hello! Yes, you can put Lana Grossa Cool Wool in the washing machine because it is machine washable according to the label [yarn:165070]. This yarn is made of Merino 100% [fibre:merino], which has high elasticity and high warmth [fibre:merino]. Superwash merino can be machine washed on a wool cycle, but it may grow when wet, so you should dry it flat [yarn:165070]."
+    },
+    {
+      "id": "advice-011",
+      "tags": [
+        "needles"
+      ],
+      "facts_ok": true,
+      "seconds": 0.0,
+      "asks_needles": true,
+      "needle_mentioned": true,
+      "must": [
+        true
+      ],
+      "missing": [],
+      "warn": false,
+      "warned": false,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "answer": "Hello! For Kartopu Amigurumi [yarn:171944], the suggested starting needle is 4 mm [yarn:171944], while the full needle size range from the yarn label is 3.5–4.5 mm [yarn:171944]. With this DK weight yarn (CYC category 3) [cyc:3], you can expect a gauge of 20.7–24.6 stitches per 10 cm from the yarn label [yarn:171944], alongside the CYC guideline of 21–24 stitches per 10 cm on 3.75–4.5 mm needles [cyc:3]. Its main fibre is acrylic [fibre:acrylic], which provides medium elasticity [yarn:171944]."
+    },
+    {
+      "id": "advice-013",
+      "tags": [
+        "gauge"
+      ],
+      "facts_ok": true,
+      "seconds": 0.0,
+      "asks_needles": true,
+      "needle_mentioned": true,
+      "must": [
+        true
+      ],
+      "missing": [],
+      "warn": false,
+      "warned": false,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "answer": "Etrofil Savona is made of 100% wool [fibre:wool], which has high elasticity [fibre:wool]. \n\nThe expected gauge is 20.7 stitches per 10 cm from the yarn label [yarn:174264]. The CYC guideline for this weight gives 21–24 stitches per 10 cm [cyc:3]. For your starting needle, use 3 mm [yarn:174264], which will also give you a starting needle size of 2.5–3.5 mm from the label [yarn:174264] (compared to 3.75–4.5 mm from the CYC range [cyc:3])."
+    },
+    {
+      "id": "advice-016",
+      "tags": [
+        "flagged_gauge"
+      ],
+      "facts_ok": true,
+      "seconds": 0.0,
+      "asks_needles": true,
+      "needle_mentioned": true,
+      "must": [
+        true
+      ],
+      "missing": [],
+      "warn": true,
+      "warned": true,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "answer": "Hello! Nako Pirlanta is made of 100% acrylic [fibre:acrylic], which has medium elasticity, medium warmth, and medium drape [fibre:acrylic]. \n\nFor your needles and gauge, the suggested starting needle is 4 mm [yarn:57790], with a needle size range of 4–4.5 mm from the yarn label [yarn:57790]. The expected gauge from the yarn label is 16.7 stitches per 10 cm [yarn:57790], while the CYC guideline for this weight ([cyc:2]) is 23–26 stitches per 10 cm on 3.25–3.75 mm needles [cyc:2]. \n\nWARNING: the label gauge does not fit the yarn's weight category (data problem); you should knit a swatch and trust the swatch, not the label [yarn:57790]."
+    },
+    {
+      "id": "advice-020",
+      "tags": [
+        "no_name"
+      ],
+      "facts_ok": true,
+      "seconds": 0.0,
+      "asks_needles": true,
+      "needle_mentioned": true,
+      "must": [
+        true
+      ],
+      "missing": [],
+      "warn": false,
+      "warned": false,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "answer": "Hello! For this Aran acrylic yarn, the expected gauge is 16–20 stitches per 10 cm, which comes from the CYC range [cyc:4]. The suggested starting needle size is 5 mm [cyc:4]. This yarn's main fibre is acrylic [fibre:acrylic], which has medium elasticity [fibre:acrylic]."
+    },
+    {
+      "id": "advice-021",
+      "tags": [
+        "no_name"
+      ],
+      "facts_ok": true,
+      "seconds": 0.0,
+      "asks_needles": true,
+      "needle_mentioned": true,
+      "must": [
+        true
+      ],
+      "missing": [],
+      "warn": false,
+      "warned": false,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "answer": "Hello! For your fingering merino socks, you can use a starting needle size of 2.75 mm, with an overall needle size range of 2.25–3.25 mm (from the CYC range for Super Fine yarn) [cyc:1]. The expected gauge for this yarn is 27–32 stitches per 10 cm (from the CYC range for Super Fine yarn) [cyc:1]. \n\nThis merino yarn features high elasticity and high warmth [fibre:merino]. It is soft enough for items worn against the skin and works well for accessories [fibre:merino]. Happy knitting!"
+    },
+    {
+      "id": "advice-024",
+      "tags": [
+        "no_name"
+      ],
+      "facts_ok": true,
+      "seconds": 0.0,
+      "asks_needles": false,
+      "needle_mentioned": true,
+      "must": [
+        true,
+        true
+      ],
+      "missing": [],
+      "warn": false,
+      "warned": false,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "answer": "Hello! As a linen yarn, its main fibre is linen, which has low elasticity, low warmth, and high drape [fibre:linen]. While you are knitting, it might feel stiff and your stitches can look uneven until washed [fibre:linen], but it gets softer with each wash [fibre:linen]. For your needles and gauge, the suggested starting needle is 3.5 mm [cyc:2], with a needle size of 3.25–3.75 mm (from the CYC range for Fine yarn) [cyc:2] and an expected gauge of 23–26 stitches per 10 cm (from the CYC range for Fine yarn) [cyc:2]."
+    }
+  ]
+}

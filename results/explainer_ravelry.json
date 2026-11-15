@@ -1,7 +1,7 @@
 {
   "component": "explainer",
   "split": "ravelry",
-  "version": "v4-judge",
+  "version": "v4-flash-lite",
   "model": "gemini-3.5-flash-lite",
   "date": "2026-11-15",
   "metrics": {
@@ -14,7 +14,7 @@
       "citation_recall": 0.975,
       "structure_ok": 1.0,
       "judge_mean": null,
-      "median_seconds": 0.1
+      "median_seconds": 0.0
     }
   },
   "n": 10,
@@ -28,12 +28,12 @@
       "why": "number 7 is not in the fact sheet"
     }
   ],
-  "judge_model": "dots-studio/dots-3-note-preview:free",
+  "judge_model": null,
   "cases": [
     {
       "id": "3x1-hood",
       "template": "partial",
-      "seconds": 0.1,
+      "seconds": 0.0,
       "grounded_first": true,
       "grounded_final": true,
       "violations": [],
@@ -41,11 +41,7 @@
       "missing": [],
       "citation_recall": 1.0,
       "structure_ok": true,
-      "text": "(1328 chars, not saved)",
-      "judge_score": null,
-      "judge_errors": [
-        "judge failed: All models failed: ['dots-studio/dots-3-note-preview:free']"
-      ]
+      "text": "(1328 chars, not saved)"
     },
     {
       "id": "blueberry-bandana",
@@ -58,16 +54,12 @@
       "missing": [],
       "citation_recall": 1.0,
       "structure_ok": true,
-      "text": "(1914 chars, not saved)",
-      "judge_score": null,
-      "judge_errors": [
-        "judge failed: All models failed: ['dots-studio/dots-3-note-preview:free']"
-      ]
+      "text": "(1914 chars, not saved)"
     },
     {
       "id": "double-hat",
       "template": "partial",
-      "seconds": 0.1,
+      "seconds": 0.0,
       "grounded_first": true,
       "grounded_final": true,
       "violations": [],
@@ -77,16 +69,12 @@
       ],
       "citation_recall": 0.75,
       "structure_ok": true,
-      "text": "(2609 chars, not saved)",
-      "judge_score": null,
-      "judge_errors": [
-        "judge failed: All models failed: ['dots-studio/dots-3-note-preview:free']"
-      ]
+      "text": "(2609 chars, not saved)"
     },
     {
       "id": "feeling-good-legwarmers",
       "template": "full",
-      "seconds": 0.1,
+      "seconds": 0.0,
       "grounded_first": true,
       "grounded_final": true,
       "violations": [],
@@ -94,11 +82,7 @@
       "missing": [],
       "citation_recall": 1.0,
       "structure_ok": true,
-      "text": "(1002 chars, not saved)",
-      "judge_score": null,
-      "judge_errors": [
-        "judge failed: All models failed: ['dots-studio/dots-3-note-preview:free']"
-      ]
+      "text": "(1002 chars, not saved)"
     },
     {
       "id": "moose-balaclava",
@@ -111,16 +95,12 @@
       "missing": [],
       "citation_recall": 1.0,
       "structure_ok": true,
-      "text": "(1146 chars, not saved)",
-      "judge_score": null,
-      "judge_errors": [
-        "judge failed: All models failed: ['dots-studio/dots-3-note-preview:free']"
-      ]
+      "text": "(1146 chars, not saved)"
     },
     {
       "id": "nick-chopper",
       "template": "full",
-      "seconds": 0.1,
+      "seconds": 0.0,
       "grounded_first": true,
       "grounded_final": true,
       "violations": [],
@@ -128,11 +108,7 @@
       "missing": [],
       "citation_recall": 1.0,
       "structure_ok": true,
-      "text": "(3517 chars, not saved)",
-      "judge_score": null,
-      "judge_errors": [
-        "judge failed: All models failed: ['dots-studio/dots-3-note-preview:free']"
-      ]
+      "text": "(3517 chars, not saved)"
     },
     {
       "id": "sherbet-bandana",
@@ -145,11 +121,7 @@
       "missing": [],
       "citation_recall": 1.0,
       "structure_ok": true,
-      "text": "(3321 chars, not saved)",
-      "judge_score": null,
-      "judge_errors": [
-        "judge failed: All models failed: ['dots-studio/dots-3-note-preview:free']"
-      ]
+      "text": "(3321 chars, not saved)"
     },
     {
       "id": "sister-scarf",
@@ -162,11 +134,7 @@
       "missing": [],
       "citation_recall": 1.0,
       "structure_ok": true,
-      "text": "(3135 chars, not saved)",
-      "judge_score": null,
-      "judge_errors": [
-        "judge failed: All models failed: ['dots-studio/dots-3-note-preview:free']"
-      ]
+      "text": "(3135 chars, not saved)"
     },
     {
       "id": "stickjournalens-headscarf",
@@ -181,11 +149,7 @@
       "missing": [],
       "citation_recall": 1.0,
       "structure_ok": true,
-      "text": "(1915 chars, not saved)",
-      "judge_score": null,
-      "judge_errors": [
-        "judge failed: All models failed: ['dots-studio/dots-3-note-preview:free']"
-      ]
+      "text": "(1915 chars, not saved)"
     },
     {
       "id": "the-sigrid-scarf",
@@ -198,11 +162,7 @@
       "missing": [],
       "citation_recall": 1.0,
       "structure_ok": true,
-      "text": "(2305 chars, not saved)",
-      "judge_score": null,
-      "judge_errors": [
-        "judge failed: All models failed: ['dots-studio/dots-3-note-preview:free']"
-      ]
+      "text": "(2305 chars, not saved)"
     }
   ]
 }

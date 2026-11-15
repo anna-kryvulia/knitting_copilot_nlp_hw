@@ -33,7 +33,7 @@ SYNONYMS = {
     "go down a needle size": r"go(ing)? down|smaller needle|down a (needle )?size|down from",
     "larger needles": r"larger needle|bigger needle|much larger",
     "grow": r"\bgrow|lengthen|stretch(es)? (out )?over time",
-    "softens": r"soften",
+    "softens": r"soften|softer",               # "gets softer with each wash" (found on test, scoring fix)
     "markers": r"marker",
     "halo": r"halo|fuzz",
 }

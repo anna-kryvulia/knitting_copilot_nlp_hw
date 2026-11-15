@@ -1,31 +1,22 @@
 {
   "component": "rewriter",
   "split": "dev",
-  "version": "v1",
-  "model": "nvidia/nemotron-3.5-super-vl:free",
+  "version": "v4-flash-lite",
+  "model": "gemini-3.5-flash-lite",
   "date": "2026-11-15",
   "metrics": {
     "overall": {
       "n": 9,
-      "verified_llm": 0.778,
-      "first_try": 0.778,
-      "fallback": 0.222,
+      "verified_llm": 1.0,
+      "first_try": 1.0,
+      "fallback": 0.0,
       "final_verified": 1.0,
-      "style_similarity_llm": 0.714,
+      "style_similarity_llm": 0.791,
       "style_similarity_code_render": 0.554
     }
   },
   "n": 9,
-  "failures": [
-    {
-      "id": "parse-005",
-      "why": "llm: time budget used up (last error: Request timed out.)"
-    },
-    {
-      "id": "parse-006",
-      "why": "llm: time budget used up (last error: Request timed out.)"
-    }
-  ],
+  "failures": [],
   "cases": [
     {
       "id": "parse-001",
@@ -36,9 +27,9 @@
       "first_try": true,
       "fallback": false,
       "final_verified": true,
-      "style_similarity": 0.896,
+      "style_similarity": 0.939,
       "code_render_similarity": 0.768,
-      "seconds": 43.1,
+      "seconds": 1.2,
       "problems": []
     },
     {
@@ -50,9 +41,9 @@
       "first_try": true,
       "fallback": false,
       "final_verified": true,
-      "style_similarity": 0.85,
+      "style_similarity": 0.949,
       "code_render_similarity": 0.816,
-      "seconds": 44.7,
+      "seconds": 3.8,
       "problems": []
     },
     {
@@ -64,9 +55,9 @@
       "first_try": true,
       "fallback": false,
       "final_verified": true,
-      "style_similarity": 0.899,
+      "style_similarity": 0.898,
       "code_render_similarity": 0.505,
-      "seconds": 62.4,
+      "seconds": 4.0,
       "problems": []
     },
     {
@@ -78,42 +69,38 @@
       "first_try": true,
       "fallback": false,
       "final_verified": true,
-      "style_similarity": 0.427,
+      "style_similarity": 0.432,
       "code_render_similarity": 0.418,
-      "seconds": 38.3,
+      "seconds": 4.5,
       "problems": []
     },
     {
       "id": "parse-005",
       "template": "eyelet_scarf",
       "style": "imperial",
-      "method": "code_render",
-      "verified_llm": false,
-      "first_try": false,
-      "fallback": true,
+      "method": "llm",
+      "verified_llm": true,
+      "first_try": true,
+      "fallback": false,
       "final_verified": true,
-      "style_similarity": 0.808,
+      "style_similarity": 0.949,
       "code_render_similarity": 0.808,
-      "seconds": 90.3,
-      "problems": [
-        "llm: time budget used up (last error: Request timed out.)"
-      ]
+      "seconds": 3.8,
+      "problems": []
     },
     {
       "id": "parse-006",
       "template": "feather_fan",
       "style": "terse",
-      "method": "code_render",
-      "verified_llm": false,
-      "first_try": false,
-      "fallback": true,
+      "method": "llm",
+      "verified_llm": true,
+      "first_try": true,
+      "fallback": false,
       "final_verified": true,
-      "style_similarity": 0.827,
+      "style_similarity": 0.966,
       "code_render_similarity": 0.827,
-      "seconds": 90.3,
-      "problems": [
-        "llm: time budget used up (last error: Request timed out.)"
-      ]
+      "seconds": 4.4,
+      "problems": []
     },
     {
       "id": "parse-007",
@@ -124,9 +111,9 @@
       "first_try": true,
       "fallback": false,
       "final_verified": true,
-      "style_similarity": 0.441,
+      "style_similarity": 0.47,
       "code_render_similarity": 0.344,
-      "seconds": 120.4,
+      "seconds": 4.1,
       "problems": []
     },
     {
@@ -138,9 +125,9 @@
       "first_try": true,
       "fallback": false,
       "final_verified": true,
-      "style_similarity": 0.959,
+      "style_similarity": 0.988,
       "code_render_similarity": 0.018,
-      "seconds": 21.3,
+      "seconds": 3.8,
       "problems": []
     },
     {
@@ -152,9 +139,9 @@
       "first_try": true,
       "fallback": false,
       "final_verified": true,
-      "style_similarity": 0.527,
+      "style_similarity": 0.525,
       "code_render_similarity": 0.478,
-      "seconds": 12.4,
+      "seconds": 3.3,
       "problems": []
     }
   ]

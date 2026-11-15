@@ -11,6 +11,7 @@ Raw results: `results/<component>_<split>.json`.
 | v1 | hybrid (grammar first) | dev | 36 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 |
 | v1 | llm (Nemotron 3.5 Super) | dev | 36 | 0.556 | **1.000** | 0.556 | 0.594 | 0.718 | 0.556 | 1.000 |
 | v1 | llm, missing cases re-run after the daily quota reset | dev | 36 | 0.944 | **1.000** | 0.944 | 0.949 | 0.978 | 0.944 | 1.000 |
+| v2 | llm (Gemini 3.5 Flash-Lite) | **test** | 27 | 1.000 | 0.926 | 1.000 | 0.995 | 1.000 | 0.926 | 1.000 |
 
 **Marker set** (`parse_cases_markers.jsonl`, 20 cases): grammar v2 (marker syntax) dev 12/12 and test 8/8
 exact; original set unchanged (dev 36/36, test 27/27 — first run of the original test split for the grammar).
@@ -110,6 +111,8 @@ changes it, every non-basic abbreviation cited), citation recall, one section pe
 | v1 | first version | 1.000 | 1.000 | 0.960 | 1.000 | 1.000 | 26 s |
 | v2 | prompt: give the count after each changing row (hat crown was summarised, coverage 0.64); fix "Rnds 1–1" headings | 1.000 | 1.000 | 0.944 | 0.889 | 1.000 | 29 s |
 | v3 | check: a citation by *name* ("[yarn over: …]") is a problem → repair names the id | 0.889 | **1.000** | **1.000** | **1.000** | 1.000 | (cached) |
+| v4 | same, Gemini 3.5 Flash-Lite | 0.889 | 1.000 | 1.000 | 1.000 | 1.000 | 3.6 s |
+| v4 | **test** (9), Gemini 3.5 Flash-Lite | 1.000 | **1.000** | **1.000** | **1.000** | 1.000 | 4.1 s |
 
 Error analysis: v2 fixed the hat (0.64 → 1.00) but the eyelet explanation (different sample, temperature
 0.2) cited abbreviations by name, which code cannot verify → v3 makes this a check failure, and the repair
@@ -157,6 +160,18 @@ real patterns (Part D), where a parsing error shows up as a wrong chart. A visua
 | Version | facts correct | needle size given (needle/gauge questions) | required facts mentioned | swatch warning (flagged yarns) | grounded 1st try | grounded final |
 |---|---|---|---|---|---|---|
 | v1 | 1.000 | 1.000* | 1.000 | 1.000 | 1.000 | 1.000 |
+| v4 | Gemini 3.5 Flash-Lite, same prompt (dev) | 1.000 | 0.778 | 0.720 | 0.500 | 1.000 | 1.000 |
+| v4 | Gemini 3.5 Flash-Lite, **test** | 1.000 | 0.800 | 0.818† | 1.000 | 1.000 | 1.000 |
+| v5 | prompt: always name the fibre and its key property, always pass on a gauge warning, needle **and** gauge for needle/gauge questions; code adds the swatch warning if the answer lacks it (dev) | 1.000 | 1.000 | 0.920 | 1.000 | 0.875 | 1.000 |
+| v5 | same, **test** | 1.000 | 1.000 | 1.000 | 1.000 | 0.778 | 1.000 |
+
+The first column is facts correct; then needle size given, required facts, swatch warning, grounded first try / final
+(table header above). **Model change matters:** with the Nemotron prompt, Flash-Lite answered narrowly ("What needle
+size?" → only sizes, no fibre; a washing question about a yarn whose label gauge looks wrong → no swatch warning).
+The v5 prompt was changed on dev failures (the same pattern appeared on test, which had already been run once with v4,
+so v5 test is not an unbiased estimate). The swatch warning is now guaranteed by code: it is a computed fact, not
+something left to the model. Remaining dev misses: a mohair scarf answer without the halo / hard-to-unravel tips.
+† scoring fix found on test: "gets softer with each wash" now counts as "softens" (0.727 → 0.818).
 
 \* first scored over all questions (0.688): the 5 "misses" were care/suitability questions ("How do I wash
 it?", "Is it good for a baby?") where a needle size is not expected — a metric specification error, fixed
@@ -171,6 +186,11 @@ Median latency ≈ 11 s.
 | Version | verified LLM rewrite | first try | code fallback | final output verified | style similarity LLM / code render |
 |---|---|---|---|---|---|
 | v1 | 0.778 | 0.778 | 0.222 | **1.000** | 0.714 / 0.554 |
+| v2 | Gemini 3.5 Flash-Lite, dev | 1.000 | 1.000 | 0.000 | 1.000 | 0.791 / 0.554 |
+| v2 | Gemini 3.5 Flash-Lite, **test** | 1.000 | 1.000 | 0.000 | **1.000** | 0.851 / 0.591 |
+
+With a faster model every rewrite came back in time and passed the row-by-row check on the first try (v1's two
+fallbacks were time-outs).
 
 Both fallbacks were time-outs of the free model (90 s budget), not wrong rewrites; every LLM rewrite that
 came back passed the row-by-row check. The LLM keeps the original style much better than the code render

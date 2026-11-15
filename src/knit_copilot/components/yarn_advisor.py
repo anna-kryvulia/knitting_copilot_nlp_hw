@@ -164,6 +164,9 @@ def run(inp: AdvisorInput) -> AdvisorOutput:
         if not problems:
             break
         feedback = "\nYOUR PREVIOUS ANSWER HAD PROBLEMS — fix them:\n- " + "\n- ".join(problems[:10])
+    if f.warn_gauge and not re.search(r"swatch", answer, re.I):     # a code fact: guaranteed, not left to the model
+        answer += ("\n\n**Knit a swatch first:** the gauge on this yarn's label does not fit its weight category, "
+                   "so measure your own gauge and trust it.")
     return AdvisorOutput(status="answered", answer=answer, facts=f.as_text(),
                          citations=list(dict.fromkeys(CITATION.findall(answer))), violations=problems,
                          attempts=attempts, yarn_id=int(row["yarn_id"]) if row else None)

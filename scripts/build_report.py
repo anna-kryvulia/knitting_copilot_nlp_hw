@@ -261,6 +261,24 @@ checkable facts (coverage, grounding, citations); retrieval with recall@3 / MRR;
 macro-F1 plus rule coverage/precision; the setup agent with the final project state (what the user sees) as well as
 tool sequence and arguments.
 
+**Models.** Free models changed during the project as free-tier limits ran out (OpenRouter: 50 requests/day;
+Gemini 3.5 Flash: 20/day). The table lists the model behind every result file; comparisons are only made between
+runs of the same model, and code-only evaluations use no model.
+""")
+
+code(r"""
+mrows = []
+for f in sorted((ROOT / "results").glob("*.json")):
+    d = json.loads(f.read_text())
+    if not isinstance(d, dict) or "component" not in d:
+        continue
+    mrows.append({"component": d["component"], "split": d["split"], "version": d.get("version"),
+                  "model": d.get("model") if d.get("model") not in (None, "none", "grammar") else "— (code only)",
+                  "judge": d.get("judge_model") or "", "date": d.get("date")})
+display(pd.DataFrame(mrows).sort_values(["component", "split"]).reset_index(drop=True))
+""")
+
+md(r"""
 ### 4.1 Overview against the targets (`docs/01_business_understanding.md` §1.8)
 """)
 
@@ -276,18 +294,18 @@ def g(name, *keys):
 
 rows = [
  ("Parser (grammar)", "exact match, synthetic", 0.95, g("parser_grammar_dev","exact_match"), g("parser_grammar_test","exact_match"), g("parser_grammar_ravelry","exact")),
- ("Parser (LLM)", "op F1, synthetic", 0.90, g("parser_llm_dev","op_f1"), None, None),
+ ("Parser (LLM)", "op F1, synthetic", 0.90, g("parser_llm_dev","op_f1"), g("parser_llm_test","op_f1"), None),
  ("Parser (LLM)", "op F1, real patterns", 0.75, None, None, g("parser_llm_ravelry","op_f1")),
  ("Parser (LLM)", "rows to first difference, real", None, None, None, g("parser_llm_ravelry","rows_to_divergence")),
  ("KB lookup", "exact lookup accuracy", 0.98, g("kb_lookup_dev","exact","accuracy"), g("kb_lookup_test","exact","accuracy"), None),
  ("KB retrieval (hybrid)", "recall@3 questions", 0.85, g("kb_lookup_dev","questions","hybrid","recall@3"), g("kb_lookup_test","questions","hybrid","recall@3"), None),
  ("Yarn linker", "accuracy", 0.90, g("yarn_linker_dev","accuracy"), g("yarn_linker_test","accuracy"), None),
- ("Yarn advisor", "facts correct", 0.95, g("yarn_advisor_dev","facts_correct"), None, None),
- ("Explainer", "fact coverage", 0.85, g("explainer_dev","fact_coverage"), None, g("explainer_ravelry","fact_coverage")),
- ("Explainer", "grounded (final)", 0.95, g("explainer_dev","grounded_final"), None, g("explainer_ravelry","grounded_final")),
+ ("Yarn advisor", "facts correct", 0.95, g("yarn_advisor_dev","facts_correct"), g("yarn_advisor_test","facts_correct"), None),
+ ("Explainer", "fact coverage", 0.85, g("explainer_dev","fact_coverage"), g("explainer_test","fact_coverage"), g("explainer_ravelry","fact_coverage")),
+ ("Explainer", "grounded (final)", 0.95, g("explainer_dev","grounded_final"), g("explainer_test","grounded_final"), g("explainer_ravelry","grounded_final")),
  ("Gauge adjuster", "closest valid count", 1.0, g("gauge_dev","closest_valid"), g("gauge_test","closest_valid"), None),
  ("Gauge adjuster", "motifs kept", 1.0, g("gauge_dev","motifs_kept"), g("gauge_test","motifs_kept"), None),
- ("Rewriter", "final output verified", 0.90, g("rewriter_dev","final_verified"), None, None),
+ ("Rewriter", "final output verified", 0.90, g("rewriter_dev","final_verified"), g("rewriter_test","final_verified"), None),
  ("Charts", "ops match simulator", 0.98, g("charts_dev","ops_match"), g("charts_test","ops_match"), g("charts_ravelry","ops_match")),
  ("Router (hybrid)", "macro-F1", 0.90, g("router_hybrid_dev","macro_f1"), g("router_hybrid_test","macro_f1"), None),
  ("Setup agent", "final project state", 0.85, g("setup_agent_dev","state_match"), g("setup_agent_test","state_match"), None),
@@ -317,8 +335,9 @@ display(Image(data=buf.getvalue()))
 md(r"""
 ### 4.2 Parser (semantic parsing)
 Synthetic patterns: the grammar baseline and the hybrid parser read every pattern exactly (dev 36, test 27; marker set
-20). This is an upper bound: the grammar and the generator share notation conventions. The LLM parser (Nemotron, dev)
-was exact on **every** pattern it answered; its misses were free-tier time-outs and quota (answered 0.944).
+20). This is an upper bound: the grammar and the generator share notation conventions. The LLM parser was exact on
+every pattern it answered on dev (Nemotron; misses were free-tier time-outs and quota) and, on **test** with Gemini 3.5
+Flash-Lite, answered all 27 with 25 exact (op F1 1.0; one decrease row off by 2 stitches, one stitch op different).
 
 **Real Ravelry patterns (the parser's test set, 10 patterns).** Input is the text extracted from the PDF.
 """)
@@ -373,22 +392,25 @@ rewriting, and a fresh author-written question set.
 code(r"""
 yl = [{"split": sp, **{k: R(f"yarn_linker_{sp}")[0][k] for k in ["accuracy", "top1_accuracy", "none_precision", "none_recall", "ambiguous_recall"]}} for sp in ["dev", "test"]]
 display(pd.DataFrame(yl).style.format(precision=3))
-o, _ = R("yarn_advisor_dev")
-display(pd.DataFrame([{k: o[k] for k in ["n", "facts_correct", "needle_mentioned", "must_mention", "warning_recall", "grounded_final"]}]))
+display(pd.DataFrame([{"split": sp, **{k: R(f"yarn_advisor_{sp}")[0][k] for k in ["n", "facts_correct", "needle_mentioned", "must_mention", "warning_recall", "grounded_final"]}} for sp in ["dev", "test"]]).style.format(precision=3))
 """)
 md(r"""
 Linker: the clean test number is 0.938 (one brand-named-twice case, "Garnstudio Drops Air", fixed after seeing it).
 Unknown yarns are always recognised as unknown, which matters most: a wrong match would give wrong needle advice.
-Advisor: all facts come from code (yarn label, CYC table, fibre KB), the LLM writes the answer; a first metric error
-(expecting a needle size for washing questions) was fixed in the metric, not the system. The judge score is not measured.
+Advisor: all facts come from code (yarn label, CYC table, fibre KB), and they are correct in every case; the LLM writes
+the answer. **Changing the model mattered:** with the original prompt, Gemini Flash-Lite answered narrowly (no fibre
+for "What needle size?", no swatch warning for a washing question) — required facts 0.72 and warnings 0.5 on dev.
+v5 made those rules unconditional in the prompt and lets **code** add the swatch warning if the answer lacks it
+(it is a computed fact): dev 0.92 / 1.0, test 1.0 / 1.0 (test had been run once before v5, so it is not unbiased).
+The judge score is not measured.
 
 ### 4.5 Explainer (UC1)
 """)
 code(r"""
 ex = []
-for name, label in [("explainer_dev", "synthetic dev (Nemotron)"), ("explainer_ravelry", "real, gold IR (Gemini Flash-Lite)")]:
+for name, label in [("explainer_dev", "synthetic dev"), ("explainer_test", "synthetic test"), ("explainer_ravelry", "real, gold IR")]:
     o, _ = R(name)
-    ex.append({"set": label, **{k: o[k] for k in ["n", "fact_coverage", "citation_recall", "grounded_first", "grounded_final", "structure_ok"]}})
+    ex.append({"set": label, "model": _["model"], **{k: o[k] for k in ["n", "fact_coverage", "citation_recall", "grounded_first", "grounded_final", "structure_ok"]}})
 display(pd.DataFrame(ex).style.format(precision=3))
 """)
 md(r"""
@@ -404,16 +426,15 @@ free quota was used up; it also needs calibration against human ratings before i
 code(r"""
 ga = [{"split": sp, **{k: R(f"gauge_{sp}")[0][k] for k in ["n", "closest_valid", "motifs_kept", "width_within_1cm", "width_error_unavoidable", "length_within_1cm"]}} for sp in ["dev", "test"]]
 display(pd.DataFrame(ga).style.format(precision=3))
-o, _ = R("rewriter_dev")
-display(pd.DataFrame([o]).style.format(precision=3))
+display(pd.DataFrame([{"split": sp, **R(f"rewriter_{sp}")[0]} for sp in ["dev", "test"]]).style.format(precision=3))
 """)
 md(r"""
 The maths is right every time (the chosen cast-on is the closest count that keeps every repeat whole, checked by brute
 force). The 1 cm width target is not reachable for large motifs: feather & fan repeats every 18 stitches (≈ 10 cm per
 step) — **every** width miss is such a case where no valid count is closer, and the app says so and suggests a
-different needle size. Rewriter: all LLM rewrites that came back passed the row-by-row check; 2 of 9 were free-model
-time-outs and fell back to a code-written version, so the final output is always verified. The LLM keeps the original
-style much better (similarity 0.71 vs 0.55).
+different needle size. Rewriter: every LLM rewrite passed the row-by-row check on the first try on dev and test
+(with the slower first model, 2 of 9 timed out and fell back to a code-written version), so the final output is always
+verified. The LLM keeps the original style much better than the code render (similarity 0.79–0.85 vs 0.55–0.59).
 
 ### 4.7 Charts (UC4)
 """)

@@ -23,3 +23,10 @@ def test_check_and_ambiguous_yarn(monkeypatch):
     assert ya.check("Use 3.5 mm needles [fibre:cotton] [yarn:9876].", f) == []
     assert ya.check("Use 7 mm needles [fibre:wool].", f)
     assert ya.run(ya.AdvisorInput(yarn_text="Baby Wool")).status == "ambiguous"
+
+
+def test_swatch_warning_is_added_by_code_when_the_model_forgets(monkeypatch):
+    from knit_copilot.components import yarn_advisor as Y
+    monkeypatch.setattr(Y.llm, "chat", lambda *a, **k: {"content": "It is machine washable [yarn:107059]."})
+    out = Y.run(Y.AdvisorInput(yarn_id=107059, question="How do I wash it?"))
+    assert "swatch" in out.answer.lower()
