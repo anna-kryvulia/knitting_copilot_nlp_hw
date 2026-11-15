@@ -12,6 +12,13 @@ Raw results: `results/<component>_<split>.json`.
 | v1 | llm (Nemotron 3.5 Super) | dev | 36 | 0.556 | **1.000** | 0.556 | 0.594 | 0.718 | 0.556 | 1.000 |
 | v1 | llm, missing cases re-run after the daily quota reset | dev | 36 | 0.944 | **1.000** | 0.944 | 0.949 | 0.978 | 0.944 | 1.000 |
 
+**Marker set** (`parse_cases_markers.jsonl`, 20 cases): grammar v2 (marker syntax) dev 12/12 and test 8/8
+exact; original set unchanged (dev 36/36, test 27/27 — first run of the original test split for the grammar).
+Before the change the grammar read the shawls with warnings and **silently skipped** the named crown rows of
+the hats; a warning for unread instruction lines was added. **LLM parser with the marker prompt** (dev, 12):
+answered 5, **all 5 exact** (marker stops included); 7 stopped at the 60 s budget (busy free models) —
+again an availability problem, not an accuracy one.
+
 **LLM parser: accuracy vs availability.** Every pattern the LLM answered was parsed exactly (20/20, op
 precision 1.00, all styles incl. verbose, UK and typos). All 16 failures are availability, not errors:
 - 13 consecutive cases (parse-050 … 063) at the end: OpenRouter returned **429 "free-models-per-day"** — the

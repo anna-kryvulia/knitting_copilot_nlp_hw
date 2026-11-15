@@ -225,6 +225,15 @@ matches — row counts (Double Hat 104 → 16 → 8; Nick Chopper all 3 sizes), 
 3. Not representable (documented, not modelled): motifs that shift as a triangle shrinks, picked-up sections,
    applied i-cord edgings, brioche-type stitches, partial rows with turns.
 
+**Marker eval set** (`data/eval/parse_cases_markers.jsonl`, `python -m knit_copilot.data.generator --markers`):
+the parser had to learn marker syntax, but the real patterns are its *test* set — fitting the grammar to their
+wording would be tuning on test data. So marker syntax was implemented from standard notation and checked on 2
+new synthetic templates in a **separate** file (the original 63 cases stay comparable): a sectioned beanie
+("*k to 2 sts before m, k2tog, sm; rep from * to end", "Repeat Dec rnd and Knit rnd until 40 sts remain") and a
+centre-out triangle shawl ("k2, yo, k to marker, yo, sm, k1, sm, yo, k to last 2 sts, yo, k2"); 20 cases
+(12 dev / 8 test), 5 styles. Regenerating checked: original cases identical apart from the new `marker: false`
+default in the saved IR.
+
 **Author review:** `data/private/ravelry/gold/REVIEW.md` lists every row (readable form + counts) with a
 checkbox; corrections go back into `build_gold.py`.
 

@@ -60,11 +60,17 @@ VERBOSE_RULES = [
     (r"knit 2 together", "k2tog"), (r"purl 2 together", "p2tog"), (r"slip slip knit", "ssk"),
     (r"yarn over", "yo"), (r"knit into front and back", "kfb"),
     (r"cable (\d) (back|front)", lambda m: f"c{m.group(1)}{m.group(2)[0]}"),
+    (r"place marker", "pm"), (r"slip marker", "sm"), (r"remove marker", "rm"),
+    (rf"repeat \[(.+?)\] until the marker", r"[\1] to marker"),
+    (rf"repeat \[(.+?)\] until ({MULTI}) stitch(?:es)? before the marker", r"[\1] to \2 sts before marker"),
     (rf"repeat \[(.+?)\] to the end of the (?:row|round)", r"(\1) to end"),
     (rf"repeat \[(.+?)\] until ({MULTI}) stitch(?:es)? remains?", r"[\1] to last \2 sts"),
     (r"work \[(.+?)\] (once|twice|three times|four times|five times|six times|seven times|eight times)",
      lambda m: f"({m.group(1)}) {WORD_TIMES[m.group(2)]} times"),
     (rf"work \[(.+?)\] ({MULTI}) times", r"(\1) \2 times"),
+    (r"\b(knit|purl) to the marker", lambda m: f"{m.group(1)[0]} to marker"),
+    (rf"\b(knit|purl) until ({MULTI}) stitch(?:es)? before the marker",
+     lambda m: f"{m.group(1)[0]} to {m.group(2)} sts before marker"),
     (r"\b(knit|purl) to the end of the (?:row|round)", lambda m: f"{m.group(1)[0]} to end"),
     (rf"\b(knit|purl) until ({MULTI}) stitch(?:es)? remains?", lambda m: f"{m.group(1)[0]} to last {m.group(2)} sts"),
     (rf"\b(knit|purl) ({MULTI})", lambda m: f"{m.group(1)[0]}{m.group(2)}"),
@@ -100,8 +106,10 @@ def _split_top(text: str) -> list[str]:
     return [p.strip() for p in parts if p.strip()]
 
 
+MARKER = r"(?:the )?(?:next )?(?:marker|m)\b"
 STAR = re.compile(
     rf"\*(?P<inner>.+?);?\s*rep(?:eat)? from \*\s*(?P<stop>to end|to last st\b|to last (?P<rem>{MULTI}) sts?|"
+    rf"to (?:(?P<mrem>{MULTI}) sts? before )?{MARKER}|"
     rf"(?P<more>{MULTI}) (?:more times?|times more)|once more)", re.I)
 
 
@@ -113,7 +121,10 @@ def parse_items(text: str, sizes: list[str]) -> list[dict]:
     def star_sub(m: re.Match) -> str:
         inner = parse_items(m.group("inner"), sizes)
         stop = m.group("stop").lower()
-        if stop == "to end":
+        if re.search(r"\b(?:marker|m)\b", stop):
+            rep = {"repeat": inner, "until": {"remaining": parse_multi(m.group("mrem"), sizes) if m.group("mrem") else 0,
+                                               "marker": True}}
+        elif stop == "to end":
             rep = {"repeat": inner, "until": {"remaining": 0}}
         elif stop.startswith("to last st") and not m.group("rem"):
             rep = {"repeat": inner, "until": {"remaining": 1}}
@@ -133,8 +144,10 @@ def parse_items(text: str, sizes: list[str]) -> list[dict]:
 
 
 GROUP = re.compile(rf"^[\(\[](?P<inner>.+)[\)\]]\s*(?P<stop>to end|to last st\b|to last (?P<rem>{MULTI}) sts?|"
+                   rf"to (?:(?P<mrem>{MULTI}) sts? before )?{MARKER}|"
                    rf"(?P<times>{MULTI}) times|(?P<word>once|twice|three times|four times|five times|six times))$", re.I)
 TO_END = re.compile(rf"^(?P<op>.+?) to (?:end|last st\b|last (?P<rem>{MULTI}) sts?)$", re.I)
+TO_MARKER = re.compile(rf"^(?P<op>.+?) to (?:(?P<mrem>{MULTI}) sts? before )?{MARKER}$", re.I)
 OP_TIMES = re.compile(rf"^(?P<op>.+?) (?P<times>{MULTI}) times$", re.I)
 OP_NUM = re.compile(rf"^(?P<op>[a-z]+?)\s*(?P<n>{MULTI})$", re.I)
 
@@ -156,8 +169,15 @@ def _atom(tok: str, sizes: list[str], stars: list[dict]) -> dict:
         if m.group("times") or m.group("word"):
             t = parse_multi(m.group("times"), sizes) if m.group("times") else WORD_TIMES[m.group("word").lower()]
             return {"repeat": inner, "times": t}
+        if m.group("mrem") or re.search(r"\b(?:marker|m)\b", m.group("stop").lower()):
+            return {"repeat": inner, "until": {"remaining": parse_multi(m.group("mrem"), sizes) if m.group("mrem") else 0,
+                                               "marker": True}}
         rem = parse_multi(m.group("rem"), sizes) if m.group("rem") else (1 if "last st" in m.group("stop").lower() else 0)
         return {"repeat": inner, "until": {"remaining": rem}}
+    m = TO_MARKER.match(tok)
+    if m:                                                       # "k to marker", "k to 3 sts before m"
+        return {"repeat": [{"op": _op(m.group("op"))}],
+                "until": {"remaining": parse_multi(m.group("mrem"), sizes) if m.group("mrem") else 0, "marker": True}}
     m = TO_END.match(tok)
     if m:
         rem = parse_multi(m.group("rem"), sizes) if m.group("rem") else (1 if "last st" in tok.lower() else 0)
@@ -175,14 +195,15 @@ def _atom(tok: str, sizes: list[str], stars: list[dict]) -> dict:
 
 # ---------- lines ----------
 
-ROW = re.compile(r"^(?P<label>(?:Row|Rnd|Round) \d+|[A-Z][A-Za-z ]*? row)\s*(?:\((?P<side>RS|WS|right side|wrong side)\))?"
+ROW = re.compile(r"^(?P<label>(?:[A-Z][\w-]*\s+){0,3}(?:Row|Rnd|Round)(?:\s+\d+)?)\s*"
+                 r"(?:\((?P<side>RS|WS|right side|wrong side)\))?"
                  r"\s*(?::|-|–|—)\s*(?P<body>.+)$", re.I)
 COUNT = re.compile(rf"\s*(?:[\(\[]\s*(?P<a>{MULTI})\s*sts?\s*[\)\]]|[—–-]\s*(?P<b>{MULTI})\s*sts?)\s*\.?\s*$", re.I)
 REPEAT_LINE = re.compile(r"^(?:Repeat|Rep|Work) (?P<ref>.+?) (?P<rest>(?:until|a total of|\d+ (?:more )?times|once more).*)$", re.I)
 
 
 def _label(text: str) -> str:
-    text = text.strip()
+    text = re.sub(r"\s+", " ", text.strip())
     m = re.fullmatch(r"(row|rnd|round) (\d+)", text, re.I)
     if m:
         word = "Rnd" if m.group(1).lower() in ("rnd", "round") else "Row"
@@ -196,6 +217,10 @@ def _refs(ref: str) -> list[str]:
     if m:
         word = "Row" if m.group(1).lower() == "rows" else "Rnd"
         return [f"{word} {i}" for i in range(int(m.group(2)), int(m.group(3)) + 1)]
+    m = re.fullmatch(r"((?:[A-Za-z-]+\s+)+)(Rows|Rnds|Rounds) (\d+)\s*[–-]\s*(\d+)", ref, re.I)   # "Dec Rows 1–2"
+    if m:
+        word = m.group(2)[:-1]                                   # Rows → Row, rnds → rnd (keep the case)
+        return [f"{m.group(1)}{word} {i}" for i in range(int(m.group(3)), int(m.group(4)) + 1)]
     m = re.fullmatch(r"(Rows|Rnds|Rounds) (\d+) and (\d+)", ref, re.I)
     if m:
         word = "Row" if m.group(1).lower() == "rows" else "Rnd"
@@ -272,8 +297,11 @@ def parse(text: str) -> ParseResult:
                     body = body[:c.start()]
                 label = _label(m.group("label"))
                 side = {"rs": "RS", "ws": "WS", "right side": "RS", "wrong side": "WS"}.get((m.group("side") or "").lower())
-                if label.startswith("Rnd"):
+                if re.search(r"\b(?:rnd|round)\b", label, re.I):
                     side, construction = "round", "round"
+                used = {r["label"] for st in steps if st["type"] == "rows" for r in st["rows"]}
+                if label in used:                                    # "Next Row" written twice
+                    label = next(f"{label} ({i})" for i in range(2, 99) if f"{label} ({i})" not in used)
                 row = {"label": label, "side": side or ("round" if construction == "round" else "RS"),
                        "ops": parse_items(body, sizes)}
                 if stated is not None:
@@ -286,8 +314,9 @@ def parse(text: str) -> ParseResult:
                 steps.append({"type": "bind_off", "method": method})
             elif re.match(r"^Break (?:the )?yarn.*(draw|thread|pull)", ln, re.I):
                 steps.append({"type": "bind_off", "method": "gather"})
-            elif re.match(r"^(?:Row|Rnd|Round)s?\b|^(?:Repeat|Rep|Work)\b", ln, re.I):
-                warnings.append(f"could not read instruction line: {ln}")
+            elif re.match(r"^(?:Row|Rnd|Round)s?\b|^(?:Repeat|Rep|Work)\b", ln, re.I) or \
+                    re.match(r"^[A-Z][\w -]{0,30}:\s*\S.*\b(?:k\d|p\d|k2tog|ssk|yo|knit|purl)\b", ln, re.I):
+                warnings.append(f"could not read instruction line: {ln}")   # never drop an instruction silently
         except (GrammarError, KeyError) as e:
             warnings.append(f"{ln[:60]} → {e}")
 

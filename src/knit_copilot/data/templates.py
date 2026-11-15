@@ -204,3 +204,50 @@ TEMPLATES = {
     "eyelet_scarf": eyelet_scarf, "feather_fan": feather_fan, "cable_scarf": cable_scarf,
     "bias_dishcloth": bias_dishcloth, "bordered_blanket": bordered_blanket,
 }
+
+
+# ---------- templates with stitch markers (added for real-pattern features, separate eval file) ----------
+
+def to_marker(name: str, remaining=0) -> dict:
+    return {"repeat": [op(name)], "until": {"remaining": remaining, "marker": True}}
+
+
+def marker_hat(rng: random.Random) -> Pattern:
+    """Hat in the round with 8 crown sections marked by stitch markers: 'k to 2 sts before marker, k2tog, sm'."""
+    sizes = ["S", "M", "L"]
+    sec = {"S": 10, "M": 11, "L": 12}
+    co = {s: 8 * n for s, n in sec.items()}
+    body = {s: 14 + i for i, s in enumerate(sizes)}
+    return pattern("Sectioned Beanie", "round", co, [
+        rows(row("Rnd 1", "round", [rep([op("k", 2), op("p", 2)], remaining=0)])),
+        repeat_rows(["Rnd 1"], length=rng.choice([4, 5])),
+        rows(row("Rnd 2", "round", [to_end("k")])),
+        repeat_rows(["Rnd 2"], length=body),
+        rows(row("Set-up rnd", "round", [rep([op("k", sec), op("pm")], times=7), op("k", sec)]),
+             row("Dec rnd", "round", [rep([to_marker("k", 2), op("k2tog"), op("sm")], remaining=0)],
+                 stated={s: co[s] - 8 for s in sizes}),
+             row("Knit rnd", "round", [to_end("k")])),
+        repeat_rows(["Dec rnd", "Knit rnd"], count=40),
+        repeat_rows(["Dec rnd"], count=16),
+        rows(row("Last rnd", "round", [rep([op("k2tog")], remaining=0)], stated=8)),
+        bind_off("gather")],
+        gauge(rng, (20, 22), 1.35, 4.0, "stockinette"), sizes)
+
+
+def triangle_shawl(rng: random.Random) -> Pattern:
+    """Top-down triangle shawl with a centre stitch between two markers; 4 increases every RS row."""
+    top = 7 + 4 * rng.randint(20, 35)
+    return pattern("Centre-Out Triangle Shawl", "flat", 5, [
+        rows(row("Row 1", "RS", [op("k", 2), op("yo"), op("pm"), op("k"), op("pm"), op("yo"), op("k", 2)], stated=7),
+             row("Row 2", "WS", [op("k", 2), to_end("p", 2), op("k", 2)]),
+             row("Row 3", "RS", [op("k", 2), op("yo"), to_marker("k"), op("yo"), op("sm"), op("k"), op("sm"), op("yo"),
+                                 to_end("k", 2), op("yo"), op("k", 2)], stated=11),
+             row("Row 4", "WS", [op("k", 2), to_end("p", 2), op("k", 2)])),
+        repeat_rows(["Row 3", "Row 4"], count=top),
+        rows(row("Edge row 1", "RS", [to_end("k")])),
+        repeat_rows(["Edge row 1"], times=3),
+        bind_off("loose")],
+        gauge(rng, (18, 22), 1.4, rng.choice([4.0, 4.5]), "garter-edged stockinette"))
+
+
+MARKER_TEMPLATES = {"marker_hat": marker_hat, "triangle_shawl": triangle_shawl}

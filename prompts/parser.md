@@ -27,6 +27,13 @@ IR rules:
   "*yo, k2tog; rep from * to last 2 sts" → until remaining 2. "rep from * to end" / "(k1, p1) to end" → remaining 0.
   "*k2, p2; rep from * 3 more times" → "times": 4 (worked once + 3 more). "(k2tog) 3 times" → "times": 3.
   "k to end" → {"repeat": [{"op": "k"}], "until": {"remaining": 0}}. "p to last 2 sts" → remaining 2.
+- Stitch markers: "pm" / "place marker" → {"op": "pm"}, "sm" / "slip marker" → {"op": "sm"}, "rm" → {"op": "rm"}.
+  A stop at a marker uses "marker": true — "k to marker" / "k to m" →
+  {"repeat": [{"op": "k"}], "until": {"remaining": 0, "marker": true}}; "k to 2 sts before marker" → remaining 2
+  with "marker": true; "*k1, p1; rep from * to 4 sts before m" → the group repeated with
+  {"remaining": 4, "marker": true}. "Slip marker" at the end of a round is still written as {"op": "sm"}.
+- Row names can be words ("Dec rnd", "Set-up row", "Inc Row 3", "Next Row"): use them as labels; if the same
+  name appears twice, add " (2)" to the second. "Repeat Dec Rows 1–2" refers to "Dec Row 1" and "Dec Row 2".
 - `gauge`: {"sts_per_10cm", "rows_per_10cm", "needle_mm", "stitch_pattern"} copied from the text, or null.
 - Ignore materials, notes and finishing lines that are not stitch instructions.
 

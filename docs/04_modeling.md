@@ -171,3 +171,11 @@ Real patterns shape with markers ("knit to 3 sts before the next marker", "[k1, 
 - Each worked row stores a record of the real repeat counts; display, fact sheets and charts read it instead
   of recomputing (which is impossible once stops depend on markers).
 - Stated counts are checked on the first time a row is worked only.
+
+### Parser: marker syntax and named rows
+- Grammar: stops "to marker", "to N sts before (the next) marker / m" for single stitches, star repeats and
+  bracket groups; `pm` / `sm` / `rm` and their spelled-out forms; row names made of words ("Dec rnd", "Set-up
+  row", "Inc Row 3"; rounds detected from "rnd/round" in the name); ranges with a prefix ("Dec Rows 1–2");
+  a repeated name gets " (2)". **No silent drops:** any "Name: instruction" line the grammar cannot read is
+  now a warning (before, lines like "Dec rnd: …" were skipped without a warning — found on the marker set).
+- LLM prompt (`prompts/parser.md`): marker ops, `"marker": true` stops, named rows.

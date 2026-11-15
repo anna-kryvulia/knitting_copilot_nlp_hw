@@ -96,9 +96,10 @@ def main() -> None:
     ap.add_argument("--split", default="dev")
     ap.add_argument("--limit", type=int, default=None)
     ap.add_argument("--version", default="v1")
+    ap.add_argument("--file", default="parse_cases.jsonl", help="e.g. parse_cases_markers.jsonl")
     args = ap.parse_args()
 
-    cases = load_cases("parse_cases.jsonl", args.split)[: args.limit]
+    cases = load_cases(args.file, args.split)[: args.limit]
     parse_fn = get_parser(args.parser)
     scored = []
     for c in cases:
@@ -117,7 +118,8 @@ def main() -> None:
                "by_template": {k: aggregate(v) for k, v in sorted(by_template.items())}}
     failures = [{"id": s["id"], "tags": s["tags"], "why": s["first_diff"], "warnings": s["warnings"]}
                 for s in scored if not s["exact_match"]]
-    path = write_results(f"parser_{args.parser}", args.split, args.version, metrics, len(scored), failures,
+    suffix = "" if args.file == "parse_cases.jsonl" else "_" + args.file.removeprefix("parse_cases_").removesuffix(".jsonl")
+    path = write_results(f"parser_{args.parser}{suffix}", args.split, args.version, metrics, len(scored), failures,
                          model=None if args.parser == "grammar" else app_model())
     o = metrics["overall"]
     print(f"\n{args.parser} on {args.split} (n={o['n']}): answered={o['answered']} "

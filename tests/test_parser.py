@@ -88,3 +88,29 @@ def test_chat_deadline_is_enforced(monkeypatch):
     except (llm.LLMTimeout, RuntimeError):
         pass
     assert _t.monotonic() - t0 < 2.5
+
+
+def test_grammar_marker_stops_and_named_rows():
+    assert parse_items("k to 2 sts before m", []) == [{"repeat": [{"op": "k"}], "until": {"remaining": 2, "marker": True}}]
+    assert parse_items("knit to the marker, slip marker", []) == [
+        {"repeat": [{"op": "k"}], "until": {"remaining": 0, "marker": True}}, {"op": "sm"}]
+    star = parse_items("*k to 2 sts before m, k2tog, sm; rep from * to end", [])[0]
+    assert star["until"] == {"remaining": 0} and star["repeat"][0]["until"]["marker"] is True
+    text = """Hat
+CO 24 sts.
+Join to work in the round.
+Set-up rnd: *k8, pm; rep from * 1 more time, k8.
+Dec rnd: *k to 2 sts before m, k2tog, sm; rep from * to end. (21 sts)
+Knit rnd: K to end.
+Repeat Dec rnd and Knit rnd until 12 sts remain.
+BO all sts.
+"""
+    r = parse(text)
+    assert r.ok and not r.warnings and r.pattern.construction == "round"
+    sim = simulate(r.pattern)
+    assert sim.ok and [x.end_count for x in sim.rows if x.label == "Dec rnd"][-1] == 12
+
+
+def test_grammar_warns_instead_of_skipping_unknown_named_rows():
+    r = parse("X\nCO 10 sts.\nFancy bit: k5, zz9, k5.\n")
+    assert r.warnings

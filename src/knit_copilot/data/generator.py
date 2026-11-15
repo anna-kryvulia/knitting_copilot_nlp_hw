@@ -23,7 +23,7 @@ from collections import Counter
 
 from knit_copilot import units
 from knit_copilot.config import ROOT
-from knit_copilot.data.templates import TEMPLATES
+from knit_copilot.data.templates import MARKER_TEMPLATES, TEMPLATES
 from knit_copilot.ir import Op, Pattern, RepeatRowsStep, Repeat, RowsStep, BindOffStep
 from knit_copilot.simulator import simulate
 
@@ -31,11 +31,12 @@ OUT = ROOT / "data" / "eval" / "parse_cases.jsonl"
 STYLES = ["terse", "brackets", "verbose", "uk", "imperial"]
 
 TERSE = {"k": "k", "p": "p", "yo": "yo", "k2tog": "k2tog", "ssk": "ssk", "skp": "skp", "kfb": "kfb",
-         "c6b": "C6B", "c6f": "C6F", "c4b": "C4B", "c4f": "C4F", "bo": "BO"}
+         "c6b": "C6B", "c6f": "C6F", "c4b": "C4B", "c4f": "C4F", "bo": "BO", "pm": "pm", "sm": "sm", "rm": "rm"}
 UK = {**TERSE, "yo": "yfwd", "skp": "skpo", "bo": "cast off"}
 VERBOSE = {"k": "knit", "p": "purl", "yo": "yarn over", "k2tog": "knit 2 together", "ssk": "slip slip knit",
            "skp": "slip 1, knit 1, pass slipped stitch over", "kfb": "knit into front and back",
-           "c6b": "cable 6 back", "c6f": "cable 6 front", "c4b": "cable 4 back", "c4f": "cable 4 front"}
+           "c6b": "cable 6 back", "c6f": "cable 6 front", "c4b": "cable 4 back", "c4f": "cable 4 front",
+           "pm": "place marker", "sm": "slip marker", "rm": "remove marker"}
 NUM_WORDS = {2: "twice", 3: "three times", 4: "four times", 5: "five times", 6: "six times"}
 
 
@@ -80,6 +81,8 @@ class Renderer:
         if isinstance(it, Op):
             return self.op(it)
         rem = it.until.remaining if it.until else None
+        if it.until is not None and it.until.marker:
+            return self.to_marker(it, rem, nested)
         # single-op repeat to the end / to last n sts: "k to end", "p to last 2 sts"
         if len(it.repeat) == 1 and isinstance(it.repeat[0], Op) and it.repeat[0].n == 1 and rem is not None:
             word = self.names.get(it.repeat[0].op, it.repeat[0].op)
@@ -105,6 +108,23 @@ class Renderer:
             return f"({inner}) to end" if rem == 0 else f"[{inner}] to {'last st' if rem == 1 else f'last {r} sts'}"
         last = "last st" if rem == 1 else f"last {r} sts"
         return f"*{inner}; rep from * to end" if rem == 0 else f"*{inner}; rep from * to {last}"
+
+    def to_marker(self, it, rem, nested: bool) -> str:
+        """'k to marker', 'k to 2 sts before marker', '*k1, p1; rep from * to 4 sts before m'."""
+        r = fmt(rem, self.sizes)
+        m = self.rng.choice(["marker", "m"]) if self.style != "verbose" else "the marker"
+        if len(it.repeat) == 1 and isinstance(it.repeat[0], Op) and it.repeat[0].n == 1:
+            word = self.names.get(it.repeat[0].op, it.repeat[0].op)
+            if self.style == "verbose":
+                return f"{word} to the marker" if rem == 0 else f"{word} until {r} stitches before the marker"
+            return f"{word} to {m}" if rem == 0 else f"{word} to {r} sts before {m}"
+        inner = self.items(it.repeat, nested=True)
+        stop = m if rem == 0 else f"{r} sts before {m}"
+        if self.style == "verbose":
+            return f"repeat [{inner}] until " + ("the marker" if rem == 0 else f"{r} stitches before the marker")
+        if self.style == "brackets" or nested:
+            return f"[{inner}] to {stop}"
+        return f"*{inner}; rep from * to {stop}"
 
     # ---------- rows and steps ----------
 
@@ -257,15 +277,16 @@ def add_typos(text: str, rng: random.Random) -> str:
 
 # ---------- cases ----------
 
-def make_cases(n: int, seed: int) -> list[dict]:
+def make_cases(n: int, seed: int, templates: dict | None = None, prefix: str = "parse") -> list[dict]:
+    templates = templates or TEMPLATES
     rng = random.Random(seed)
-    names = list(TEMPLATES)
+    names = list(templates)
     cases = []
     for i in range(n):
         template = names[i % len(names)]
         style = STYLES[i % len(STYLES)]          # 9 templates x 5 styles are coprime: every pair occurs
         case_rng = random.Random(rng.random())
-        pattern = TEMPLATES[template](case_rng)
+        pattern = templates[template](case_rng)
         text, gold = render(pattern, style, case_rng)
         tags = [template, style, gold.construction]
         if gold.sizes:
@@ -278,7 +299,7 @@ def make_cases(n: int, seed: int) -> list[dict]:
         if not sim.ok or sim.count_mismatches():
             raise RuntimeError(f"gold pattern does not simulate: {template} {style}: {sim.errors}")
         cases.append({
-            "id": f"parse-{i + 1:03d}", "split": None, "component": "parser", "source": "synthetic",
+            "id": f"{prefix}-{i + 1:03d}", "split": None, "component": "parser", "source": "synthetic",
             "input": {"text": text, "size": size},
             "expected": {"ir": gold.model_dump(mode="json", exclude_defaults=False),
                          "size": size, "total_rows": len(sim.rows), "final_count": sim.final_count,
@@ -301,8 +322,14 @@ def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--n", type=int, default=63)
     ap.add_argument("--seed", type=int, default=7)
+    ap.add_argument("--markers", action="store_true", help="marker templates → data/eval/parse_cases_markers.jsonl")
     args = ap.parse_args()
-    cases = make_cases(args.n, args.seed)
+    global OUT
+    if args.markers:
+        OUT = ROOT / "data" / "eval" / "parse_cases_markers.jsonl"
+        cases = make_cases(20, args.seed, MARKER_TEMPLATES, prefix="markers")
+    else:
+        cases = make_cases(args.n, args.seed)
     OUT.parent.mkdir(parents=True, exist_ok=True)
     with open(OUT, "w", encoding="utf-8") as f:
         for c in cases:

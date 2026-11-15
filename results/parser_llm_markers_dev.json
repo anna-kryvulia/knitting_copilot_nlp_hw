@@ -1,0 +1,239 @@
+{
+  "component": "parser_llm_markers",
+  "split": "dev",
+  "version": "v1",
+  "model": "nvidia/nemotron-3.5-super-vl:free",
+  "date": "2026-11-15",
+  "metrics": {
+    "overall": {
+      "n": 12,
+      "answered": 0.417,
+      "exact_when_answered": 1.0,
+      "parse_success": 0.417,
+      "total_rows_match": 0.417,
+      "row_count_agreement": 0.413,
+      "op_precision": 1.0,
+      "op_recall": 0.391,
+      "op_f1": 0.562,
+      "exact_match": 0.417,
+      "side_accuracy": 1.0
+    },
+    "by_source": {
+      "synthetic": {
+        "n": 12,
+        "answered": 0.417,
+        "exact_when_answered": 1.0,
+        "parse_success": 0.417,
+        "total_rows_match": 0.417,
+        "row_count_agreement": 0.413,
+        "op_precision": 1.0,
+        "op_recall": 0.391,
+        "op_f1": 0.562,
+        "exact_match": 0.417,
+        "side_accuracy": 1.0
+      }
+    },
+    "by_style": {
+      "+typo": {
+        "n": 4,
+        "answered": 0.5,
+        "exact_when_answered": 1.0,
+        "parse_success": 0.5,
+        "total_rows_match": 0.5,
+        "row_count_agreement": 0.482,
+        "op_precision": 1.0,
+        "op_recall": 0.463,
+        "op_f1": 0.633,
+        "exact_match": 0.5,
+        "side_accuracy": 1.0
+      },
+      "brackets": {
+        "n": 3,
+        "answered": 0.333,
+        "exact_when_answered": 1.0,
+        "parse_success": 0.333,
+        "total_rows_match": 0.333,
+        "row_count_agreement": 0.309,
+        "op_precision": 1.0,
+        "op_recall": 0.257,
+        "op_f1": 0.408,
+        "exact_match": 0.333,
+        "side_accuracy": 1.0
+      },
+      "imperial": {
+        "n": 2,
+        "answered": 0.5,
+        "exact_when_answered": 1.0,
+        "parse_success": 0.5,
+        "total_rows_match": 0.5,
+        "row_count_agreement": 0.504,
+        "op_precision": 1.0,
+        "op_recall": 0.465,
+        "op_f1": 0.635,
+        "exact_match": 0.5,
+        "side_accuracy": 1.0
+      },
+      "terse": {
+        "n": 2,
+        "answered": 1.0,
+        "exact_when_answered": 1.0,
+        "parse_success": 1.0,
+        "total_rows_match": 1.0,
+        "row_count_agreement": 1.0,
+        "op_precision": 1.0,
+        "op_recall": 1.0,
+        "op_f1": 1.0,
+        "exact_match": 1.0,
+        "side_accuracy": 1.0
+      },
+      "uk": {
+        "n": 2,
+        "answered": 0.5,
+        "exact_when_answered": 1.0,
+        "parse_success": 0.5,
+        "total_rows_match": 0.5,
+        "row_count_agreement": 0.531,
+        "op_precision": 1.0,
+        "op_recall": 0.524,
+        "op_f1": 0.687,
+        "exact_match": 0.5,
+        "side_accuracy": 1.0
+      },
+      "verbose": {
+        "n": 3,
+        "answered": 0.0,
+        "exact_when_answered": null,
+        "parse_success": 0.0,
+        "total_rows_match": 0.0,
+        "row_count_agreement": 0.0,
+        "op_precision": 0.0,
+        "op_recall": 0.0,
+        "op_f1": 0.0,
+        "exact_match": 0.0,
+        "side_accuracy": null
+      }
+    },
+    "by_template": {
+      "marker_hat": {
+        "n": 6,
+        "answered": 0.167,
+        "exact_when_answered": 1.0,
+        "parse_success": 0.167,
+        "total_rows_match": 0.167,
+        "row_count_agreement": 0.153,
+        "op_precision": 1.0,
+        "op_recall": 0.136,
+        "op_f1": 0.239,
+        "exact_match": 0.167,
+        "side_accuracy": null
+      },
+      "triangle_shawl": {
+        "n": 6,
+        "answered": 0.667,
+        "exact_when_answered": 1.0,
+        "parse_success": 0.667,
+        "total_rows_match": 0.667,
+        "row_count_agreement": 0.646,
+        "op_precision": 1.0,
+        "op_recall": 0.63,
+        "op_f1": 0.773,
+        "exact_match": 0.667,
+        "side_accuracy": 1.0
+      }
+    }
+  },
+  "n": 12,
+  "failures": [
+    {
+      "id": "markers-003",
+      "tags": [
+        "marker_hat",
+        "verbose",
+        "round",
+        "multi_size"
+      ],
+      "why": "no IR: llm: stopped after 60 s (free models busy or slow); try again later or use hybrid mode",
+      "warnings": [
+        "llm: stopped after 60 s (free models busy or slow); try again later or use hybrid mode"
+      ]
+    },
+    {
+      "id": "markers-007",
+      "tags": [
+        "marker_hat",
+        "brackets",
+        "round",
+        "multi_size"
+      ],
+      "why": "no IR: llm: stopped after 60 s (free models busy or slow); try again later or use hybrid mode",
+      "warnings": [
+        "llm: stopped after 60 s (free models busy or slow); try again later or use hybrid mode"
+      ]
+    },
+    {
+      "id": "markers-008",
+      "tags": [
+        "triangle_shawl",
+        "verbose",
+        "flat",
+        "typo"
+      ],
+      "why": "no IR: llm: stopped after 60 s (free models busy or slow); try again later or use hybrid mode",
+      "warnings": [
+        "llm: stopped after 60 s (free models busy or slow); try again later or use hybrid mode"
+      ]
+    },
+    {
+      "id": "markers-009",
+      "tags": [
+        "marker_hat",
+        "uk",
+        "round",
+        "multi_size",
+        "typo"
+      ],
+      "why": "no IR: llm: stopped after 60 s (free models busy or slow); try again later or use hybrid mode",
+      "warnings": [
+        "llm: stopped after 60 s (free models busy or slow); try again later or use hybrid mode"
+      ]
+    },
+    {
+      "id": "markers-015",
+      "tags": [
+        "marker_hat",
+        "imperial",
+        "round",
+        "multi_size"
+      ],
+      "why": "no IR: llm: stopped after 60 s (free models busy or slow); try again later or use hybrid mode",
+      "warnings": [
+        "llm: stopped after 60 s (free models busy or slow); try again later or use hybrid mode"
+      ]
+    },
+    {
+      "id": "markers-017",
+      "tags": [
+        "marker_hat",
+        "brackets",
+        "round",
+        "multi_size"
+      ],
+      "why": "no IR: llm: stopped after 60 s (free models busy or slow); try again later or use hybrid mode",
+      "warnings": [
+        "llm: stopped after 60 s (free models busy or slow); try again later or use hybrid mode"
+      ]
+    },
+    {
+      "id": "markers-018",
+      "tags": [
+        "triangle_shawl",
+        "verbose",
+        "flat"
+      ],
+      "why": "no IR: llm: stopped after 60 s (free models busy or slow); try again later or use hybrid mode",
+      "warnings": [
+        "llm: stopped after 60 s (free models busy or slow); try again later or use hybrid mode"
+      ]
+    }
+  ]
+}

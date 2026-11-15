@@ -210,3 +210,11 @@ Running log of decisions. Newest entries at the bottom. Format:
   2 simulator bugs fixed. 139 tests pass; chart + grammar-parser evals unchanged (no regressions).
 - Next: author reviews REVIEW.md; then run parser (grammar/llm/hybrid), charts, explainer on the real text
   (parser needs marker syntax: "to marker", "sm", "pm").
+
+## 2026-11-15 — 4/5. Modeling + Evaluation — Parser learns markers (no test peeking)
+- What: marker templates (sectioned beanie, triangle shawl) → separate `parse_cases_markers.jsonl` (20);
+  grammar: marker stops, pm/sm/rm, named rows, prefixed ranges, warnings instead of silent drops; LLM prompt rules.
+- Why: 3 of the real patterns shape with markers; real patterns are the parser's test set, so the syntax was
+  built from standard notation and checked on new synthetic data instead.
+- Result / numbers: grammar marker set dev 12/12, test 8/8; original set unchanged (36/36, 27/27). Found: named
+  rows were silently skipped before. LLM on the marker set (dev): 5/12 answered, all 5 exact; 7 time-outs.
