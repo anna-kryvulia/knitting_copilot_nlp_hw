@@ -129,5 +129,44 @@ gets within 1 cm (mean width error per template: feather & fan 3.3–3.6 cm, cab
 ≤ 0.7 cm). The system says so and advises changing needle size. Length errors come from finishing on a whole
 4- or 8-row repeat. Hand-calculated cases are unit tests (`tests/test_gauge.py`).
 
-## 5.6 Yarn advisor and rewriter
-Eval scripts ready (`eval_yarn_advisor.py`, `eval_rewriter.py`), not run yet (daily free-model quota).
+## 5.6 Charts (UC4)
+
+`eval/eval_charts.py`: every written row of every synthetic pattern charted at full width and read back.
+
+| Split | patterns | rows | ops match simulator | width = stitch count | symbols | reading direction | motif rows aligned | default shows stitch work |
+|---|---|---|---|---|---|---|---|---|
+| dev | 36 | 184 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 (11 motif charts) | 1.000 |
+| test | 27 | 138 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 (8 motif charts) | 1.000 |
+
+These are consistency checks of code against code (chart builder vs simulator), so 1.0 is the expected
+result and mainly guards against regressions. The meaningful chart test is end-to-end: charts of **parsed**
+real patterns (Part D), where a parsing error shows up as a wrong chart. A visual check of five templates
+(eyelet, cable, feather & fan, hat crown, rib) found and fixed three presentation problems (§4.8).
+
+## 5.7 Yarn advisor (UC3)
+
+`eval/eval_yarn_advisor.py`, 16 dev cases, gold yarn id (isolated from the linker).
+
+| Version | facts correct | needle size given (needle/gauge questions) | required facts mentioned | swatch warning (flagged yarns) | grounded 1st try | grounded final |
+|---|---|---|---|---|---|---|
+| v1 | 1.000 | 1.000* | 1.000 | 1.000 | 1.000 | 1.000 |
+
+\* first scored over all questions (0.688): the 5 "misses" were care/suitability questions ("How do I wash
+it?", "Is it good for a baby?") where a needle size is not expected — a metric specification error, fixed
+before any change to the system. Required-facts matching accepts synonyms ("not very elastic" = "low
+elasticity"); the list is in the script. Not measured yet: judge score (answer quality beyond the facts).
+Median latency ≈ 11 s.
+
+## 5.8 Rewriter (UC2 text)
+
+`eval/eval_rewriter.py`, one pattern per template (9), adjusted to a tighter or looser gauge.
+
+| Version | verified LLM rewrite | first try | code fallback | final output verified | style similarity LLM / code render |
+|---|---|---|---|---|---|
+| v1 | 0.778 | 0.778 | 0.222 | **1.000** | 0.714 / 0.554 |
+
+Both fallbacks were time-outs of the free model (90 s budget), not wrong rewrites; every LLM rewrite that
+came back passed the row-by-row check. The LLM keeps the original style much better than the code render
+(similarity to the original text 0.71 vs 0.55; e.g. bias dishcloth 0.96 vs 0.02, because the code render uses
+terse notation where the original was verbose). Robustness fix found in the log: during verification the
+LLM parser once returned `gauge.stitch_pattern: null`, rejected by the schema → field made optional.

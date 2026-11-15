@@ -15,6 +15,7 @@ before the next starts. This document grows with every component.
 | 8 | Yarn advisor (`components/yarn_advisor.py`) | code facts + LLM + grounding check | ✅ built, ⏳ eval needs quota | `eval/eval_yarn_advisor.py` |
 | 9 | Gauge adjustment (`gauge.py`) | code | ✅ | `eval/eval_gauge.py`, `tests/test_gauge.py` |
 | 10 | Rewriter (`components/rewriter.py`) | code edit list + LLM + re-parse check, code fallback | ✅ built, ⏳ eval needs quota | `eval/eval_rewriter.py` |
+| 11 | Charts (`charts.py`) | code | ✅ | `eval/eval_charts.py`, `tests/test_charts.py` |
 
 ## 4.1 Parsers
 
@@ -141,3 +142,20 @@ knitter's gauge and must match the adjusted IR row by row; one repair with the c
 the **code-rendered** version (generator's terse renderer, also verified) is shown with a warning.
 UI: Pattern → "My gauge" tab (swatch inputs → changes table, width/length before and after, notes →
 "Write my version of the pattern").
+
+## 4.8 Charts (UC4)
+`src/knit_copilot/charts.py`, no model calls. The chart is built from the same expansion as the simulator:
+one cell per stitch on the needle after the row; an op that makes n stitches spans n cells (cables drawn as a
+diagonal across the crossed stitches, direction from the KB lean); ops that make no stitch have no cell;
+narrower rows are padded with grey "no stitch" cells. Row 1 at the bottom, numbered with the pattern's row
+numbers; RS rows and rounds read right → left (number on the right), WS rows left → right (number on the
+left) with WS symbols (a knit on the WS is drawn as a purl bump •). Legend from the KB.
+- **Default rows**: the block with the most stitch work (ops other than knit/purl), then the most distinct
+  rows — e.g. the eyelet rows 1–4, the cable rows 1–8, the hat **crown**.
+- **Motif mode** (automatic above 48 stitches, or chosen): edge stitches + one repeat, boxed in red. For
+  rows with a multi-stitch repeat the first iteration is kept; for one-stitch repeats ("p to last 2 sts")
+  the width ÷ number of repeats; plain rows that don't divide evenly are cut to the nearest motif row's width.
+  The hat crown becomes the usual wedge (7, 7, 6, 6, … 1 stitches).
+- UI: Pattern → Chart tab (rows multiselect, auto / full width / one repeat, PNG download).
+- Fixes during development: default-row selection compared a score with a count (picked border rows);
+  piece row numbers replaced by pattern row numbers; feather & fan plain rows misaligned in motif mode.

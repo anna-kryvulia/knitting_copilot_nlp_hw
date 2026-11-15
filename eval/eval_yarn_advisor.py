@@ -2,7 +2,8 @@
 
 Code metrics:
   facts_correct     code-built facts match gold: CYC category, needle range, gauge range (label or CYC)
-  needle_mentioned  the answer states a needle size from the facts (range end or suggested size)
+  needle_mentioned  for questions about needles or gauge: the answer states a needle size from the facts
+                    (range end or suggested size); other questions (care, suitability) are not scored
   must_mention      share of required facts in the answer (synonyms allowed, see SYNONYMS)
   warning_recall    answers for flagged label gauges tell the knitter to swatch
   grounded_first / grounded_final  no number outside the facts, no wrong citation (before / after repair)
@@ -72,7 +73,9 @@ def main() -> None:
             continue
         a = out.answer
         needles = {f"{x:g}" for x in (*f.needle_mm, f.suggested_needle_mm)}
+        asks_needles = bool(re.search(r"needle|gauge", inp["question"], re.I))
         r = {"id": c["id"], "tags": c["tags"], "facts_ok": facts_ok, "seconds": round(time.time() - t, 1),
+             "asks_needles": asks_needles,
              "needle_mentioned": any(re.search(rf"(?<![\d.]){re.escape(n)}\s*mm", a) for n in needles),
              "must": [mentions(m, a) for m in g["must_mention"]],
              "missing": [m for m in g["must_mention"] if not mentions(m, a)],
@@ -88,7 +91,7 @@ def main() -> None:
             except (RuntimeError, ValueError) as e:
                 r.update(judge_score=None, judge_errors=[f"judge failed: {str(e)[:100]}"])
         rows.append(r)
-        if not (facts_ok and r["needle_mentioned"] and not r["missing"] and r["grounded_final"]
+        if not (facts_ok and (r["needle_mentioned"] or not asks_needles) and not r["missing"] and r["grounded_final"]
                 and (r["warned"] or not r["warn"])):
             failures.append({"id": c["id"], "why": "; ".join(
                 (["facts wrong"] if not facts_ok else []) + (["no needle size"] if not r["needle_mentioned"] else [])
@@ -104,7 +107,8 @@ def main() -> None:
     metrics = {"overall": {
         "n": len(rows), "answered": round(len(ok) / max(1, len(rows)), 3),
         "facts_correct": round(sum(r["facts_ok"] for r in rows) / max(1, len(rows)), 3),
-        "needle_mentioned": round(sum(r["needle_mentioned"] for r in ok) / n, 3),
+        "needle_mentioned": round(sum(r["needle_mentioned"] for r in ok if r["asks_needles"])
+                                  / max(1, sum(r["asks_needles"] for r in ok)), 3),
         "must_mention": round(sum(sum(r["must"]) for r in ok) / max(1, sum(len(r["must"]) for r in ok)), 3),
         "warning_recall": round(sum(r["warned"] for r in warn_rows) / len(warn_rows), 3) if warn_rows else None,
         "grounded_first": round(sum(r["grounded_first"] for r in ok) / n, 3),

@@ -111,7 +111,7 @@ class Gauge(_Strict):
     sts_per_10cm: float
     rows_per_10cm: float | None = None
     needle_mm: float | None = None
-    stitch_pattern: str = "stockinette"
+    stitch_pattern: str | None = "stockinette"
 
 
 class Source(_Strict):

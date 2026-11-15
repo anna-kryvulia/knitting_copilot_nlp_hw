@@ -163,3 +163,14 @@ Running log of decisions. Newest entries at the bottom. Format:
 - Loops: 5 → 4 three times (explainer prompt rule, citation check, single-row label bug); one eval bug (rounded
   target) fixed. Mac sleep explained a 19-min outlier.
 - Next: yarn advisor + rewriter evals (quota), judge calibration; then charts (UC4).
+
+## 2026-11-15 — 4/5. Modeling + Evaluation — Charts (UC4), yarn advisor and rewriter results
+- What: `charts.py` (cells from the simulator expansion, RS/WS direction and symbols, cable diagonals,
+  motif mode with red repeat box, default rows with stitch work), Chart tab + PNG download, `eval_charts.py`;
+  advisor and rewriter evals run.
+- Result / numbers: charts dev/test 322 rows, all checks 1.000 (code vs code). Yarn advisor dev: all code
+  metrics 1.000 (needle metric re-specified: only needle/gauge questions). Rewriter dev: 7/9 LLM rewrites
+  verified first try, 2 time-outs → code fallback, final output verified 9/9; style similarity 0.71 vs 0.55.
+- Fixes: chart default rows (score bug), row numbering, motif alignment; Gauge.stitch_pattern optional.
+- Next: Must-tier remaining: row tracker + project workflow (setup → lock, chat setup via tool calls,
+  router, LangGraph); Part D (Ravelry annotations); judge calibration.

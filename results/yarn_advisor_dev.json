@@ -1,0 +1,356 @@
+{
+  "component": "yarn_advisor",
+  "split": "dev",
+  "version": "v1",
+  "model": "nvidia/nemotron-3.5-super-vl:free",
+  "date": "2026-11-15",
+  "metrics": {
+    "overall": {
+      "n": 16,
+      "answered": 1.0,
+      "facts_correct": 1.0,
+      "needle_mentioned": 1.0,
+      "must_mention": 1.0,
+      "warning_recall": 1.0,
+      "grounded_first": 1.0,
+      "grounded_final": 1.0,
+      "judge_mean": null
+    }
+  },
+  "n": 16,
+  "failures": [],
+  "cases": [
+    {
+      "id": "advice-001",
+      "tags": [
+        "blend"
+      ],
+      "facts_ok": true,
+      "seconds": 0.0,
+      "asks_needles": true,
+      "needle_mentioned": true,
+      "must": [
+        true,
+        true
+      ],
+      "missing": [],
+      "warn": false,
+      "warned": true,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "answer": "Use 3.5 mm needles as listed on the yarn label, with an expected gauge of 23.6 stitches per 10 cm [yarn:9876]. The CYC guideline for this sport/fine weight is 23–26 stitches per 10 cm on 3.25–3.75 mm needles [cyc:2]. Because the cotton blend has low elasticity, start with 3.25 mm needles and cast on firmly, since ribbing will not spring back [yarn:9876][fibre:cotton]. Knit a swatch to confirm your gauge before starting."
+    },
+    {
+      "id": "advice-003",
+      "tags": [
+        "needles"
+      ],
+      "facts_ok": true,
+      "seconds": 0.0,
+      "asks_needles": true,
+      "needle_mentioned": true,
+      "must": [
+        true
+      ],
+      "missing": [],
+      "warn": false,
+      "warned": true,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "answer": "Use 5 mm needles; this is the size listed on the yarn label and the suggested starting needle [yarn:58406]. The CYC guideline for Aran / category 4 (Medium) is 4.5–5.5 mm needles [cyc:4]. Because wool has high elasticity and ribbing holds its shape well, 5 mm suits hats, sweaters, mittens, cables, and ribbing [fibre:wool]. Knit a swatch to confirm you reach 16.7 stitches per 10 cm before starting your project [yarn:58406]."
+    },
+    {
+      "id": "advice-004",
+      "tags": [
+        "suitability"
+      ],
+      "facts_ok": true,
+      "seconds": 0.0,
+      "asks_needles": false,
+      "needle_mentioned": true,
+      "must": [
+        true,
+        true,
+        true
+      ],
+      "missing": [],
+      "warn": false,
+      "warned": false,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "answer": "Yes, you can knit a scarf with DROPS Kid-Silk. It is a lace weight yarn (CYC category 0) [cyc:0] that gives a warm, drapey fabric with a fuzzy halo [fibre:mohair], and it is well suited to light scarves. The label recommends 3.5 mm needles and 22.6 stitches per 10 cm [yarn:24537], though the suggested starting needle is 4.5 mm because of the fibre; lace is often knitted on larger needles for openwork, so follow your pattern gauge [cyc:0]. Mohair has medium elasticity and high warmth [fibre:mohair], but the fuzzy halo hides stitch definition and the yarn is very hard to unravel, so use a lifeline and choose simple stitch patterns. Care is hand wash cool and dry flat; it is not stated as machine washable [yarn:24537]."
+    },
+    {
+      "id": "advice-006",
+      "tags": [
+        "care",
+        "flagged_gauge"
+      ],
+      "facts_ok": true,
+      "seconds": 0.0,
+      "asks_needles": false,
+      "needle_mentioned": false,
+      "must": [
+        true,
+        true
+      ],
+      "missing": [],
+      "warn": true,
+      "warned": true,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "answer": "You can machine wash Himalaya Everyday because the label says it is machine washable [yarn:107059]. It is also safe to tumble dry on low heat [yarn:107059]. Since it is 100% acrylic [fibre:acrylic], avoid high heat and heavy steaming—too much steam can “kill” the fibre and make it flat and limp [yarn:107059]. The yarn has medium elasticity, warmth and drape [fibre:acrylic], so gentle low-heat care will help it keep its shape. Note that the label gauge does not match this yarn's weight category, so knit a swatch and trust it rather than the label [yarn:107059]."
+    },
+    {
+      "id": "advice-007",
+      "tags": [
+        "needles"
+      ],
+      "facts_ok": true,
+      "seconds": 0.0,
+      "asks_needles": true,
+      "needle_mentioned": true,
+      "must": [
+        true,
+        true
+      ],
+      "missing": [],
+      "warn": false,
+      "warned": true,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "answer": "The yarn label recommends 3.5 mm needles [yarn:143378], but a 3.25 mm starting needle is suggested because this bamboo/cotton blend is slippery with low elasticity [yarn:143378]. The CYC guideline for DK weight lists 3.75–4.5 mm needles [cyc:3]. Wooden or bamboo needles work best since the fibre is slippery [fibre:bamboo]. The label gauge is 19.7 stitches per 10 cm, which differs from the CYC range of 21–24 stitches per 10 cm, so knit a swatch and trust it."
+    },
+    {
+      "id": "advice-008",
+      "tags": [
+        "gauge"
+      ],
+      "facts_ok": true,
+      "seconds": 0.0,
+      "asks_needles": true,
+      "needle_mentioned": true,
+      "must": [
+        true
+      ],
+      "missing": [],
+      "warn": false,
+      "warned": true,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "answer": "Expect about 21.7 stitches per 10 cm, which is the gauge listed on the Nako Calico label [yarn:131500]. This falls within the CYC category 3 (DK) guideline of 21–24 stitches per 10 cm on 3.75–4.5 mm needles [cyc:3]. The label recommends 4–4.5 mm needles [yarn:131500], but the facts suggest starting at 3.75 mm because cotton has low elasticity and many knitters go down a size for even stitches [fibre:cotton]. Since cotton lacks elastic memory, ribbing will not spring back, so cast on firmly and knit a swatch to confirm your gauge before starting."
+    },
+    {
+      "id": "advice-009",
+      "tags": [
+        "suitability"
+      ],
+      "facts_ok": true,
+      "seconds": 0.0,
+      "asks_needles": false,
+      "needle_mentioned": false,
+      "must": [
+        true
+      ],
+      "missing": [],
+      "warn": false,
+      "warned": true,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "answer": "Yes—this yarn is listed as good for children’s clothes, blankets and toys, and its blend includes 40% merino [yarn:68636]. The acrylic portion gives medium elasticity, warmth and drape, and it can be machine washed and dried on low heat [fibre:acrylic][yarn:68636]. Because softness is personal, knit a swatch and wash it the way you plan to wash the finished item before deciding [yarn:68636]."
+    },
+    {
+      "id": "advice-012",
+      "tags": [
+        "suitability"
+      ],
+      "facts_ok": true,
+      "seconds": 0.0,
+      "asks_needles": false,
+      "needle_mentioned": false,
+      "must": [
+        true
+      ],
+      "missing": [],
+      "warn": false,
+      "warned": false,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "answer": "Vizell FAYNA is not listed as a recommended yarn for socks; the label suggests accessories next to skin, baby items, and sweaters instead [yarn:158692]. Its 100% merino fibre has high elasticity, which helps with sock fit [fibre:merino]. However, machine washability is not stated on the label [yarn:158692], and superwash merino can pill with wear and stretch when wet [yarn:158692], so it may not hold up well in high-friction areas like heels and toes."
+    },
+    {
+      "id": "advice-014",
+      "tags": [
+        "suitability"
+      ],
+      "facts_ok": true,
+      "seconds": 0.0,
+      "asks_needles": false,
+      "needle_mentioned": false,
+      "must": [
+        true,
+        true
+      ],
+      "missing": [],
+      "warn": false,
+      "warned": false,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "answer": "No. This yarn is 100% cotton, and cotton has low elasticity and no elastic memory, so ribbing will not spring back or stay stretchy [fibre:cotton][yarn:20655]. The yarn facts note it is less suited for stretchy ribbing [yarn:20655]. Cast on firmly, and many knitters go down a needle size for even stitches [yarn:20655]."
+    },
+    {
+      "id": "advice-015",
+      "tags": [
+        "wide_gauge_range"
+      ],
+      "facts_ok": true,
+      "seconds": 0.0,
+      "asks_needles": true,
+      "needle_mentioned": true,
+      "must": [
+        true
+      ],
+      "missing": [],
+      "warn": false,
+      "warned": true,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "answer": "According to the yarn label, YarnArt Merino De Luxe gives 14.8–21.7 stitches per 10 cm on 3.5 mm needles [yarn:41737]. The CYC category 3 (DK) guideline is 21–24 stitches per 10 cm on 3.75–4.5 mm needles [cyc:3]. Because merino has high elasticity and the label range is wide [fibre:merino], knit a swatch and trust your own gauge."
+    },
+    {
+      "id": "advice-017",
+      "tags": [
+        "flagged_gauge"
+      ],
+      "facts_ok": true,
+      "seconds": 0.0,
+      "asks_needles": true,
+      "needle_mentioned": true,
+      "must": [
+        true
+      ],
+      "missing": [],
+      "warn": true,
+      "warned": true,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "answer": "The yarn label gives an expected gauge of 11.8 stitches per 10 cm on 5 mm needles [yarn:138061]. The CYC category 4 (Medium) guideline is 16–20 stitches per 10 cm on 4.5–5.5 mm needles [cyc:4], but there is a warning that the label gauge does not fit the weight category, so knit a swatch and trust your swatch, not the label [yarn:138061]. This 100% acrylic yarn has medium elasticity and drape, is machine washable, and does not respond much to wet blocking—steam lightly if needed, since too much steam can flatten it [fibre:acrylic]."
+    },
+    {
+      "id": "advice-018",
+      "tags": [
+        "no_name"
+      ],
+      "facts_ok": true,
+      "seconds": 0.0,
+      "asks_needles": true,
+      "needle_mentioned": true,
+      "must": [
+        true,
+        true
+      ],
+      "missing": [],
+      "warn": false,
+      "warned": true,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "answer": "Use 3.75–4.5 mm needles for DK cotton; this is the CYC needle range for Light (DK) weight yarn [cyc:3]. A good starting needle is 3.75 mm, since cotton has low elasticity and many knitters go down a needle size for even stitches [fibre:cotton]. Cotton has low elasticity and medium drape, so ribbing won’t spring back and the yarn can be hard on the hands—take breaks [fibre:cotton]. Knit a swatch to confirm your gauge before you begin."
+    },
+    {
+      "id": "advice-019",
+      "tags": [
+        "no_name"
+      ],
+      "facts_ok": true,
+      "seconds": 0.0,
+      "asks_needles": true,
+      "needle_mentioned": true,
+      "must": [
+        true
+      ],
+      "missing": [],
+      "warn": false,
+      "warned": true,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "answer": "For worsted weight wool (CYC category 4 Medium), use 4.5–5.5 mm needles, which is the CYC range for this weight [cyc:4]. A suggested starting needle is 5 mm. Expect 16–20 stitches per 10 cm on 4.5–5.5 mm needles [cyc:4]. Wool has high elasticity and warmth with low drape [fibre:wool], and it relaxes noticeably when wet blocked, so knit a swatch and trust your own gauge."
+    },
+    {
+      "id": "advice-022",
+      "tags": [
+        "no_name",
+        "lace"
+      ],
+      "facts_ok": true,
+      "seconds": 0.0,
+      "asks_needles": true,
+      "needle_mentioned": true,
+      "must": [
+        true,
+        true
+      ],
+      "missing": [],
+      "warn": false,
+      "warned": true,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "answer": "For lace-weight mohair, start with 3 mm needles, which is up from 2 mm because of the fibre [fibre:mohair]; the CYC range for Lace weight is 1.5–2.25 mm [cyc:0]. Lace yarn is often knitted on much larger needles for openwork, so follow the pattern gauge [cyc:0]. Mohair has medium elasticity, high warmth, and high drape, and its fuzzy halo hides stitch definition [fibre:mohair]. Since mohair is very hard to unravel, use a lifeline and knit a swatch to confirm your gauge before starting [fibre:mohair]."
+    },
+    {
+      "id": "advice-023",
+      "tags": [
+        "no_name",
+        "suitability"
+      ],
+      "facts_ok": true,
+      "seconds": 0.0,
+      "asks_needles": false,
+      "needle_mentioned": true,
+      "must": [
+        true,
+        true
+      ],
+      "missing": [],
+      "warn": false,
+      "warned": false,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "answer": "Sport alpaca is less suited for fitted sweaters because alpaca has low elasticity and high drape, and heavy alpaca fabrics can stretch over time [fibre:alpaca]. It works better for loose sweaters, scarves, shawls, and cowls [fibre:alpaca]. If you want to use it anyway, consider blending with wool for structure [fibre:alpaca]. The CYC gauge for this sport/fine weight is 23–26 stitches per 10 cm on 3.25–3.75 mm needles [cyc:2]."
+    },
+    {
+      "id": "advice-025",
+      "tags": [
+        "no_name"
+      ],
+      "facts_ok": true,
+      "seconds": 0.0,
+      "asks_needles": false,
+      "needle_mentioned": false,
+      "must": [
+        true
+      ],
+      "missing": [],
+      "warn": false,
+      "warned": true,
+      "grounded_first": true,
+      "grounded_final": true,
+      "violations": [],
+      "answer": "Plush or velvet yarns hide stitches, so count carefully and use stitch markers [cyc:6]. Because this is a polyester Super Bulky yarn, its low elasticity and medium drape won’t make stitches stand out [fibre:polyester]. Work slowly, count at the end of every row, and knit a swatch to check your gauge before starting the project."
+    }
+  ]
+}

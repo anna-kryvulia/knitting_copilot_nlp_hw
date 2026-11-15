@@ -1,0 +1,22 @@
+{
+  "component": "charts",
+  "split": "test",
+  "version": "v1",
+  "model": "none",
+  "date": "2026-11-15",
+  "metrics": {
+    "overall": {
+      "patterns": 27,
+      "rows": 138,
+      "ops_match": 1.0,
+      "width_match": 1.0,
+      "symbol_match": 1.0,
+      "direction_ok": 1.0,
+      "motif_mode_patterns": 8,
+      "motif_aligned": 1.0,
+      "default_has_work": 1.0
+    }
+  },
+  "n": 138,
+  "failures": []
+}

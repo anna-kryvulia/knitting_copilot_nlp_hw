@@ -10,7 +10,7 @@ import pandas as pd
 import streamlit as st
 
 from knit_copilot import kb
-from knit_copilot import gauge
+from knit_copilot import charts, gauge
 from knit_copilot.components import explainer, parser, rewriter, yarn_advisor, yarn_linker
 from knit_copilot.config import ROOT, settings
 from knit_copilot.display import row_lines
@@ -119,7 +119,22 @@ with tab_pattern:
                                + ", ".join(f"{r.label} (says {r.stated_count}, computed {r.end_count})" for r in mism))
                 for w in out.warnings:
                     st.caption(f"⚠ {w}")
-                rows_tab, explain_tab, gauge_tab = st.tabs(["Rows", "Explanation", "My gauge"])
+                rows_tab, chart_tab, explain_tab, gauge_tab = st.tabs(["Rows", "Chart", "Explanation", "My gauge"])
+                with chart_tab:
+                    written = [r.label for st_ in p.pieces[0].steps if hasattr(st_, "rows") for r in st_.rows]
+                    default_labels = charts.default_rows(p, size)
+                    chosen = st.multiselect("Rows to chart", written, default=[x for x in default_labels if x in written],
+                                            help="Default: the block with the most stitch work.")
+                    mode = st.radio("Width", ["auto", "full width", "one repeat"], horizontal=True,
+                                    help="auto: one repeat (red box) when the row is wider than 48 stitches")
+                    if chosen:
+                        ch = charts.build(p, size, labels=[x for x in written if x in chosen],
+                                          motif={"auto": None, "full width": False, "one repeat": True}[mode])
+                        png = charts.render_png(ch)
+                        st.image(png, use_container_width=ch.width > 20)
+                        st.caption("Read right-side rows (numbers on the right) from right to left and wrong-side "
+                                   "rows (numbers on the left) from left to right. Grey = no stitch.")
+                        st.download_button("Download chart (PNG)", png, file_name="chart.png", mime="image/png")
                 with rows_tab:
                     every = st.toggle("Show every row", value=False,
                                       help="Off: repeated rows are grouped into one line. On: one line per row worked.")

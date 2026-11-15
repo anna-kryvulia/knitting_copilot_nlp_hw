@@ -1,0 +1,161 @@
+{
+  "component": "rewriter",
+  "split": "dev",
+  "version": "v1",
+  "model": "nvidia/nemotron-3.5-super-vl:free",
+  "date": "2026-11-15",
+  "metrics": {
+    "overall": {
+      "n": 9,
+      "verified_llm": 0.778,
+      "first_try": 0.778,
+      "fallback": 0.222,
+      "final_verified": 1.0,
+      "style_similarity_llm": 0.714,
+      "style_similarity_code_render": 0.554
+    }
+  },
+  "n": 9,
+  "failures": [
+    {
+      "id": "parse-005",
+      "why": "llm: time budget used up (last error: Request timed out.)"
+    },
+    {
+      "id": "parse-006",
+      "why": "llm: time budget used up (last error: Request timed out.)"
+    }
+  ],
+  "cases": [
+    {
+      "id": "parse-001",
+      "template": "garter_scarf",
+      "style": "terse",
+      "method": "llm",
+      "verified_llm": true,
+      "first_try": true,
+      "fallback": false,
+      "final_verified": true,
+      "style_similarity": 0.896,
+      "code_render_similarity": 0.768,
+      "seconds": 43.1,
+      "problems": []
+    },
+    {
+      "id": "parse-002",
+      "template": "rib_scarf",
+      "style": "brackets",
+      "method": "llm",
+      "verified_llm": true,
+      "first_try": true,
+      "fallback": false,
+      "final_verified": true,
+      "style_similarity": 0.85,
+      "code_render_similarity": 0.816,
+      "seconds": 44.7,
+      "problems": []
+    },
+    {
+      "id": "parse-003",
+      "template": "seed_cowl",
+      "style": "verbose",
+      "method": "llm",
+      "verified_llm": true,
+      "first_try": true,
+      "fallback": false,
+      "final_verified": true,
+      "style_similarity": 0.899,
+      "code_render_similarity": 0.505,
+      "seconds": 62.4,
+      "problems": []
+    },
+    {
+      "id": "parse-004",
+      "template": "ribbed_hat",
+      "style": "uk",
+      "method": "llm",
+      "verified_llm": true,
+      "first_try": true,
+      "fallback": false,
+      "final_verified": true,
+      "style_similarity": 0.427,
+      "code_render_similarity": 0.418,
+      "seconds": 38.3,
+      "problems": []
+    },
+    {
+      "id": "parse-005",
+      "template": "eyelet_scarf",
+      "style": "imperial",
+      "method": "code_render",
+      "verified_llm": false,
+      "first_try": false,
+      "fallback": true,
+      "final_verified": true,
+      "style_similarity": 0.808,
+      "code_render_similarity": 0.808,
+      "seconds": 90.3,
+      "problems": [
+        "llm: time budget used up (last error: Request timed out.)"
+      ]
+    },
+    {
+      "id": "parse-006",
+      "template": "feather_fan",
+      "style": "terse",
+      "method": "code_render",
+      "verified_llm": false,
+      "first_try": false,
+      "fallback": true,
+      "final_verified": true,
+      "style_similarity": 0.827,
+      "code_render_similarity": 0.827,
+      "seconds": 90.3,
+      "problems": [
+        "llm: time budget used up (last error: Request timed out.)"
+      ]
+    },
+    {
+      "id": "parse-007",
+      "template": "cable_scarf",
+      "style": "brackets",
+      "method": "llm",
+      "verified_llm": true,
+      "first_try": true,
+      "fallback": false,
+      "final_verified": true,
+      "style_similarity": 0.441,
+      "code_render_similarity": 0.344,
+      "seconds": 120.4,
+      "problems": []
+    },
+    {
+      "id": "parse-008",
+      "template": "bias_dishcloth",
+      "style": "verbose",
+      "method": "llm",
+      "verified_llm": true,
+      "first_try": true,
+      "fallback": false,
+      "final_verified": true,
+      "style_similarity": 0.959,
+      "code_render_similarity": 0.018,
+      "seconds": 21.3,
+      "problems": []
+    },
+    {
+      "id": "parse-009",
+      "template": "bordered_blanket",
+      "style": "uk",
+      "method": "llm",
+      "verified_llm": true,
+      "first_try": true,
+      "fallback": false,
+      "final_verified": true,
+      "style_similarity": 0.527,
+      "code_render_similarity": 0.478,
+      "seconds": 12.4,
+      "problems": []
+    }
+  ]
+}
