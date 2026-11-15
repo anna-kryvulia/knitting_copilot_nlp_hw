@@ -31,6 +31,8 @@ class Settings:
     llm_cache: bool = os.getenv("LLM_CACHE", "1") == "1"
     max_retries: int = int(os.getenv("LLM_MAX_RETRIES", "4"))
     timeout_s: float = float(os.getenv("LLM_TIMEOUT_S", "60"))
+    # thinking models (e.g. Gemini 3.x): hidden reasoning counts against max_tokens; "low" keeps it short
+    reasoning_effort: str = os.getenv("LLM_REASONING_EFFORT", "")
     parse_budget_s: float = float(os.getenv("PARSE_TIME_BUDGET_S", "60"))
     db_path: Path = ROOT / os.getenv("DB_PATH", "data/knit.db")
     prompts_dir: Path = ROOT / "prompts"

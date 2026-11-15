@@ -51,8 +51,59 @@ h1, h2, h3 { letter-spacing: -0.01em; }
 [data-testid="stSidebar"] h2 { font-family: 'Fraunces', serif; }
 .stButton button[kind="primary"] { box-shadow: 0 2px 6px rgba(200, 40, 60, 0.25); }
 .stProgress > div > div > div > div { background-color: var(--kc-red); }
+/* knit texture: rows of V stitches */
+.kc-hero { position: relative; overflow: hidden; }
+.kc-hero::after { content: ""; position: absolute; inset: 0 0 0 45%; pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='22'%3E%3Cg fill='%23C8283C' fill-opacity='0.13'%3E%3Cellipse cx='8' cy='11' rx='4' ry='9' transform='rotate(-28 8 11)'/%3E%3Cellipse cx='18' cy='11' rx='4' ry='9' transform='rotate(28 18 11)'/%3E%3C/g%3E%3C/svg%3E");
+  -webkit-mask-image: linear-gradient(to left, #000 30%, transparent); mask-image: linear-gradient(to left, #000 30%, transparent); }
+.kc-hero > * { position: relative; z-index: 1; }
+.kc-stats { display: flex; gap: 0.5rem; margin-top: 0.55rem; flex-wrap: wrap; }
+.kc-stat { background: #FBF7F2; border: 1px solid var(--kc-line); border-radius: 999px; padding: 0.15rem 0.65rem;
+  font-size: 0.8rem; color: #5E4F48; }
+.kc-stat b { color: var(--kc-red); }
+/* section cards, steps and tiles */
+.kc-card { background: var(--kc-card); border: 1px solid var(--kc-line); border-radius: 0.9rem; padding: 1.1rem 1.3rem;
+  box-shadow: 0 2px 10px rgba(80, 40, 30, 0.04); margin-bottom: 0.9rem; }
+.kc-card h3 { font-family: 'Fraunces', serif; font-size: 1.25rem; margin: 0 0 0.2rem; padding: 0; }
+.kc-card .kc-sub { color: #7A6A62; font-size: 0.92rem; margin: 0 0 0.9rem; }
+.kc-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; }
+.kc-step { background: #FBF7F2; border: 1px solid var(--kc-line); border-radius: 0.8rem; padding: 0.9rem; }
+.kc-step .kc-num { display: inline-flex; width: 1.7rem; height: 1.7rem; border-radius: 50%; background: var(--kc-red);
+  color: #fff; font-weight: 700; align-items: center; justify-content: center; font-size: 0.9rem; }
+.kc-step.kc-done .kc-num { background: #2E7D4F; }
+.kc-step.kc-todo { border-color: #EBC2C7; background: #FDF3F4; }
+.kc-step h4 { margin: 0.5rem 0 0.2rem; font-size: 1rem; padding: 0; }
+.kc-step p { margin: 0; font-size: 0.86rem; color: #6E5F58; }
+.kc-tiles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.7rem; }
+.kc-tile { display: flex; gap: 0.7rem; align-items: flex-start; background: #FBF7F2; border: 1px solid var(--kc-line);
+  border-radius: 0.8rem; padding: 0.8rem; }
+.kc-tile .kc-ico { font-size: 1.4rem; width: 2.3rem; height: 2.3rem; border-radius: 0.6rem; background: var(--kc-red-soft);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.kc-tile b { display: block; font-size: 0.95rem; }
+.kc-tile span { font-size: 0.84rem; color: #6E5F58; }
+.kc-chips { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.4rem; }
+.kc-chip { background: var(--kc-red-soft); color: #A81F31; border-radius: 999px; padding: 0.2rem 0.7rem; font-size: 0.82rem; }
+.kc-side-brand { display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 0.7rem; margin-bottom: 0.8rem;
+  background: #fff; border: 1px solid var(--kc-line); border-left: 4px solid var(--kc-red); border-radius: 0.7rem; }
+.kc-side-brand b { font-family: 'Fraunces', serif; font-size: 1.05rem; }
+.kc-side-brand span { display: block; font-size: 0.76rem; color: #7A6A62; }
+@media (max-width: 900px) { .kc-steps, .kc-tiles { grid-template-columns: 1fr; } .kc-hero .kc-tag { display: none; } }
 </style>
 """, unsafe_allow_html=True)
+
+
+def html(markup: str) -> None:
+    st.markdown(markup, unsafe_allow_html=True)
+
+
+def tiles(items: list[tuple[str, str, str]]) -> str:
+    return '<div class="kc-tiles">' + "".join(
+        f'<div class="kc-tile"><div class="kc-ico">{i}</div><div><b>{t}</b><span>{d}</span></div></div>'
+        for i, t, d in items) + "</div>"
+
+
+def chips(words: list[str]) -> str:
+    return '<div class="kc-chips">' + "".join(f'<span class="kc-chip">{w}</span>' for w in words) + "</div>"
 
 
 @st.cache_data
@@ -68,8 +119,11 @@ def example_patterns() -> dict[str, dict]:
 
 # ---------- sidebar: abbreviation lookup (UC6) ----------
 with st.sidebar:
-    st.header("Abbreviations")
-    q = st.text_input("Abbreviation or question", placeholder="ssk, yfwd … or “how do I decrease left?”")
+    html('<div class="kc-side-brand">📖<div><b>Stitch dictionary</b>'
+         f'<span>{len(kb.abbreviations())} abbreviations · US and UK terms</span></div></div>')
+    pick = st.pills("Popular", ["k2tog", "ssk", "yo", "m1l", "sl1", "pm", "kfb", "psso"], label_visibility="collapsed")
+    q = st.text_input("Abbreviation or question", value=pick or "",
+                      placeholder="ssk, yfwd … or “how do I decrease left?”")
 
     def show_entry(a: kb.Abbreviation, title_prefix: str = "") -> None:
         st.subheader(f"{title_prefix}{a.id} — {a.name}")
@@ -102,11 +156,14 @@ st.markdown("""
 <div class="kc-hero">
   <div class="kc-ball">🧶</div>
   <div><h1>Knitting Copilot</h1>
-  <p>Reads your pattern, fits it to your yarn and gauge, draws the chart and keeps count of your rows.</p></div>
+  <p>Reads your pattern, fits it to your yarn and gauge, draws the chart and keeps count of your rows.</p>
+  <div class="kc-stats"><span class="kc-stat"><b>NLP</b> pattern reading</span>
+  <span class="kc-stat"><b>%d</b> yarns from Ukrainian shops</span>
+  <span class="kc-stat"><b>mm · cm</b> metric only</span></div></div>
   <div class="kc-tag">every number checked by code</div>
 </div>
-""", unsafe_allow_html=True)
-tab_project, tab_pattern, tab_yarn = st.tabs(["My project", "Pattern explorer", "Yarn"])
+""" % len(yarn_linker.yarns()), unsafe_allow_html=True)
+tab_project, tab_pattern, tab_yarn = st.tabs(["🧶\u2002My project", "📜\u2002Pattern explorer", "🐑\u2002Yarn"])
 
 # ---------- Pattern tab ----------
 with tab_pattern:
@@ -133,6 +190,17 @@ with tab_pattern:
             st.session_state["adjustment"] = None
             st.session_state["rewrite"] = None
         out = st.session_state.get("parsed")
+        if out is None:
+            html('<div class="kc-card"><h3>Paste a pattern, get the whole picture</h3>'
+                 '<p class="kc-sub">Load an example on the left or paste your own written pattern, then press '
+                 '<b>Read pattern</b>.</p>' + tiles([
+                     ("🔢", "Rows", "every row worked, with stitch counts checked by the simulator"),
+                     ("🟥", "Chart", "a knitting chart drawn from the written rows"),
+                     ("💬", "Explanation", "plain-English walkthrough with stitch-dictionary sources"),
+                     ("📏", "My gauge", "the pattern recalculated for your swatch, repeats kept whole")])
+                 + '<p class="kc-sub" style="margin:0.9rem 0 0.2rem">Understands notation like</p>'
+                 + chips(["*k2, p2; rep from *", "k to last 3 sts", "rep rnds 1–4 3 more times",
+                          "until piece measures 12 cm", "S (M, L)", "sm, ssk"]) + "</div>")
         if out is not None:
             if not out.ok:
                 st.error("Could not read this pattern.")
@@ -293,6 +361,17 @@ with tab_yarn:
                        + (f" Closest: {', '.join(c.brand + ' ' + c.name for c in link.candidates[:2] if c.score > 0.5)}"
                           if any(c.score > 0.5 for c in link.candidates) else ""))
     use_fibre = fibre != "—" and weight != "—"
+    if not (yarn_row or use_fibre or yarn_text):
+        html('<div class="kc-card"><h3>Which needles for this yarn?</h3>'
+             '<p class="kc-sub">Name a yarn, or pick a fibre and weight. Needle sizes and the expected gauge come '
+             'from the yarn label and the Craft Yarn Council table; the advisor adds fibre care and tips.</p>'
+             + tiles([("🪡", "Needles", "a range in mm and where to start"),
+                      ("📐", "Expected gauge", "stitches per 10 cm, flagged when the label looks off"),
+                      ("🧼", "Fibre advice", "washing, blocking, warmth and drape"),
+                      ("🔎", "Fuzzy names", "typos and Cyrillic brand names are understood")])
+             + '<p class="kc-sub" style="margin:0.9rem 0 0.2rem">Try</p>'
+             + chips(["YarnArt Jeans", "Gazzal Baby Wool", "DROPS Karisma", "Alize Cotton Gold", "Himalaya Everyday"])
+             + "</div>")
     if yarn_row or use_fibre:
         f = yarn_advisor.yarn_facts(yarn_row, None if yarn_row else fibre, None if yarn_row else weight)
         m = st.columns(3)
@@ -333,6 +412,20 @@ with tab_project:
                 pr = project.new_project(new_name)
                 db.save(pr)
                 st.rerun()
+            with right_col:
+                html('<div class="kc-card"><h3>How a project works</h3>'
+                     '<p class="kc-sub">Set it up by chat or with the form. Once generated, the working pattern is '
+                     'locked so your row count stays valid.</p><div class="kc-steps">'
+                     '<div class="kc-step"><span class="kc-num">1</span><h4>Set up</h4>'
+                     '<p>Pattern, size, your needles and swatch gauge; yarn if you like.</p></div>'
+                     '<div class="kc-step"><span class="kc-num">2</span><h4>Generate</h4>'
+                     '<p>The pattern is recalculated for your gauge and checked row by row.</p></div>'
+                     '<div class="kc-step"><span class="kc-num">3</span><h4>Knit</h4>'
+                     '<p>Follow the row tracker; ask about any stitch or row on the way.</p></div></div></div>')
+                html('<div class="kc-card"><h3>Things you can say in the chat</h3>'
+                     + chips(["I'm using YarnArt Jeans on 4 mm needles", "my swatch is 22 sts over 10 cm",
+                              "I want size M", "generate the working pattern", "I finished row 12",
+                              "what does ssk mean?", "show me the chart"]) + "</div>")
             st.stop()
         pr = db.load(choice)
 
@@ -379,6 +472,21 @@ with tab_project:
             st.caption("History: " + " · ".join(pr.history[-3:]))
 
     with right_col:
+        if pr.stage != "knitting":
+            need = project.missing(pr)
+            items = [("pattern", "Pattern", "paste it in Setup or the chat"),
+                     ("size", "Size", "one of the pattern's sizes"),
+                     ("gauge", "Gauge", "your swatch, stitches per 10 cm"),
+                     ("needles", "Needles", "the size you will knit with")]
+            steps = "".join(
+                f'<div class="kc-step {"kc-todo" if k in need else "kc-done"}"><span class="kc-num">'
+                f'{"!" if k in need else "✓"}</span><h4>{t}</h4><p>{d if k in need else "done"}</p></div>'
+                for k, t, d in items if k != "size" or (pr.pattern and pr.pattern.sizes) or "size" in need)
+            html('<div class="kc-card"><h3>' + ("Ready to generate" if not need else
+                 f"{len(need)} thing{'s' if len(need) != 1 else ''} left to set up") + '</h3>'
+                 '<p class="kc-sub">' + ("Press <b>Generate working pattern</b> on the left." if not need else
+                 "Tell the chat below, e.g. “my swatch is 22 sts over 10 cm on 4 mm needles”, or use the form.")
+                 + '</p><div class="kc-steps" style="grid-template-columns: repeat(4, 1fr)">' + steps + "</div></div>")
         if pr.stage == "knitting":
             with st.container(border=True):
                 v = tracker.view(pr)

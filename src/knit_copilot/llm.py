@@ -99,7 +99,11 @@ def chat(messages: list[dict[str, Any]], *, model: str | None = None, tools: lis
         params["tools"] = tools
 
     last_err: Exception | None = None
+    base_params = params
     for m in models:
+        params = dict(base_params)
+        if settings.reasoning_effort and m != settings.judge_model:    # app endpoint only
+            params["reasoning_effort"] = settings.reasoning_effort
         path = _cache_path({"model": m, "messages": messages, **params})
         if use_cache and path.exists():
             out = json.loads(path.read_text(encoding="utf-8"))
