@@ -264,3 +264,11 @@ Running log of decisions. Newest entries at the bottom. Format:
   (Gemini 3.5 Flash-Lite). The one ungrounded case is a correct number the model derived itself (7-stitch repeat),
   so the check is strict (precision over recall). Judge pending: OpenRouter free quota used up.
 - Next: judge run after the quota resets; report.
+
+## 2026-11-15 — 6. Deployment — Report notebook
+- What: `notebooks/report.ipynb` (+ HTML export) built by `scripts/build_report.py`; diagrams drawn by
+  `scripts/draw_diagrams.py` (`docs/diagrams/system.png`, `chat_graph.png`). All numbers are read from `results/`
+  when the notebook runs; a live demo cell runs the code path (parse → simulate → generate → tracker → chart).
+- Why: the assignment asks for a report with diagrams, business logic and eval results; reading `results/` keeps the
+  report and the evals in sync.
+- Next: LLM judge after the OpenRouter quota resets; video.

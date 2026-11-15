@@ -9,6 +9,8 @@ Built for *NLP Assignment 1: Build an NLP System*, following CRISP-DM (see [docs
 
 > Status: all Must-tier use cases are built and evaluated. Docs: [system diagram](docs/diagrams/system.md),
 > [chat graph](docs/diagrams/chat_graph.md), [evaluation](docs/05_evaluation.md), [modeling](docs/04_modeling.md).
+> **Report:** [notebooks/report.ipynb](notebooks/report.ipynb) (also as `notebooks/report.html`): business logic,
+> diagrams, components, walkthrough, every evaluation with error analysis, agentic coding setup.
 
 ## Use cases
 
