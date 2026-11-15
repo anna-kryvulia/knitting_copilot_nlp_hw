@@ -39,6 +39,9 @@ class ParserOutput(BaseModel):
     warnings: list[str] = []
     method: str = ""            # grammar | llm | llm+repair | failed
     attempts: int = 0           # LLM calls made
+    # last IR that was valid JSON but did not simulate (never used by the app; the evaluation scores it
+    # to see how much of a reading was right, e.g. when only an out-of-scope section fails)
+    unverified: Pattern | None = None
 
     @property
     def ok(self) -> bool:
@@ -80,12 +83,26 @@ def _llm_parse(text: str, feedback: str = "", model: str | None = None, deadline
     return llm.chat_json(messages, schema=Pattern, model=model, fallback=model is None, deadline=deadline)
 
 
+NO_ROW_GAUGE = "the pattern gives no row gauge: 'work until it measures' steps use your own row gauge"
+
+
 def _check(pattern: Pattern, size: str | None) -> list[str]:
+    """Simulation errors for every size. A missing row gauge is missing information, not a reading error:
+    such patterns are verified with a typical row gauge (1.4 × the stitch gauge) and get a warning instead."""
     sizes = [size] if size else (pattern.sizes or [None])
+    rows_g = None
+    if pattern.gauge is None or not pattern.gauge.rows_per_10cm:
+        rows_g = round(1.4 * pattern.gauge.sts_per_10cm, 1) if pattern.gauge else 28.0
     errors = []
     for s in sizes:
-        errors += simulate(pattern, s).errors
+        errors += simulate(pattern, s, rows_per_10cm=rows_g).errors
     return errors
+
+
+def _notes(pattern: Pattern) -> list[str]:
+    from knit_copilot.ir import RepeatRowsStep
+    uses_length = any(isinstance(st, RepeatRowsStep) and st.until_length_cm for pc in pattern.pieces for st in pc.steps)
+    return [NO_ROW_GAUGE] if uses_length and not (pattern.gauge and pattern.gauge.rows_per_10cm) else []
 
 
 def run(inp: ParserInput) -> ParserOutput:
@@ -93,11 +110,11 @@ def run(inp: ParserInput) -> ParserOutput:
     if inp.mode == "hybrid":
         g = grammar_parse(inp.text)
         if g.ok and not g.warnings and not _check(g.pattern, inp.size):
-            return ParserOutput(pattern=g.pattern, warnings=[], method="grammar")
+            return ParserOutput(pattern=g.pattern, warnings=_notes(g.pattern), method="grammar")
         warnings += [f"grammar: {w}" for w in g.warnings] or ["grammar: result does not simulate"]
 
     text = normalise_units(inp.text)
-    feedback, attempts = "", 0
+    feedback, attempts, last = "", 0, None
     deadline = time.monotonic() + (inp.time_budget_s or settings.parse_budget_s)
     for attempt in range(1 + MAX_REPAIRS):
         attempts += 1
@@ -116,9 +133,10 @@ def run(inp: ParserInput) -> ParserOutput:
             continue
         errors = _check(pattern, inp.size)
         if not errors:
-            return ParserOutput(pattern=pattern, warnings=warnings,
+            return ParserOutput(pattern=pattern, warnings=warnings + _notes(pattern),
                                 method="llm" if attempt == 0 else "llm+repair", attempts=attempts)
+        last = pattern
         warnings.append(f"llm: simulation error: {errors[0]}")
         feedback = (f"\nYour previous IR does not simulate: {errors[0]}. Check repeat stop rules, op counts and "
                     f"which rows are repeated, then return the corrected JSON.")
-    return ParserOutput(pattern=None, warnings=warnings, method="failed", attempts=attempts)
+    return ParserOutput(pattern=None, warnings=warnings, method="failed", attempts=attempts, unverified=last)

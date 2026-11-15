@@ -1,7 +1,7 @@
 {
   "component": "parser_grammar",
   "split": "test",
-  "version": "v1",
+  "version": "v3",
   "model": "none",
   "date": "2026-11-15",
   "metrics": {

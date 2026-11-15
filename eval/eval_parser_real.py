@@ -6,8 +6,14 @@ For `partial` patterns only the annotated section is scored: the first len(gold 
 'Until length' steps are simulated with the gold row gauge when the parsed pattern has none (the row gauge is
 a reading decision for one pattern, see REVIEW.md).
 
+Equivalent notations count as equal (v3 scoring): marker ops (pm/sm/rm) are dropped, because markers make no
+stitch and a beginning-of-round marker is optional; "slip purlwise" + "with yarn in front/back" equals the single
+KB stitch sl_wyif / sl_wyib. Size labels are matched by name, else by position ("S/M" ↔ "S/M Adult").
+
 Metrics per pattern, then averaged / pooled:
-  answered             the parser returned an IR
+  answered             the parser returned an IR (verified, or unverified: valid JSON that did not simulate,
+                       never used by the app; scored up to its first simulation error)
+  verified             the IR passed the parser's simulation check
   simulates            the IR simulates without errors over the scored rows
   rows_to_divergence   share of gold rows worked identically (ops and count) before the first difference
   row_count_agreement  share of aligned gold rows with the same end stitch count
@@ -29,6 +35,37 @@ from knit_copilot.ir import Pattern
 from knit_copilot.simulator import simulate
 
 PRIVATE = Path("data/private/ravelry")
+MARKERS = {"pm", "sm", "rm"}
+MERGE = {("sl_pw", "wyif"): "sl_wyif", ("wyif", "sl_pw"): "sl_wyif",
+         ("sl_pw", "wyib"): "sl_wyib", ("wyib", "sl_pw"): "sl_wyib"}
+
+
+def canon(ops: list[str]) -> list[str]:
+    """Ops with equivalent notations unified (see module docstring)."""
+    out: list[str] = []
+    for o in ops:
+        if o in MARKERS:
+            continue
+        if out and (out[-1], o) in MERGE:
+            out[-1] = MERGE[(out[-1], o)]
+            continue
+        out.append(o)
+    return out
+
+
+def match_size(size: str | None, gold_sizes: list[str], pred_sizes: list[str]) -> str | None:
+    if not pred_sizes:
+        return None
+    if size in pred_sizes:
+        return size
+    key = (size or "").replace(" ", "").lower()
+    by_name = [s for s in pred_sizes if s.replace(" ", "").lower() == key
+               or s.replace(" ", "").lower().startswith(key)]
+    if len(by_name) == 1:
+        return by_name[0]
+    if size in gold_sizes and len(gold_sizes) == len(pred_sizes):
+        return pred_sizes[gold_sizes.index(size)]
+    return pred_sizes[0]
 
 
 def gold_cases() -> list[dict]:
@@ -40,21 +77,18 @@ def score(g: dict, parse_fn) -> dict:
     size = g["eval_size"]
     gold = simulate(gold_pat, size)
     n = len(gold.rows)
-    out = {"slug": g["slug"], "coverage": g["coverage"], "rows_gold": n, "answered": False, "simulates": False,
-           "same_prefix": 0, "count_hits": 0, "op_tp": 0, "op_pred": 0, "op_gold": sum(len(r.ops) for r in gold.rows),
+    out = {"slug": g["slug"], "coverage": g["coverage"], "rows_gold": n, "answered": False, "verified": False,
+           "simulates": False, "same_prefix": 0, "count_hits": 0, "op_tp": 0, "op_pred": 0,
+           "op_gold": sum(len(canon(r.ops)) for r in gold.rows),
            "total_rows_match": False, "exact": False, "first_diff": None, "rows_pred": 0, "warnings": 0}
     res = parse_fn((PRIVATE / f"{g['slug']}.txt").read_text())
     out["warnings"] = len(res.warnings)
-    if not res.ok:
-        out["first_diff"] = "no IR"
+    pat = res.pattern or getattr(res, "unverified", None)
+    if pat is None:
+        out["first_diff"] = "no IR: " + "; ".join(w[:80] for w in res.warnings[-1:])
         return out
-    out["answered"] = True
-    pat = res.pattern
-    if size and pat.sizes and size not in pat.sizes:                 # size labels written differently
-        size_p = next((s for s in pat.sizes if s.replace(" ", "").lower() == size.replace(" ", "").lower()),
-                      pat.sizes[0])
-    else:
-        size_p = size if pat.sizes else None
+    out["answered"], out["verified"] = True, res.ok
+    size_p = match_size(size, gold_pat.sizes or [], pat.sizes or [])
     rows_gauge = None if (pat.gauge and pat.gauge.rows_per_10cm) else gold_pat.gauge.rows_per_10cm
     pred = simulate(pat, size_p, rows_per_10cm=rows_gauge)
     scored = pred.rows[:n] if g["coverage"] == "partial" else pred.rows
@@ -68,16 +102,17 @@ def score(g: dict, parse_fn) -> dict:
         if pr is None:
             out["first_diff"] = out["first_diff"] or f"row {gr.number} ({gr.label}) missing"
             break
-        out["op_pred"] += len(pr.ops)
-        out["op_tp"] += sum((Counter(pr.ops) & Counter(gr.ops)).values())
+        p_ops, g_ops = canon(pr.ops), canon(gr.ops)
+        out["op_pred"] += len(p_ops)
+        out["op_tp"] += sum((Counter(p_ops) & Counter(g_ops)).values())
         out["count_hits"] += pr.end_count == gr.end_count
-        if not diverged and pr.ops == gr.ops and pr.end_count == gr.end_count:
+        if not diverged and p_ops == g_ops and pr.end_count == gr.end_count:
             out["same_prefix"] += 1
         elif not diverged:
             diverged = True
             out["first_diff"] = (f"row {gr.number} (gold '{gr.label}', parsed '{pr.label}'): "
                                  f"{pr.start_count}→{pr.end_count} vs gold {gr.start_count}→{gr.end_count}")
-    out["op_pred"] += sum(len(r.ops) for r in scored[n:])
+    out["op_pred"] += sum(len(canon(r.ops)) for r in scored[n:])
     out["exact"] = out["simulates"] and out["total_rows_match"] and out["same_prefix"] == n
     if not pred.ok and not out["simulates"]:
         out["first_diff"] = (out["first_diff"] or "") + f" | simulation error: {pred.errors[0][:100]}"
@@ -90,6 +125,7 @@ def aggregate(rows: list[dict]) -> dict:
     prec, rec = (tp / pp if pp else 0.0), (tp / gg if gg else 0.0)
     return {"n": len(rows),
             "answered": round(sum(r["answered"] for r in rows) / k, 3),
+            "verified": round(sum(r["verified"] for r in rows) / k, 3),
             "simulates": round(sum(r["simulates"] for r in rows) / k, 3),
             "rows_to_divergence": round(sum(r["same_prefix"] / r["rows_gold"] for r in rows) / k, 3),
             "row_count_agreement": round(sum(r["count_hits"] for r in rows) / max(1, sum(r["rows_gold"] for r in rows)), 3),
@@ -108,7 +144,7 @@ def main() -> None:
     for g in gold_cases():
         r = score(g, parse_fn)
         rows.append(r)
-        print(f"{r['slug']:28} {'EXACT' if r['exact'] else '     '} prefix {r['same_prefix']}/{r['rows_gold']} "
+        print(f"{r['slug']:28} {'EXACT' if r['exact'] else '     '} {'V' if r['verified'] else 'u' if r['answered'] else '-'} prefix {r['same_prefix']}/{r['rows_gold']} "
               f"counts {r['count_hits']}/{r['rows_gold']} pred_rows {r['rows_pred']}  {r['first_diff'] or ''}"[:220])
     metrics = {"overall": aggregate(rows),
                "full": aggregate([r for r in rows if r["coverage"] == "full"]),

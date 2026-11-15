@@ -114,3 +114,11 @@ BO all sts.
 def test_grammar_warns_instead_of_skipping_unknown_named_rows():
     r = parse("X\nCO 10 sts.\nFancy bit: k5, zz9, k5.\n")
     assert r.warnings
+
+
+def test_missing_row_gauge_is_a_warning_not_a_reading_error():
+    from knit_copilot.components import parser as P
+    text = ("Scarf\nGauge: 20 sts = 10 cm.\nCO 20 sts.\nRow 1: k to end.\n"
+            "Repeat Row 1 until piece measures 10 cm.\nBO all sts.\n")
+    out = P.run(P.ParserInput(text=text, mode="hybrid"))
+    assert out.ok and P.NO_ROW_GAUGE in out.warnings

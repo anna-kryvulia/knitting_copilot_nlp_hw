@@ -238,3 +238,13 @@ Running log of decisions. Newest entries at the bottom. Format:
   (66 rows). 147 tests pass.
 - Next: LLM + hybrid parser on real patterns, explainer on real patterns, setup agent and router LLM evals — as
   soon as an LLM endpoint with quota is available.
+
+## 2026-11-15 — 5 → 4 → 5. Evaluation ↔ Modeling — Real-pattern LLM parser: error analysis and fixes
+- What: first-divergence diff of every real pattern against its gold; scoring now treats equal knitting as equal
+  (markers ignored, sl_pw+wyif = sl_wyif, sizes matched by name/position); parser accepts patterns without a row
+  gauge (warning + typical row gauge for the check) and keeps an `unverified` IR for evaluation; explorer shows such
+  patterns with the estimate. Gemini thinking capped (`LLM_REASONING_EFFORT=low`) after answers were cut off.
+- Result / numbers: LLM parser on 10 real patterns: exact 0 → 3, rows to divergence 0.10 → 0.43, op F1 0.48 → 0.59,
+  answered 0.5 → 1.0 (0.6 verified). The remaining errors are structural (repeat counts, skipped sections), 3 of them
+  invisible to the stitch-count check. Grammar 0/10 (unchanged). 147 tests pass.
+- Next: setup agent and router LLM evals on Gemini; explainer on real patterns; report.

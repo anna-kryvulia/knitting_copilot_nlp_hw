@@ -246,7 +246,10 @@ with tab_pattern:
                         st.session_state.pop(f"step-{cur_pr.id}", None)
                         (st.success if res.ok else st.warning)(
                             (res.message + " Open the My project tab to continue.") if res.ok else res.message)
-                sim = simulate(p, size)
+                est_rows = None
+                if parser.NO_ROW_GAUGE in out.warnings:
+                    est_rows = round(1.4 * p.gauge.sts_per_10cm, 1) if p.gauge else 28.0
+                sim = simulate(p, size, rows_per_10cm=est_rows)
                 cols = st.columns(4)
                 cols[0].metric("Construction", p.construction)
                 cols[1].metric("Cast on", sim.cast_on)
@@ -264,7 +267,8 @@ with tab_pattern:
                     st.warning("Stated counts that differ from the computed ones: "
                                + ", ".join(f"{r.label} (says {r.stated_count}, computed {r.end_count})" for r in mism))
                 for w in out.warnings:
-                    st.caption(f"⚠ {w}")
+                    st.caption(f"⚠ {w}" + (f" (shown here with a typical {est_rows:g} rows per 10 cm)"
+                                           if w == parser.NO_ROW_GAUGE else ""))
                 rows_tab, chart_tab, explain_tab, gauge_tab = st.tabs(["Rows", "Chart", "Explanation", "My gauge"])
                 with chart_tab:
                     written = [r.label for st_ in p.pieces[0].steps if hasattr(st_, "rows") for r in st_.rows]

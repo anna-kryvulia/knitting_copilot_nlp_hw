@@ -1,13 +1,14 @@
 {
   "component": "parser_grammar",
   "split": "ravelry",
-  "version": "v1",
+  "version": "v3-scoring",
   "model": "grammar",
   "date": "2026-11-15",
   "metrics": {
     "overall": {
       "n": 10,
       "answered": 0.5,
+      "verified": 0.5,
       "simulates": 0.2,
       "rows_to_divergence": 0.0,
       "row_count_agreement": 0.0,
@@ -18,6 +19,7 @@
     "full": {
       "n": 5,
       "answered": 0.4,
+      "verified": 0.4,
       "simulates": 0.2,
       "rows_to_divergence": 0.0,
       "row_count_agreement": 0.0,
@@ -28,6 +30,7 @@
     "partial": {
       "n": 5,
       "answered": 0.6,
+      "verified": 0.6,
       "simulates": 0.2,
       "rows_to_divergence": 0.0,
       "row_count_agreement": 0.0,
@@ -40,11 +43,11 @@
   "failures": [
     {
       "slug": "3x1-hood",
-      "why": "no IR"
+      "why": "no IR: no cast-on line found"
     },
     {
       "slug": "blueberry-bandana",
-      "why": "no IR"
+      "why": "no IR: no cast-on line found"
     },
     {
       "slug": "double-hat",
@@ -52,7 +55,7 @@
     },
     {
       "slug": "feeling-good-legwarmers",
-      "why": "no IR"
+      "why": "no IR: no cast-on line found"
     },
     {
       "slug": "moose-balaclava",
@@ -60,11 +63,11 @@
     },
     {
       "slug": "nick-chopper",
-      "why": "no IR"
+      "why": "no IR: no cast-on line found"
     },
     {
       "slug": "sherbet-bandana",
-      "why": "no IR"
+      "why": "no IR: no cast-on line found"
     },
     {
       "slug": "sister-scarf",
@@ -85,6 +88,7 @@
       "coverage": "partial",
       "rows_gold": 58,
       "answered": false,
+      "verified": false,
       "simulates": false,
       "same_prefix": 0,
       "count_hits": 0,
@@ -93,7 +97,7 @@
       "op_gold": 2376,
       "total_rows_match": false,
       "exact": false,
-      "first_diff": "no IR",
+      "first_diff": "no IR: no cast-on line found",
       "rows_pred": 0,
       "warnings": 23
     },
@@ -102,6 +106,7 @@
       "coverage": "partial",
       "rows_gold": 76,
       "answered": false,
+      "verified": false,
       "simulates": false,
       "same_prefix": 0,
       "count_hits": 0,
@@ -110,7 +115,7 @@
       "op_gold": 3116,
       "total_rows_match": false,
       "exact": false,
-      "first_diff": "no IR",
+      "first_diff": "no IR: no cast-on line found",
       "rows_pred": 0,
       "warnings": 14
     },
@@ -119,12 +124,13 @@
       "coverage": "partial",
       "rows_gold": 77,
       "answered": true,
+      "verified": true,
       "simulates": false,
       "same_prefix": 0,
       "count_hits": 0,
       "op_tp": 0,
       "op_pred": 0,
-      "op_gold": 7664,
+      "op_gold": 7616,
       "total_rows_match": false,
       "exact": false,
       "first_diff": "row 1 (Rib rnd) missing | simulation error: step 1: repeat refers to undefined rows ['Decrease round on every 2nd round']",
@@ -136,6 +142,7 @@
       "coverage": "full",
       "rows_gold": 174,
       "answered": false,
+      "verified": false,
       "simulates": false,
       "same_prefix": 0,
       "count_hits": 0,
@@ -144,7 +151,7 @@
       "op_gold": 11136,
       "total_rows_match": false,
       "exact": false,
-      "first_diff": "no IR",
+      "first_diff": "no IR: no cast-on line found",
       "rows_pred": 0,
       "warnings": 1
     },
@@ -153,6 +160,7 @@
       "coverage": "partial",
       "rows_gold": 23,
       "answered": true,
+      "verified": true,
       "simulates": true,
       "same_prefix": 0,
       "count_hits": 0,
@@ -170,15 +178,16 @@
       "coverage": "full",
       "rows_gold": 97,
       "answered": false,
+      "verified": false,
       "simulates": false,
       "same_prefix": 0,
       "count_hits": 0,
       "op_tp": 0,
       "op_pred": 0,
-      "op_gold": 10475,
+      "op_gold": 10400,
       "total_rows_match": false,
       "exact": false,
-      "first_diff": "no IR",
+      "first_diff": "no IR: no cast-on line found",
       "rows_pred": 0,
       "warnings": 19
     },
@@ -187,6 +196,7 @@
       "coverage": "full",
       "rows_gold": 267,
       "answered": false,
+      "verified": false,
       "simulates": false,
       "same_prefix": 0,
       "count_hits": 0,
@@ -195,7 +205,7 @@
       "op_gold": 6245,
       "total_rows_match": false,
       "exact": false,
-      "first_diff": "no IR",
+      "first_diff": "no IR: no cast-on line found",
       "rows_pred": 0,
       "warnings": 8
     },
@@ -204,6 +214,7 @@
       "coverage": "full",
       "rows_gold": 573,
       "answered": true,
+      "verified": true,
       "simulates": false,
       "same_prefix": 0,
       "count_hits": 0,
@@ -221,6 +232,7 @@
       "coverage": "partial",
       "rows_gold": 5,
       "answered": true,
+      "verified": true,
       "simulates": false,
       "same_prefix": 0,
       "count_hits": 0,
@@ -238,12 +250,13 @@
       "coverage": "full",
       "rows_gold": 81,
       "answered": true,
+      "verified": true,
       "simulates": true,
       "same_prefix": 0,
       "count_hits": 0,
       "op_tp": 0,
       "op_pred": 0,
-      "op_gold": 6653,
+      "op_gold": 6573,
       "total_rows_match": false,
       "exact": false,
       "first_diff": "row 1 (Row 1) missing",

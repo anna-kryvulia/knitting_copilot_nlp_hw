@@ -205,10 +205,49 @@ count the designers print. Both stay private (copyright). Script: `eval/eval_par
 For partial patterns only the annotated section is scored.
 
 ### Parser
-| Version | Parser | Answered | Simulates | Rows to divergence | Row-count agreement | Op F1 | Exact |
+| Version | Parser | Answered | Verified | Rows to divergence | Row-count agreement | Op F1 | Exact |
 |---|---|---|---|---|---|---|---|
-| v1 | grammar | 0.5 | 0.2 | 0.0 | 0.0 | 0.0 | 0 / 10 |
-| — | llm / hybrid | pending (free quota used up) | | | | | |
+| v1 | grammar | 0.5 | — | 0.0 | 0.0 | 0.0 | 0 / 10 |
+| v2 | llm (Gemini 3.5 Flash) | 0.5 | 0.5 | 0.099 | 0.356 | 0.475 | 0 / 10 |
+| v3 | llm, fixed scoring + parser fixes | **1.0** | 0.6 | **0.431** | 0.417 | 0.591 | **3 / 10** |
+| v3 | grammar, same scoring | 0.5 | — | 0.0 | 0.0 | 0.0 | 0 / 10 |
+
+Hybrid = grammar first, then the LLM. The grammar reads none of the real patterns, so on this set hybrid gives the
+same results as llm. Gemini 3.5 Flash with `LLM_REASONING_EFFORT=low`; under the free per-minute limit some answers
+came from the fallback model `gemini-3.5-flash-lite`.
+
+**v2 → v3: error analysis of the LLM parser.** Each pattern's first differing row was compared with the gold
+(script: `eval/eval_parser_real.py`). There were three kinds of causes:
+
+*A. Scoring treated equal knitting as different (eval fixes, documented in the script's docstring):*
+- Legwarmers: the only difference was a beginning-of-round marker (`sm`). Markers make no stitch and are
+  optional, so marker ops are now left out of the comparison.
+- Sherbet Bandana: "SL 1 PWISE WYIF" was read as two KB ops `sl_pw` + `wyif` instead of the one KB stitch
+  `sl_wyif`. The knitting is the same, so the pair now equals the single stitch.
+- Nick Chopper: the size was not found ("S/M" in the gold, "S/M Adult" in the parse), so the Kids size was scored
+  against the S/M gold. Sizes are now matched by name, or else by position.
+
+*B. The parser threw away valid readings (system fixes, general rules):*
+- The Sigrid Scarf gives no row gauge, so "work until 28 cm" could not be simulated and the parser rejected a
+  correct reading. A missing row gauge is missing information, not a reading error: the parser now checks such
+  patterns with a typical row gauge (1.4 × the stitch gauge) and warns. Sigrid is now **exact**.
+- When verification fails after the repair round, the parser now keeps the last IR as `unverified`. The app never
+  uses it; the eval scores it up to its first simulation error. This separates "no answer" (availability) from
+  "wrong answer" (accuracy).
+
+*C. Real reading errors (no fix: the patterns are the test set):*
+| Pattern | What went wrong | Caught by the simulator? |
+|---|---|---|
+| Blueberry, Moose, headscarf, Double Hat | stitch counts in a row do not add up (row 1 or a set-up round with markers) | yes: the app would show an error, not a wrong pattern |
+| 3x1 Hood | one extra pair of rows before the set-up row ("repeat until …, end with a WS row") | no: 57 / 58 rows right |
+| Nick Chopper | set-up and rib section in the wrong order; repeat counts lost (24 rows instead of 97) | no |
+| Sister Scarf | the rib section was skipped, and "until the desired length" was not turned into rows | no |
+
+Four of the seven wrong readings were caught by the simulator, so the user would see "cannot read this pattern"
+instead of wrong numbers. The three that pass the check are wrong in **structure** (which rows repeat, how often),
+not in stitch arithmetic. These are the errors the row-count self-check cannot see. The next improvement would be
+to check the parsed pattern against counts the designer states in prose ("you have knitted 23 rows",
+"measures 9 cm"), which the gold work showed most real patterns contain.
 
 **Error analysis (grammar).** The grammar reads synthetic notation perfectly (dev 36/36, test 27/27, markers 20/20)
 and fails on every real pattern. Causes, from the parser warnings:
