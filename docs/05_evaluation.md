@@ -180,23 +180,65 @@ LLM parser once returned `gauge.stitch_pattern: null`, rejected by the schema �
 
 ## 5.9 Router (intent classification)
 Set: `data/eval/intents.jsonl` (dev 55, test 33, 11 intents). Rules are written from the intent definitions,
-not from eval cases.
+not from eval cases. The LLM part gets the intent definitions only (`prompts/router.md`), no examples.
 
-| Version | Split | Mode | Accuracy | Macro-F1 | Rule coverage | Rule precision | Note |
+| Version | Model | Split | Mode | Answered | Accuracy | Macro-F1 | Rule coverage / precision |
 |---|---|---|---|---|---|---|---|
-| v1 | dev | rules | — | — | 0.436 | 1.000 | 24 of 55 decided by rules, all correct; rest unknown |
-| v1 | test | rules | — | — | 0.515 | 0.941 | 1 misfire: "Row 12 says 64 sts but I get 62…" → setup (numbers rule) |
-| v2 | dev | hybrid | 0.636 | 0.724 | 0.436 | 1.000 | 12 LLM calls answered (11 correct); **19 calls failed: daily free quota (50/day) used up** |
+| v1 | — | dev | rules | — | — | — | 0.436 / 1.000 |
+| v1 | — | test | rules | — | — | — | 0.515 / 0.941 |
+| v2 | Nemotron (OpenRouter) | dev | hybrid | 36 / 55 | 0.636 (35/36 answered) | 0.724 | 0.436 / 1.000 |
+| v3 | Gemini 3.5 Flash | dev | hybrid | 47 / 55 | 0.855 (47/47 answered) | 0.899 | 0.436 / 1.000 |
+| v3 | Gemini 3.5 Flash | dev | llm | 54 / 55 | 0.964 (53/54 answered) | 0.972 | — |
+| **v4** | Gemini 3.5 Flash-Lite | dev | hybrid | 55 / 55 | **0.982** | 0.982 | 0.436 / 1.000 |
+| v4 | Gemini 3.5 Flash-Lite | dev | llm | 55 / 55 | 0.982 | 0.982 | — |
+| **v4** | Gemini 3.5 Flash-Lite | **test** | hybrid | 33 / 33 | **0.939** | 0.938 | 0.515 / 0.941 |
+| v4 | Gemini 3.5 Flash-Lite | test | llm | 33 / 33 | 0.939 | 0.939 | — |
 
-Accuracy over answered cases (v2 dev): 35 / 36 = 0.972. The one LLM error: "how many stitches do I need with
-my gauge for the same width" → setup (gold adjust_pattern). The question mentions "my gauge", which the
-definitions tie to setup. The 0.636 measures availability, not quality. Re-run when quota allows (`--mode hybrid`
-and `--mode llm`, dev then test).
+v2 and v3 failures were free-tier quota errors (OpenRouter 50 requests/day; Gemini 3.5 Flash 20 requests/day), so
+availability and accuracy are reported apart. v4 adds a pause between requests (`LLM_MIN_INTERVAL_S=4`) and uses
+Flash-Lite (larger free quota): every case answered.
+
+**Error analysis (v4).**
+- dev and test, LLM: "What is blocking and do I need to do it?" → yarn_advice (gold knitting_question). Blocking
+  depends on the fibre, so this is a borderline label. Both nodes answer from the KB.
+- test, LLM: "how to read RS and WS" → abbreviation_lookup (gold knitting_question). RS/WS *are* KB abbreviations;
+  the lookup answer is still useful.
+- test, LLM only: "How do I do German short rows?" → knitting_question (gold out_of_scope). This is a real error:
+  the router does not know which techniques are out of scope. The out-of-scope rule catches crochet, colourwork
+  and sewing, but not short rows. Seen on test only, so it is not fixed here; the next step would be adding short
+  rows to the out-of-scope rule (from the scope definition, not from this case). In the hybrid run the same
+  message was classified correctly, so the model is unstable on it.
+- test, rules: "Row 12 says 64 sts but I get 62, is the pattern wrong?" → setup (gold validate). The numbers rule
+  fires on "64 sts"; it already skips texts with pattern notation, but not a question about counts.
+Hybrid and LLM-only reach the same accuracy, but hybrid makes 44 % (dev) / 52 % (test) fewer model calls, and its
+rule decisions have precision 1.0 (dev) / 0.94 (test). That is why the app uses hybrid.
 
 ## 5.10 Setup agent (tool calls)
-Set: `data/eval/setup_cases.jsonl` (30 dialogues). Metrics: tool sequence, argument accuracy, project state after
-the dialogue (gold computed by code), no-tool messages. Unit test with a mocked model passes (calls executed,
-US 8 → 5.0 mm and 18 sts / 4 in → 17.7 per 10 cm converted by code). **LLM run pending: free quota.**
+Set: `data/eval/setup_cases.jsonl` (dev 18, test 12 dialogues: single and multi-slot messages, imperial units,
+corrections, ambiguous and unknown yarns, locked project, status questions, messages that need no tool).
+
+| Version | Model | Split | Answered | Tool sequence | Argument accuracy | Final state | No-tool correct |
+|---|---|---|---|---|---|---|---|
+| v2 | Gemini 3.5 Flash | dev | 8 / 18 (quota) | 1.000 | 0.889 | 1.000 | 1.000 |
+| **v3** | Gemini 3.5 Flash-Lite | dev | 18 / 18 | 0.944 | 0.913 | **1.000** | 1.000 |
+| **v3** | Gemini 3.5 Flash-Lite | **test** | 12 / 12 | 0.917 | 0.875 | **1.000** | 1.000 |
+
+*Final state* is the metric that matters for the user (the project fields after the dialogue). Converting units
+(US 8 → 5 mm, 18 sts over 4 in → 17.7 per 10 cm) happens in `project.py`, so the LLM never does arithmetic.
+
+**Error analysis.** No error changed the project wrongly:
+- "I'm using Jeans yarn" → `set_yarn(name="Jeans yarn")` (gold "Jeans"): the linker ignores "yarn" and still asks
+  which of the 2 Jeans yarns. Counted as an argument miss.
+- "gazal baby wool, 3mm" → `set_yarn(name="gazal baby wool")` (gold "Gazzal Baby Wool"): the prompt tells the agent
+  to copy names as written, and the linker resolves the typo. The gold label and the prompt disagree; the label is
+  kept (labels are not edited to raise a score).
+- "Make it the crib size / and my gauge is 17 sts per 10 cm": two extra `get_project_status` calls (read-only).
+- "I have everything, generate my pattern": the agent checked the status instead of generating. The test project
+  has no gauge yet, so generating would have been refused anyway.
+
+Eval fix found here: the final state compared yarn *names*, so a correctly linked "Alize Cotton Gold" failed against
+the table's "Alize Cotton Gold Solids". Yarns are now compared by linked yarn id. This also exposed a display bug,
+"DROPS DROPS Karisma" (brand repeated when the name already contains it), fixed with `yarn_linker.display_name`.
 
 ## 5.11 Real Ravelry patterns (reported apart from synthetic)
 Set: 10 annotated free Ravelry patterns (5 full, 5 partial; `data/eval/ravelry/patterns.yaml`). The input is the

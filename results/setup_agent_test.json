@@ -1,0 +1,349 @@
+{
+  "component": "setup_agent",
+  "split": "test",
+  "version": "v3-flash-lite",
+  "model": "gemini-3.5-flash-lite",
+  "date": "2026-11-15",
+  "metrics": {
+    "overall": {
+      "n": 12,
+      "answered": 1.0,
+      "tool_sequence": 0.917,
+      "args_accuracy": 0.875,
+      "state_match": 1.0,
+      "no_tool_correct": 1.0
+    }
+  },
+  "n": 12,
+  "failures": [
+    {
+      "id": "setup-011",
+      "turns": [
+        "I have everything, generate my pattern"
+      ],
+      "want": [
+        {
+          "tool": "generate_working_pattern",
+          "args": {}
+        }
+      ],
+      "got": [
+        {
+          "tool": "get_project_status",
+          "args": {}
+        }
+      ],
+      "state": {}
+    },
+    {
+      "id": "setup-023",
+      "turns": [
+        "gazal baby wool, 3mm"
+      ],
+      "want": [
+        {
+          "tool": "set_yarn",
+          "args": {
+            "name": "Gazzal Baby Wool"
+          }
+        },
+        {
+          "tool": "set_needles",
+          "args": {
+            "size": 3,
+            "system": "mm"
+          }
+        }
+      ],
+      "got": [
+        {
+          "tool": "set_yarn",
+          "args": {
+            "name": "gazal baby wool"
+          }
+        },
+        {
+          "tool": "set_needles",
+          "args": {
+            "system": "mm",
+            "size": 3
+          }
+        }
+      ],
+      "state": {
+        "yarn": 68636,
+        "needle_mm": 3.0
+      }
+    }
+  ],
+  "cases": [
+    {
+      "id": "setup-001",
+      "tags": [
+        "single"
+      ],
+      "seq_ok": true,
+      "arg_hits": 1,
+      "arg_total": 1,
+      "state_ok": true,
+      "no_tool": false,
+      "calls": [
+        {
+          "tool": "set_yarn",
+          "args": {
+            "name": "YarnArt Jeans"
+          }
+        }
+      ],
+      "reply": "I've set your yarn to YarnArt Jeans. What size, needles, and gauge are you using?"
+    },
+    {
+      "id": "setup-002",
+      "tags": [
+        "single"
+      ],
+      "seq_ok": true,
+      "arg_hits": 1,
+      "arg_total": 1,
+      "state_ok": true,
+      "no_tool": false,
+      "calls": [
+        {
+          "tool": "set_needles",
+          "args": {
+            "system": "mm",
+            "size": 3.5
+          }
+        }
+      ],
+      "reply": "I've set your needles to 3.5 mm."
+    },
+    {
+      "id": "setup-007",
+      "tags": [
+        "single"
+      ],
+      "seq_ok": true,
+      "arg_hits": 1,
+      "arg_total": 1,
+      "state_ok": true,
+      "no_tool": false,
+      "calls": [
+        {
+          "tool": "set_yarn",
+          "args": {
+            "fibre": "merino",
+            "weight": "DK",
+            "name": null
+          }
+        }
+      ],
+      "reply": "I've set your yarn to merino DK. You still need to choose a size, set your needles, and provide your gauge!"
+    },
+    {
+      "id": "setup-008",
+      "tags": [
+        "correction"
+      ],
+      "seq_ok": true,
+      "arg_hits": 2,
+      "arg_total": 2,
+      "state_ok": true,
+      "no_tool": false,
+      "calls": [
+        {
+          "tool": "set_yarn",
+          "args": {
+            "name": "DROPS Nepal"
+          }
+        },
+        {
+          "tool": "set_yarn",
+          "args": {
+            "name": "DROPS Karisma"
+          }
+        }
+      ],
+      "reply": "I've updated your yarn to DROPS Karisma."
+    },
+    {
+      "id": "setup-010",
+      "tags": [
+        "status"
+      ],
+      "seq_ok": true,
+      "arg_hits": 1,
+      "arg_total": 1,
+      "state_ok": true,
+      "no_tool": false,
+      "calls": [
+        {
+          "tool": "get_project_status",
+          "args": {}
+        }
+      ],
+      "reply": "Based on the project status, we still need to set your size (S, M, or L), needles, and gauge before you can start."
+    },
+    {
+      "id": "setup-011",
+      "tags": [
+        "single"
+      ],
+      "seq_ok": false,
+      "arg_hits": 0,
+      "arg_total": 1,
+      "state_ok": true,
+      "no_tool": false,
+      "calls": [
+        {
+          "tool": "get_project_status",
+          "args": {}
+        }
+      ],
+      "reply": "You still need to choose a size, set your needles, and provide your gauge before we can generate the pattern! Which size (S, M, L) are you making?"
+    },
+    {
+      "id": "setup-015",
+      "tags": [
+        "locked"
+      ],
+      "seq_ok": true,
+      "arg_hits": 1,
+      "arg_total": 1,
+      "state_ok": true,
+      "no_tool": false,
+      "calls": [
+        {
+          "tool": "start_over",
+          "args": {}
+        }
+      ],
+      "reply": "I've unlocked the project so you can choose a new size and adjust your settings. Which size would you like to make?"
+    },
+    {
+      "id": "setup-017",
+      "tags": [
+        "no_tool"
+      ],
+      "seq_ok": true,
+      "arg_hits": 0,
+      "arg_total": 0,
+      "state_ok": true,
+      "no_tool": true,
+      "calls": [],
+      "reply": "SSK stands for **Slip, Slip, Knit**. It's a left-leaning decrease where you slip two stitches knitwise one at a time, put them back on the left needle, and knit them together through the back loop. \n\nLet me know when you're ready to set your size, needles, or gauge for your Ribbed Beanie!"
+    },
+    {
+      "id": "setup-022",
+      "tags": [
+        "single",
+        "imperial"
+      ],
+      "seq_ok": true,
+      "arg_hits": 1,
+      "arg_total": 1,
+      "state_ok": true,
+      "no_tool": false,
+      "calls": [
+        {
+          "tool": "set_gauge",
+          "args": {
+            "stitches": 20,
+            "over": 5,
+            "unit": "in"
+          }
+        }
+      ],
+      "reply": "I've recorded your gauge as 20 stitches over 5 inches."
+    },
+    {
+      "id": "setup-023",
+      "tags": [
+        "multi_slot"
+      ],
+      "seq_ok": true,
+      "arg_hits": 1,
+      "arg_total": 2,
+      "state_ok": true,
+      "no_tool": false,
+      "calls": [
+        {
+          "tool": "set_yarn",
+          "args": {
+            "name": "gazal baby wool"
+          }
+        },
+        {
+          "tool": "set_needles",
+          "args": {
+            "system": "mm",
+            "size": 3
+          }
+        }
+      ],
+      "reply": "I've set your yarn to Gazzal Baby Wool and your needles to 3 mm. You still need to choose a size (S, M, or L) and provide your gauge."
+    },
+    {
+      "id": "setup-024",
+      "tags": [
+        "single"
+      ],
+      "seq_ok": true,
+      "arg_hits": 1,
+      "arg_total": 1,
+      "state_ok": true,
+      "no_tool": false,
+      "calls": [
+        {
+          "tool": "select_size",
+          "args": {
+            "size": "M"
+          }
+        }
+      ],
+      "reply": "I've set your size to M (the middle one)."
+    },
+    {
+      "id": "setup-027",
+      "tags": [
+        "multi_slot"
+      ],
+      "seq_ok": true,
+      "arg_hits": 4,
+      "arg_total": 4,
+      "state_ok": true,
+      "no_tool": false,
+      "calls": [
+        {
+          "tool": "set_yarn",
+          "args": {
+            "name": "Lana Grossa Cool Wool"
+          }
+        },
+        {
+          "tool": "set_needles",
+          "args": {
+            "system": "mm",
+            "size": 3.25
+          }
+        },
+        {
+          "tool": "set_gauge",
+          "args": {
+            "stitches": 25,
+            "rows": 34,
+            "over": 10,
+            "unit": "cm"
+          }
+        },
+        {
+          "tool": "select_size",
+          "args": {
+            "size": "S"
+          }
+        }
+      ],
+      "reply": "I've set your yarn to Lana Grossa Cool Wool, needles to 3.25 mm, gauge to 25 sts and 34 rows per 10 cm, and size S. Everything is ready to go!"
+    }
+  ]
+}

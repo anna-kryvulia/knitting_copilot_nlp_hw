@@ -1,0 +1,79 @@
+{
+  "component": "router_llm",
+  "split": "dev",
+  "version": "v4-flash-lite",
+  "model": "gemini-3.5-flash-lite",
+  "date": "2026-11-15",
+  "metrics": {
+    "overall": {
+      "n": 55,
+      "accuracy": 0.982,
+      "macro_f1": 0.982,
+      "rule_coverage": 0.0,
+      "rule_precision": null,
+      "llm_calls": 55
+    },
+    "per_intent_f1": {
+      "setup": 1.0,
+      "adjust_pattern": 1.0,
+      "explain": 1.0,
+      "yarn_advice": 0.909,
+      "abbreviation_lookup": 1.0,
+      "knitting_question": 0.889,
+      "chart": 1.0,
+      "tracker": 1.0,
+      "validate": 1.0,
+      "out_of_scope": 1.0,
+      "smalltalk": 1.0
+    },
+    "confusion": {
+      "setup": {
+        "setup": 5
+      },
+      "adjust_pattern": {
+        "adjust_pattern": 5
+      },
+      "explain": {
+        "explain": 5
+      },
+      "yarn_advice": {
+        "yarn_advice": 5
+      },
+      "abbreviation_lookup": {
+        "abbreviation_lookup": 5
+      },
+      "knitting_question": {
+        "knitting_question": 4,
+        "yarn_advice": 1
+      },
+      "chart": {
+        "chart": 5
+      },
+      "tracker": {
+        "tracker": 5
+      },
+      "validate": {
+        "validate": 5
+      },
+      "out_of_scope": {
+        "out_of_scope": 5
+      },
+      "smalltalk": {
+        "smalltalk": 5
+      }
+    }
+  },
+  "n": 55,
+  "failures": [
+    {
+      "id": "intent-045",
+      "text": "What is blocking and do I need to do it?",
+      "gold": "knitting_question",
+      "pred": "yarn_advice",
+      "method": "llm",
+      "tags": [
+        "easy"
+      ]
+    }
+  ]
+}

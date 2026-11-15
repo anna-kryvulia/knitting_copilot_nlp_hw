@@ -67,6 +67,11 @@ def norm(text: str) -> str:
 
 
 @lru_cache
+def display_name(brand: str, name: str) -> str:
+    """'DROPS' + 'DROPS Karisma' → 'DROPS Karisma'; 'YarnArt' + 'Jeans' → 'YarnArt Jeans'."""
+    return name if name.lower().startswith(brand.lower()) else f"{brand} {name}"
+
+
 def yarns() -> list[dict]:
     rows = list(csv.DictReader(open(ROOT / "data" / "yarns.csv", encoding="utf-8")))
     for r in rows:

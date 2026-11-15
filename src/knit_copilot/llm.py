@@ -39,6 +39,18 @@ class LLMTimeout(RuntimeError):
 _pool = cf.ThreadPoolExecutor(max_workers=4, thread_name_prefix="llm")
 
 
+_last_request = 0.0
+
+
+def _pace() -> None:
+    """Keep LLM_MIN_INTERVAL_S between API requests (free per-minute limits)."""
+    global _last_request
+    wait = settings.min_interval_s - (time.monotonic() - _last_request)
+    if wait > 0:
+        time.sleep(wait)
+    _last_request = time.monotonic()
+
+
 def _call_summary(out: dict, messages: list[dict], cached: bool) -> dict:
     """Short record of one model call for the trace (no prompt text beyond the last message's start)."""
     last = messages[-1].get("content") or ""
@@ -116,6 +128,7 @@ def chat(messages: list[dict[str, Any]], *, model: str | None = None, tools: lis
                 raise LLMTimeout(f"time budget used up (last error: {last_err})")
             per_request = settings.timeout_s if remaining is None else min(settings.timeout_s, remaining)
             try:
+                _pace()
                 t0 = time.perf_counter()
                 future = _pool.submit(client(m).chat.completions.create, model=m, messages=messages, **params)
                 try:

@@ -392,15 +392,15 @@ with tab_yarn:
         link = yarn_linker.run(yarn_linker.LinkerInput(text=yarn_text))
         if link.status == "match":
             yarn_row = next(y for y in yarn_linker.yarns() if int(y["yarn_id"]) == link.yarn_id)
-            st.success(f"Found: **{yarn_row['brand']} {yarn_row['name']}** · {yarn_row['weight']} · {yarn_row['fibres']}")
+            st.success(f"Found: **{yarn_linker.display_name(yarn_row['brand'], yarn_row['name'])}** · {yarn_row['weight']} · {yarn_row['fibres']}")
         elif link.status == "ambiguous":
-            options = [f"{c.brand} {c.name}" for c in link.candidates]
+            options = [yarn_linker.display_name(c.brand, c.name) for c in link.candidates]
             pick = st.radio("Several yarns have this name — which one?", options)
             cand = link.candidates[options.index(pick)]
             yarn_row = next(y for y in yarn_linker.yarns() if int(y["yarn_id"]) == cand.yarn_id)
         else:
             st.warning("This yarn is not in our table. Choose the fibre and weight instead."
-                       + (f" Closest: {', '.join(c.brand + ' ' + c.name for c in link.candidates[:2] if c.score > 0.5)}"
+                       + (f" Closest: {', '.join(yarn_linker.display_name(c.brand, c.name) for c in link.candidates[:2] if c.score > 0.5)}"
                           if any(c.score > 0.5 for c in link.candidates) else ""))
     use_fibre = fibre != "—" and weight != "—"
     if not (yarn_row or use_fibre or yarn_text):
@@ -427,7 +427,7 @@ with tab_yarn:
         cur_pr = current_project()
         if cur_pr is not None and cur_pr.stage == "setup":
             if st.button(f"➕ Use this yarn and {f.suggested_needle_mm:g} mm needles in “{cur_pr.name}”"):
-                res = (project.set_yarn(cur_pr, f"{yarn_row['brand']} {yarn_row['name']}") if yarn_row
+                res = (project.set_yarn(cur_pr, yarn_linker.display_name(yarn_row['brand'], yarn_row['name'])) if yarn_row
                        else project.set_yarn(cur_pr, fibre=fibre, weight=weight))
                 project.set_needles(cur_pr, f.suggested_needle_mm)
                 db.save(cur_pr)
@@ -595,7 +595,7 @@ def step_yarn(pr: project.Project) -> None:
             suggested = f.suggested_needle_mm
             if f.main_fibre and not (f.needle_mm[0] <= suggested <= f.needle_mm[1]):
                 why = f" (a size off the label because {f.main_fibre} knits {'looser' if suggested < f.needle_mm[0] else 'tighter'})"
-            html(f'<div class="kc-summary"><b>🧶 {row["brand"]} {row["name"]}</b><span>{row["weight"]} · '
+            html(f'<div class="kc-summary"><b>🧶 {yarn_linker.display_name(row["brand"], row["name"])}</b><span>{row["weight"]} · '
                  f'{row["fibres"]} · label needles {rng(*f.needle_mm, "mm")} · '
                  f'{rng(*f.gauge_sts_10cm, "sts")} / 10 cm</span></div>')
     n_col, u_col = st.columns([2, 1], vertical_alignment="bottom")

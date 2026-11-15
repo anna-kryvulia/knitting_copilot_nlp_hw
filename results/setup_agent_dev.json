@@ -1,0 +1,516 @@
+{
+  "component": "setup_agent",
+  "split": "dev",
+  "version": "v3-flash-lite",
+  "model": "gemini-3.5-flash-lite",
+  "date": "2026-11-15",
+  "metrics": {
+    "overall": {
+      "n": 18,
+      "answered": 1.0,
+      "tool_sequence": 0.944,
+      "args_accuracy": 0.913,
+      "state_match": 1.0,
+      "no_tool_correct": 1.0
+    }
+  },
+  "n": 18,
+  "failures": [
+    {
+      "id": "setup-012",
+      "turns": [
+        "I'm using Jeans yarn"
+      ],
+      "want": [
+        {
+          "tool": "set_yarn",
+          "args": {
+            "name": "Jeans"
+          }
+        }
+      ],
+      "got": [
+        {
+          "tool": "set_yarn",
+          "args": {
+            "name": "Jeans yarn"
+          }
+        }
+      ],
+      "state": {}
+    },
+    {
+      "id": "setup-030",
+      "turns": [
+        "Make it the crib size",
+        "and my gauge is 17 sts per 10 cm"
+      ],
+      "want": [
+        {
+          "tool": "select_size",
+          "args": {
+            "size": "Crib"
+          }
+        },
+        {
+          "tool": "set_gauge",
+          "args": {
+            "stitches": 17,
+            "rows": null,
+            "over": 10,
+            "unit": "cm"
+          }
+        }
+      ],
+      "got": [
+        {
+          "tool": "select_size",
+          "args": {
+            "size": "Crib"
+          }
+        },
+        {
+          "tool": "get_project_status",
+          "args": {}
+        },
+        {
+          "tool": "set_gauge",
+          "args": {
+            "over": 10,
+            "stitches": 17,
+            "unit": "cm"
+          }
+        },
+        {
+          "tool": "get_project_status",
+          "args": {}
+        }
+      ],
+      "state": {
+        "gauge_sts_10cm": 17.0,
+        "size": "Crib"
+      }
+    }
+  ],
+  "cases": [
+    {
+      "id": "setup-003",
+      "tags": [
+        "single"
+      ],
+      "seq_ok": true,
+      "arg_hits": 1,
+      "arg_total": 1,
+      "state_ok": true,
+      "no_tool": false,
+      "calls": [
+        {
+          "tool": "set_gauge",
+          "args": {
+            "over": 10,
+            "rows": 28,
+            "stitches": 22,
+            "unit": "cm"
+          }
+        }
+      ],
+      "reply": "I've recorded your gauge as 22 stitches and 28 rows per 10 cm."
+    },
+    {
+      "id": "setup-004",
+      "tags": [
+        "single"
+      ],
+      "seq_ok": true,
+      "arg_hits": 1,
+      "arg_total": 1,
+      "state_ok": true,
+      "no_tool": false,
+      "calls": [
+        {
+          "tool": "select_size",
+          "args": {
+            "size": "L"
+          }
+        }
+      ],
+      "reply": "I've set the size to L."
+    },
+    {
+      "id": "setup-005",
+      "tags": [
+        "multi_slot"
+      ],
+      "seq_ok": true,
+      "arg_hits": 3,
+      "arg_total": 3,
+      "state_ok": true,
+      "no_tool": false,
+      "calls": [
+        {
+          "tool": "set_yarn",
+          "args": {
+            "name": "Alize Cotton Gold"
+          }
+        },
+        {
+          "tool": "set_needles",
+          "args": {
+            "system": "mm",
+            "size": 3.5
+          }
+        },
+        {
+          "tool": "set_gauge",
+          "args": {
+            "stitches": 24,
+            "unit": "cm",
+            "over": 10
+          }
+        }
+      ],
+      "reply": "I've set your yarn to Alize Cotton Gold, your needles to 3.5 mm, and your gauge to 24 stitches per 10 cm. You just need to choose a size (S, M, or L) to get started!"
+    },
+    {
+      "id": "setup-006",
+      "tags": [
+        "multi_slot",
+        "imperial"
+      ],
+      "seq_ok": true,
+      "arg_hits": 2,
+      "arg_total": 2,
+      "state_ok": true,
+      "no_tool": false,
+      "calls": [
+        {
+          "tool": "set_gauge",
+          "args": {
+            "unit": "in",
+            "rows": 24,
+            "over": 4,
+            "stitches": 18
+          }
+        },
+        {
+          "tool": "set_needles",
+          "args": {
+            "size": 8,
+            "system": "us"
+          }
+        }
+      ],
+      "reply": "I've set your gauge to 18 stitches and 24 rows over 4 inches, and your needles to US 8."
+    },
+    {
+      "id": "setup-009",
+      "tags": [
+        "correction"
+      ],
+      "seq_ok": true,
+      "arg_hits": 2,
+      "arg_total": 2,
+      "state_ok": true,
+      "no_tool": false,
+      "calls": [
+        {
+          "tool": "set_needles",
+          "args": {
+            "system": "mm",
+            "size": 4
+          }
+        },
+        {
+          "tool": "set_needles",
+          "args": {
+            "size": 4.5,
+            "system": "mm"
+          }
+        }
+      ],
+      "reply": "I've updated your needles to 4.5 mm."
+    },
+    {
+      "id": "setup-012",
+      "tags": [
+        "ambiguous_yarn"
+      ],
+      "seq_ok": true,
+      "arg_hits": 0,
+      "arg_total": 1,
+      "state_ok": true,
+      "no_tool": false,
+      "calls": [
+        {
+          "tool": "set_yarn",
+          "args": {
+            "name": "Jeans yarn"
+          }
+        }
+      ],
+      "reply": "I found a few different yarns called \"Jeans\". Could you specify if you are using YarnArt Jeans or Etrofil Jeans?"
+    },
+    {
+      "id": "setup-013",
+      "tags": [
+        "unknown_yarn"
+      ],
+      "seq_ok": true,
+      "arg_hits": 1,
+      "arg_total": 1,
+      "state_ok": true,
+      "no_tool": false,
+      "calls": [
+        {
+          "tool": "set_yarn",
+          "args": {
+            "name": "Rowan Felted Tweed"
+          }
+        }
+      ],
+      "reply": "I've set your yarn to Rowan Felted Tweed. What size, needles, and gauge would you like to use?"
+    },
+    {
+      "id": "setup-014",
+      "tags": [
+        "locked"
+      ],
+      "seq_ok": true,
+      "arg_hits": 1,
+      "arg_total": 1,
+      "state_ok": true,
+      "no_tool": false,
+      "calls": [
+        {
+          "tool": "set_yarn",
+          "args": {
+            "name": "Nako Calico"
+          }
+        }
+      ],
+      "reply": "The project is currently locked because you are already knitting version 1. If you'd like to change your yarn, you'll need to start over first."
+    },
+    {
+      "id": "setup-016",
+      "tags": [
+        "no_tool"
+      ],
+      "seq_ok": true,
+      "arg_hits": 0,
+      "arg_total": 0,
+      "state_ok": true,
+      "no_tool": true,
+      "calls": [],
+      "reply": "You're very welcome! Let me know when you're ready to set your size, needles, or gauge."
+    },
+    {
+      "id": "setup-018",
+      "tags": [
+        "single"
+      ],
+      "seq_ok": true,
+      "arg_hits": 1,
+      "arg_total": 1,
+      "state_ok": true,
+      "no_tool": false,
+      "calls": [
+        {
+          "tool": "set_gauge",
+          "args": {
+            "unit": "cm",
+            "over": 10,
+            "stitches": 20
+          }
+        }
+      ],
+      "reply": "I've set your gauge to 20 stitches per 10 cm."
+    },
+    {
+      "id": "setup-019",
+      "tags": [
+        "single",
+        "imperial"
+      ],
+      "seq_ok": true,
+      "arg_hits": 1,
+      "arg_total": 1,
+      "state_ok": true,
+      "no_tool": false,
+      "calls": [
+        {
+          "tool": "set_needles",
+          "args": {
+            "system": "us",
+            "size": 6
+          }
+        }
+      ],
+      "reply": "I've set your needles to US 6."
+    },
+    {
+      "id": "setup-020",
+      "tags": [
+        "multi_slot"
+      ],
+      "seq_ok": true,
+      "arg_hits": 2,
+      "arg_total": 2,
+      "state_ok": true,
+      "no_tool": false,
+      "calls": [
+        {
+          "tool": "set_yarn",
+          "args": {
+            "name": "Himalaya Everyday"
+          }
+        },
+        {
+          "tool": "select_size",
+          "args": {
+            "size": "M"
+          }
+        }
+      ],
+      "reply": "I've set your yarn to Himalaya Everyday and selected size M. You still need to set your needles and gauge!"
+    },
+    {
+      "id": "setup-021",
+      "tags": [
+        "single"
+      ],
+      "seq_ok": true,
+      "arg_hits": 1,
+      "arg_total": 1,
+      "state_ok": true,
+      "no_tool": false,
+      "calls": [
+        {
+          "tool": "set_yarn",
+          "args": {
+            "fibre": "cotton",
+            "weight": "sport"
+          }
+        }
+      ],
+      "reply": "I've set your yarn to a cotton sport weight. What size, needles, and gauge would you like to use?"
+    },
+    {
+      "id": "setup-025",
+      "tags": [
+        "single"
+      ],
+      "seq_ok": true,
+      "arg_hits": 1,
+      "arg_total": 1,
+      "state_ok": true,
+      "no_tool": false,
+      "calls": [
+        {
+          "tool": "set_gauge",
+          "args": {
+            "over": 10,
+            "stitches": 26,
+            "unit": "cm"
+          }
+        }
+      ],
+      "reply": "I've recorded your gauge of 26 stitches over 10 cm. \n\nAs for your question: whether you should change needles depends on the gauge specified in your pattern. If your 26 stitches are tighter or looser than the pattern calls for, you might want to adjust your needle size to match the designer's gauge!"
+    },
+    {
+      "id": "setup-026",
+      "tags": [
+        "status",
+        "locked"
+      ],
+      "seq_ok": true,
+      "arg_hits": 1,
+      "arg_total": 1,
+      "state_ok": true,
+      "no_tool": false,
+      "calls": [
+        {
+          "tool": "get_project_status",
+          "args": {}
+        }
+      ],
+      "reply": "You are currently on size S of the Ribbed Beanie, but your yarn hasn't been set yet. Let me know what yarn you're using so we can get that sorted out!"
+    },
+    {
+      "id": "setup-028",
+      "tags": [
+        "single"
+      ],
+      "seq_ok": true,
+      "arg_hits": 1,
+      "arg_total": 1,
+      "state_ok": true,
+      "no_tool": false,
+      "calls": [
+        {
+          "tool": "set_yarn",
+          "args": {
+            "name": "Vizell Fayna"
+          }
+        }
+      ],
+      "reply": "I've set your yarn to Vizell Fayna. You still need to select a size, set your needles, and provide your gauge."
+    },
+    {
+      "id": "setup-029",
+      "tags": [
+        "single"
+      ],
+      "seq_ok": true,
+      "arg_hits": 1,
+      "arg_total": 1,
+      "state_ok": true,
+      "no_tool": false,
+      "calls": [
+        {
+          "tool": "set_yarn",
+          "args": {
+            "weight": "Aran",
+            "fibre": "acrylic"
+          }
+        }
+      ],
+      "reply": "I've set your yarn to an acrylic Aran."
+    },
+    {
+      "id": "setup-030",
+      "tags": [
+        "multi_slot"
+      ],
+      "seq_ok": false,
+      "arg_hits": 1,
+      "arg_total": 2,
+      "state_ok": true,
+      "no_tool": false,
+      "calls": [
+        {
+          "tool": "select_size",
+          "args": {
+            "size": "Crib"
+          }
+        },
+        {
+          "tool": "get_project_status",
+          "args": {}
+        },
+        {
+          "tool": "set_gauge",
+          "args": {
+            "over": 10,
+            "stitches": 17,
+            "unit": "cm"
+          }
+        },
+        {
+          "tool": "get_project_status",
+          "args": {}
+        }
+      ],
+      "reply": "I've recorded your gauge of 17 sts per 10 cm. Now we just need your needle size!"
+    }
+  ]
+}

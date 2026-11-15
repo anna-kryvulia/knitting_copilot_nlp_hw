@@ -93,10 +93,10 @@ def set_yarn(p: Project, name: str | None = None, fibre: str | None = None, weig
         link = yarn_linker.run(yarn_linker.LinkerInput(text=name))
         if link.status == "match":
             c = link.candidates[0]
-            p.yarn = YarnChoice(text=name, yarn_id=link.yarn_id, label=f"{c.brand} {c.name}")
-            return ToolResult(ok=True, message=f"Yarn set to {c.brand} {c.name}.", data={"yarn_id": link.yarn_id})
+            p.yarn = YarnChoice(text=name, yarn_id=link.yarn_id, label=yarn_linker.display_name(c.brand, c.name))
+            return ToolResult(ok=True, message=f"Yarn set to {yarn_linker.display_name(c.brand, c.name)}.", data={"yarn_id": link.yarn_id})
         if link.status == "ambiguous":
-            options = [f"{c.brand} {c.name}" for c in link.candidates]
+            options = [yarn_linker.display_name(c.brand, c.name) for c in link.candidates]
             return ToolResult(ok=False, message=f"Several yarns are called that: {', '.join(options)}. Which one?",
                               data={"candidates": options})
         p.yarn = YarnChoice(text=name, fibre=fibre, weight=weight)

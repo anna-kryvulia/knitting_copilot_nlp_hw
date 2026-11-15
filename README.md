@@ -37,8 +37,9 @@ Then add one free LLM key to `.env` (any OpenAI-compatible API works; nothing in
 - **OpenRouter** (default): `OPENROUTER_API_KEY=` from https://openrouter.ai/keys; free models are limited to
   50 requests a day without credit.
 - **Google AI Studio (Gemini)**, used for the final evaluation runs: `LLM_BASE_URL=https://generativelanguage.googleapis.com/v1beta/openai/`,
-  `LLM_API_KEY=` from https://aistudio.google.com, `LLM_MODEL=gemini-3.5-flash`,
-  `LLM_FALLBACK_MODELS=gemini-3.5-flash-lite`. The eval judge then stays on OpenRouter (a different model family):
+  `LLM_API_KEY=` from https://aistudio.google.com, `LLM_MODEL=gemini-3.5-flash-lite`,
+  `LLM_FALLBACK_MODELS=gemini-3.1-flash-lite`, `LLM_REASONING_EFFORT=low`, `LLM_MIN_INTERVAL_S=4` (the free tier
+  limits requests per minute; Gemini 3.5 Flash allows only 20 requests a day). The eval judge then stays on OpenRouter (a different model family):
   `JUDGE_BASE_URL=https://openrouter.ai/api/v1`.
 
 LLM answers are cached in `.cache/llm/`, so a re-run of the same input is instant and costs no quota.

@@ -16,7 +16,7 @@ import random
 
 from eval.common import load_cases, write_results
 from knit_copilot import project
-from knit_copilot.components import setup_agent
+from knit_copilot.components import setup_agent, yarn_linker
 from knit_copilot.config import settings
 from knit_copilot.data.templates import ribbed_hat
 from knit_copilot.ir import Pattern
@@ -64,10 +64,11 @@ def args_match(want: dict, got: dict) -> bool:
 
 
 def state_of(p: project.Project) -> dict:
-    """Project fields in the shape of the gold `expected.state`; the yarn as its name, or its fibre."""
+    """Project fields in the shape of the gold `expected.state`. The yarn is compared by its linked yarn id (the gold
+    name is linked the same way), else as written, else by fibre: "gazal baby wool" = Gazzal Baby Wool."""
     s = {}
     if p.yarn:
-        s["yarn"] = norm(p.yarn.text or p.yarn.fibre)
+        s["yarn"] = p.yarn.yarn_id or norm(p.yarn.text or p.yarn.fibre)
     for key in ("needle_mm", "gauge_sts_10cm", "gauge_rows_10cm", "size"):
         if getattr(p, key) is not None:
             s[key] = getattr(p, key)
@@ -77,7 +78,9 @@ def state_of(p: project.Project) -> dict:
 def gold_state(exp: dict) -> dict:
     s = {k: v for k, v in exp.items() if k != "yarn"}
     if "yarn" in exp:
-        s["yarn"] = norm(exp["yarn"].get("name") or exp["yarn"].get("fibre"))
+        name = exp["yarn"].get("name")
+        link = yarn_linker.run(yarn_linker.LinkerInput(text=name)) if name else None
+        s["yarn"] = link.yarn_id if link and link.status == "match" else norm(name or exp["yarn"].get("fibre"))
     return s
 
 

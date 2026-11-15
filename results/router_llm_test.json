@@ -1,0 +1,90 @@
+{
+  "component": "router_llm",
+  "split": "test",
+  "version": "v4-flash-lite",
+  "model": "gemini-3.5-flash-lite",
+  "date": "2026-11-15",
+  "metrics": {
+    "overall": {
+      "n": 33,
+      "accuracy": 0.939,
+      "macro_f1": 0.939,
+      "rule_coverage": 0.0,
+      "rule_precision": null,
+      "llm_calls": 33
+    },
+    "per_intent_f1": {
+      "setup": 1.0,
+      "adjust_pattern": 1.0,
+      "explain": 1.0,
+      "yarn_advice": 1.0,
+      "abbreviation_lookup": 0.857,
+      "knitting_question": 0.667,
+      "chart": 1.0,
+      "tracker": 1.0,
+      "validate": 1.0,
+      "out_of_scope": 0.8,
+      "smalltalk": 1.0
+    },
+    "confusion": {
+      "setup": {
+        "setup": 3
+      },
+      "adjust_pattern": {
+        "adjust_pattern": 3
+      },
+      "explain": {
+        "explain": 3
+      },
+      "yarn_advice": {
+        "yarn_advice": 3
+      },
+      "abbreviation_lookup": {
+        "abbreviation_lookup": 3
+      },
+      "knitting_question": {
+        "knitting_question": 2,
+        "abbreviation_lookup": 1
+      },
+      "chart": {
+        "chart": 3
+      },
+      "tracker": {
+        "tracker": 3
+      },
+      "validate": {
+        "validate": 3
+      },
+      "out_of_scope": {
+        "out_of_scope": 2,
+        "knitting_question": 1
+      },
+      "smalltalk": {
+        "smalltalk": 3
+      }
+    }
+  },
+  "n": 33,
+  "failures": [
+    {
+      "id": "intent-046",
+      "text": "how to read RS and WS",
+      "gold": "knitting_question",
+      "pred": "abbreviation_lookup",
+      "method": "llm",
+      "tags": [
+        "typo"
+      ]
+    },
+    {
+      "id": "intent-076",
+      "text": "How do I do German short rows?",
+      "gold": "out_of_scope",
+      "pred": "knitting_question",
+      "method": "llm",
+      "tags": [
+        "easy"
+      ]
+    }
+  ]
+}

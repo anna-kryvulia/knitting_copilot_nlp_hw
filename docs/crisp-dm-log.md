@@ -248,3 +248,12 @@ Running log of decisions. Newest entries at the bottom. Format:
   answered 0.5 → 1.0 (0.6 verified). The remaining errors are structural (repeat counts, skipped sections), 3 of them
   invisible to the stitch-count check. Grammar 0/10 (unchanged). 147 tests pass.
 - Next: setup agent and router LLM evals on Gemini; explainer on real patterns; report.
+
+## 2026-11-15 — 5. Evaluation — Router and setup agent on Gemini (dev + test)
+- What: Gemini 3.5 Flash's free tier allows 20 requests/day (used up), so evals moved to Gemini 3.5 Flash-Lite
+  (fallback 3.1 Flash-Lite), with a pause between requests (`LLM_MIN_INTERVAL_S=4`). Setup eval compares yarns by
+  linked id; fixed the "DROPS DROPS Karisma" label bug (`yarn_linker.display_name`).
+- Result / numbers: router hybrid dev 0.982 / test 0.939 (LLM-only the same, with 44–52 % more model calls); setup
+  agent final state 1.0 on dev (18) and test (12), tool sequence 0.94 / 0.92, arguments 0.91 / 0.88. Every case
+  answered. Remaining errors: borderline labels, short rows not known as out of scope (test only, not fixed).
+- Next: explainer on the real patterns (LLM + judge), report.

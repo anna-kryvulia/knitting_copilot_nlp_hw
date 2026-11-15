@@ -1,276 +1,78 @@
 {
   "component": "router_hybrid",
   "split": "dev",
-  "version": "v2",
-  "model": "nvidia/nemotron-3.5-super-vl:free",
+  "version": "v4-flash-lite",
+  "model": "gemini-3.5-flash-lite",
   "date": "2026-11-15",
   "metrics": {
     "overall": {
       "n": 55,
-      "accuracy": 0.636,
-      "macro_f1": 0.724,
+      "accuracy": 0.982,
+      "macro_f1": 0.982,
       "rule_coverage": 0.436,
       "rule_precision": 1.0,
-      "llm_calls": 12
+      "llm_calls": 31
     },
     "per_intent_f1": {
-      "setup": 0.909,
-      "adjust_pattern": 0.889,
+      "setup": 1.0,
+      "adjust_pattern": 1.0,
       "explain": 1.0,
-      "yarn_advice": 0.571,
-      "abbreviation_lookup": 0.75,
-      "knitting_question": 0.0,
-      "chart": 0.889,
-      "tracker": 0.889,
-      "validate": 0.75,
-      "out_of_scope": 0.75,
-      "smalltalk": 0.571
+      "yarn_advice": 0.909,
+      "abbreviation_lookup": 1.0,
+      "knitting_question": 0.889,
+      "chart": 1.0,
+      "tracker": 1.0,
+      "validate": 1.0,
+      "out_of_scope": 1.0,
+      "smalltalk": 1.0
     },
     "confusion": {
       "setup": {
         "setup": 5
       },
       "adjust_pattern": {
-        "adjust_pattern": 4,
-        "setup": 1
+        "adjust_pattern": 5
       },
       "explain": {
         "explain": 5
       },
       "yarn_advice": {
-        "yarn_advice": 2,
-        "unknown": 3
+        "yarn_advice": 5
       },
       "abbreviation_lookup": {
-        "abbreviation_lookup": 3,
-        "unknown": 2
+        "abbreviation_lookup": 5
       },
       "knitting_question": {
-        "unknown": 5
+        "knitting_question": 4,
+        "yarn_advice": 1
       },
       "chart": {
-        "chart": 4,
-        "unknown": 1
+        "chart": 5
       },
       "tracker": {
-        "tracker": 4,
-        "unknown": 1
+        "tracker": 5
       },
       "validate": {
-        "validate": 3,
-        "unknown": 2
+        "validate": 5
       },
       "out_of_scope": {
-        "out_of_scope": 3,
-        "unknown": 2
+        "out_of_scope": 5
       },
       "smalltalk": {
-        "unknown": 3,
-        "smalltalk": 2
+        "smalltalk": 5
       }
     }
   },
   "n": 55,
   "failures": [
     {
-      "id": "intent-015",
-      "text": "how many stitches do I need with my gauge for the same width",
-      "gold": "adjust_pattern",
-      "pred": "setup",
-      "method": "llm",
-      "tags": [
-        "indirect"
-      ]
-    },
-    {
-      "id": "intent-030",
-      "text": "which yarn weight is himalaya everyday",
-      "gold": "yarn_advice",
-      "pred": "unknown",
-      "method": "error: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nv",
-      "tags": [
-        "typo"
-      ]
-    },
-    {
-      "id": "intent-031",
-      "text": "My acrylic project looks uneven, will blocking help?",
-      "gold": "yarn_advice",
-      "pred": "unknown",
-      "method": "error: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nv",
-      "tags": [
-        "indirect"
-      ]
-    },
-    {
-      "id": "intent-032",
-      "text": "Is Gazzal Baby Wool soft enough for a baby blanket?",
-      "gold": "yarn_advice",
-      "pred": "unknown",
-      "method": "error: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nv",
-      "tags": [
-        "easy"
-      ]
-    },
-    {
-      "id": "intent-037",
-      "text": "What does yfwd mean in a UK pattern?",
-      "gold": "abbreviation_lookup",
-      "pred": "unknown",
-      "method": "error: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nv",
-      "tags": [
-        "easy"
-      ]
-    },
-    {
-      "id": "intent-039",
-      "text": "C6B — how do I do that?",
-      "gold": "abbreviation_lookup",
-      "pred": "unknown",
-      "method": "error: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nv",
-      "tags": [
-        "ambiguous"
-      ]
-    },
-    {
-      "id": "intent-042",
-      "text": "How do I make a left-leaning decrease?",
-      "gold": "knitting_question",
-      "pred": "unknown",
-      "method": "error: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nv",
-      "tags": [
-        "indirect"
-      ]
-    },
-    {
-      "id": "intent-043",
-      "text": "What's the stretchiest bind off for ribbing?",
-      "gold": "knitting_question",
-      "pred": "unknown",
-      "method": "error: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nv",
-      "tags": [
-        "easy"
-      ]
-    },
-    {
-      "id": "intent-044",
-      "text": "How do I weave in ends on garter stitch?",
-      "gold": "knitting_question",
-      "pred": "unknown",
-      "method": "error: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nv",
-      "tags": [
-        "easy"
-      ]
-    },
-    {
       "id": "intent-045",
       "text": "What is blocking and do I need to do it?",
       "gold": "knitting_question",
-      "pred": "unknown",
-      "method": "error: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nv",
+      "pred": "yarn_advice",
+      "method": "llm",
       "tags": [
         "easy"
-      ]
-    },
-    {
-      "id": "intent-048",
-      "text": "Should I slip the first stitch of every row?",
-      "gold": "knitting_question",
-      "pred": "unknown",
-      "method": "error: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nv",
-      "tags": [
-        "easy"
-      ]
-    },
-    {
-      "id": "intent-055",
-      "text": "What does the stitch pattern look like visually?",
-      "gold": "chart",
-      "pred": "unknown",
-      "method": "error: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nv",
-      "tags": [
-        "indirect"
-      ]
-    },
-    {
-      "id": "intent-064",
-      "text": "how many sts should i have now",
-      "gold": "tracker",
-      "pred": "unknown",
-      "method": "error: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nv",
-      "tags": [
-        "typo",
-        "context"
-      ]
-    },
-    {
-      "id": "intent-069",
-      "text": "does the repeat fit the cast on number",
-      "gold": "validate",
-      "pred": "unknown",
-      "method": "error: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nv",
-      "tags": [
-        "typo"
-      ]
-    },
-    {
-      "id": "intent-071",
-      "text": "Are all abbreviations in this pattern defined?",
-      "gold": "validate",
-      "pred": "unknown",
-      "method": "error: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nv",
-      "tags": [
-        "indirect"
-      ]
-    },
-    {
-      "id": "intent-079",
-      "text": "Translate this pattern into French",
-      "gold": "out_of_scope",
-      "pred": "unknown",
-      "method": "error: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nv",
-      "tags": [
-        "indirect"
-      ]
-    },
-    {
-      "id": "intent-080",
-      "text": "What's the weather tomorrow?",
-      "gold": "out_of_scope",
-      "pred": "unknown",
-      "method": "error: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nv",
-      "tags": [
-        "easy"
-      ]
-    },
-    {
-      "id": "intent-084",
-      "text": "you're great",
-      "gold": "smalltalk",
-      "pred": "unknown",
-      "method": "error: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nv",
-      "tags": [
-        "easy"
-      ]
-    },
-    {
-      "id": "intent-087",
-      "text": "Who are you?",
-      "gold": "smalltalk",
-      "pred": "unknown",
-      "method": "error: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nv",
-      "tags": [
-        "indirect"
-      ]
-    },
-    {
-      "id": "intent-088",
-      "text": "lol my cat just stole my yarn",
-      "gold": "smalltalk",
-      "pred": "unknown",
-      "method": "error: All models failed: ['nvidia/nemotron-3.5-super-vl:free', 'nv",
-      "tags": [
-        "indirect"
       ]
     }
   ]
