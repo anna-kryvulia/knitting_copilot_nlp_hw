@@ -52,8 +52,8 @@ def required_facts(pattern: Pattern, size: str | None, sheet: facts.FactSheet) -
 
 
 def covered(kind: str, value: str, text: str) -> bool:
-    if kind == "citation":
-        return value in text
+    if kind == "citation":                       # "[yo]" or "[yo: yarn over …]"
+        return re.search(rf"\[{re.escape(value.strip('[]'))}(?::[^\]]*)?\]", text) is not None
     return re.search(rf"(?<![\d.]){re.escape(value)}(?![\d.])", text) is not None
 
 

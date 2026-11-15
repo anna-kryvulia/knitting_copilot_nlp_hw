@@ -152,3 +152,14 @@ Running log of decisions. Newest entries at the bottom. Format:
   Explainer/advisor evals waiting for LLM quota (free tier 50/day used up; $10 credit pending). 126 tests pass.
 - Next: when quota is available: re-run 16 LLM parser cases, explainer and advisor evals (+ judge
   calibration); then UC2 gauge adjustment.
+
+## 2026-11-14 — 4/5. Modeling + Evaluation — Gauge adjustment (UC2), rewriter, explainer iterations
+- What: `gauge.py` (closest valid count search, corner rule, row scaling, notes), `components/rewriter.py`
+  (code edit list + LLM + re-parse check + code-render fallback), "My gauge" tab; evals `eval_gauge.py`,
+  `eval_rewriter.py`; explainer v2/v3; LLM parser re-run after the quota reset.
+- Result / numbers: gauge dev/test: closest valid 1.00/1.00, motifs 1.00, width ≤ 1 cm 0.76/0.80 (all misses
+  unavoidable, large motifs), length ≤ 1 cm 0.85/0.89. LLM parser dev 34/36 answered, all exact. Explainer
+  dev v3: coverage 1.00, citations 1.00, grounded 1.00 (0.89 first try). 134 tests pass.
+- Loops: 5 → 4 three times (explainer prompt rule, citation check, single-row label bug); one eval bug (rounded
+  target) fixed. Mac sleep explained a 19-min outlier.
+- Next: yarn advisor + rewriter evals (quota), judge calibration; then charts (UC4).

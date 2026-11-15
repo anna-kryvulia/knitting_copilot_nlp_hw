@@ -1,0 +1,135 @@
+{
+  "component": "gauge",
+  "split": "test",
+  "version": "v1",
+  "model": "none",
+  "date": "2026-11-14",
+  "metrics": {
+    "overall": {
+      "n": 54,
+      "success": 1.0,
+      "closest_valid": 1.0,
+      "motifs_kept": 1.0,
+      "width_error_mean_cm": 0.74,
+      "width_error_max_cm": 4.9,
+      "width_within_1cm": 0.796,
+      "width_error_unavoidable": 1.0,
+      "length_error_mean_cm": 0.51,
+      "length_error_max_cm": 1.9,
+      "length_within_1cm": 0.889
+    },
+    "width_error_mean_by_template": {
+      "bias_dishcloth": 0.18,
+      "bordered_blanket": 0.07,
+      "cable_scarf": 1.4,
+      "eyelet_scarf": 0.42,
+      "feather_fan": 3.32,
+      "garter_scarf": 0.18,
+      "rib_scarf": 0.38,
+      "ribbed_hat": 0.42,
+      "seed_cowl": 0.32
+    }
+  },
+  "n": 54,
+  "failures": [
+    {
+      "id": "parse-015",
+      "template": "feather_fan",
+      "factor": [
+        0.85,
+        0.9
+      ],
+      "why": "chosen 56 best 56 target 62.92 width 35.7->31.8 unavoidable=True"
+    },
+    {
+      "id": "parse-015",
+      "template": "feather_fan",
+      "factor": [
+        0.9,
+        0.95
+      ],
+      "why": "chosen 74 best 74 target 66.49 width 35.7->39.8 unavoidable=True"
+    },
+    {
+      "id": "parse-016",
+      "template": "cable_scarf",
+      "factor": [
+        0.85,
+        0.9
+      ],
+      "why": "chosen 24 best 24 target 27.2 width 14.5->12.8 unavoidable=True"
+    },
+    {
+      "id": "parse-024",
+      "template": "feather_fan",
+      "factor": [
+        1.18,
+        1.12
+      ],
+      "why": "chosen 74 best 74 target 66.08 width 28.0->31.4 unavoidable=True"
+    },
+    {
+      "id": "parse-024",
+      "template": "feather_fan",
+      "factor": [
+        0.85,
+        0.9
+      ],
+      "why": "chosen 56 best 56 target 47.6 width 28.0->32.9 unavoidable=True"
+    },
+    {
+      "id": "parse-025",
+      "template": "cable_scarf",
+      "factor": [
+        0.9,
+        0.95
+      ],
+      "why": "chosen 24 best 24 target 21.56 width 10.2->11.3 unavoidable=True"
+    },
+    {
+      "id": "parse-025",
+      "template": "cable_scarf",
+      "factor": [
+        0.85,
+        0.9
+      ],
+      "why": "chosen 24 best 24 target 20.44 width 10.2->11.9 unavoidable=True"
+    },
+    {
+      "id": "parse-033",
+      "template": "feather_fan",
+      "factor": [
+        1.1,
+        1.05
+      ],
+      "why": "chosen 38 best 38 target 41.8 width 18.1->16.5 unavoidable=True"
+    },
+    {
+      "id": "parse-033",
+      "template": "feather_fan",
+      "factor": [
+        0.9,
+        0.95
+      ],
+      "why": "chosen 38 best 38 target 34.2 width 18.1->20.1 unavoidable=True"
+    },
+    {
+      "id": "parse-034",
+      "template": "cable_scarf",
+      "factor": [
+        0.9,
+        0.95
+      ],
+      "why": "chosen 24 best 24 target 21.6 width 10.4->11.6 unavoidable=True"
+    },
+    {
+      "id": "parse-034",
+      "template": "cable_scarf",
+      "factor": [
+        0.85,
+        0.9
+      ],
+      "why": "chosen 24 best 24 target 20.45 width 10.4->12.2 unavoidable=True"
+    }
+  ]
+}

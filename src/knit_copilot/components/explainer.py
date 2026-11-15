@@ -15,13 +15,14 @@ import time
 from pydantic import BaseModel
 
 from knit_copilot import facts as factsheet
-from knit_copilot import llm
+from knit_copilot import kb, llm
 from knit_copilot.ir import Pattern
 
 MAX_REPAIRS = 1
-CITATION = re.compile(r"\[([a-z0-9_]+)\]")
+# "[k2tog]" or, as models sometimes write it, "[k2tog: knit two together]"
+CITATION = re.compile(r"\[([a-z0-9_]+)(?::[^\]]*)?\]")
 # tokens like k2tog, p40, c6b, 2/2: numbers inside abbreviations are not checked as quantities
-ABBREV_TOKEN = re.compile(r"\b[a-z]+\d+[a-z0-9]*\b|\b\d+/\d+\b|\[[a-z0-9_]+\]", re.I)
+ABBREV_TOKEN = re.compile(r"\b[a-z]+\d+[a-z0-9]*\b|\b\d+/\d+\b|\[[a-z0-9_]+(?::[^\]]*)?\]", re.I)
 
 
 class ExplainerInput(BaseModel):
@@ -44,9 +45,18 @@ class ExplainerOutput(BaseModel):
         return not self.violations
 
 
+ANY_BRACKET = re.compile(r"\[([^\]\n]{1,80})\]")
+
+
 def check(text: str, sheet: factsheet.FactSheet) -> list[str]:
-    """Numbers not in the fact sheet and citations not used by the pattern."""
+    """Numbers not in the fact sheet, citations not used by the pattern, and citations that use a name
+    instead of an id ("[yarn over: …]" instead of "[yo]")."""
     problems = []
+    names = {kb.abbreviations()[i].name.lower(): i for i in sheet.abbreviations}
+    for inner in ANY_BRACKET.findall(text):
+        head = inner.split(":")[0].strip().lower()
+        if CITATION.fullmatch(f"[{inner}]") is None and head in names:
+            problems.append(f"cite abbreviations by id: use [{names[head]}] instead of [{head}]")
     cited = CITATION.findall(text)
     for c in dict.fromkeys(cited):
         if c not in sheet.abbreviations:

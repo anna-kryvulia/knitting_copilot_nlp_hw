@@ -10,6 +10,7 @@ Raw results: `results/<component>_<split>.json`.
 | v1 | grammar | dev (synthetic) | 36 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 |
 | v1 | hybrid (grammar first) | dev | 36 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 | 1.000 |
 | v1 | llm (Nemotron 3.5 Super) | dev | 36 | 0.556 | **1.000** | 0.556 | 0.594 | 0.718 | 0.556 | 1.000 |
+| v1 | llm, missing cases re-run after the daily quota reset | dev | 36 | 0.944 | **1.000** | 0.944 | 0.949 | 0.978 | 0.944 | 1.000 |
 
 **LLM parser: accuracy vs availability.** Every pattern the LLM answered was parsed exactly (20/20, op
 precision 1.00, all styles incl. verbose, UK and typos). All 16 failures are availability, not errors:
@@ -17,7 +18,8 @@ precision 1.00, all styles incl. verbose, UK and typos). All 16 failures are ava
   free tier allows **50 free-model requests per day**, used up by the model comparison and this eval;
 - 3 cases hit the 60 s parse budget (busy free models).
 The per-style numbers for the LLM (e.g. imperial 0.167) therefore reflect *which* cases came late in the run,
-not difficulty. The eval now reports `answered` and `exact_when_answered` separately. The 16 cases will be
+not difficulty. **Re-run after the quota reset:** 34/36 answered, all 34 exact; the 2 misses hit the 60 s
+budget (busy free models). The eval now reports `answered` and `exact_when_answered` separately. The 16 cases will be
 re-run when the quota resets (answered cases are cached, so a re-run costs only the missing calls).
 
 **Consequences for the design:** the free tier makes the LLM unsuitable as the *only* parser; **hybrid**
@@ -89,6 +91,43 @@ ambiguous with the right candidates).
 recognised as unknown (none recall 1.0), which matters most: a wrong match would give wrong needle advice.
 Weak spot: the linker only knows the 219 yarns in the table; any other yarn falls back to fibre + weight.
 
-## 5.4 Explainer and yarn advisor
-Eval scripts ready (`eval_explainer.py`, `eval_yarn_advisor.py`, judges `prompts/judge_*.md`), not run yet:
-the free tier's 50 requests/day were used up (§5.1).
+## 5.4 Explainer (UC1)
+
+`eval/eval_explainer.py`: one synthetic pattern per template (9 on dev), input = **gold IR** (isolated from the
+parser). Code metrics: grounding (no number outside the fact sheet, no citation outside the pattern's
+abbreviations), fact coverage (cast-on, every repeat count, the stitch count after every written row that
+changes it, every non-basic abbreviation cited), citation recall, one section per step.
+
+| Version | Change | grounded 1st try | grounded final | fact coverage | citation recall | structure | median time |
+|---|---|---|---|---|---|---|---|
+| v1 | first version | 1.000 | 1.000 | 0.960 | 1.000 | 1.000 | 26 s |
+| v2 | prompt: give the count after each changing row (hat crown was summarised, coverage 0.64); fix "Rnds 1–1" headings | 1.000 | 1.000 | 0.944 | 0.889 | 1.000 | 29 s |
+| v3 | check: a citation by *name* ("[yarn over: …]") is a problem → repair names the id | 0.889 | **1.000** | **1.000** | **1.000** | 1.000 | (cached) |
+
+Error analysis: v2 fixed the hat (0.64 → 1.00) but the eyelet explanation (different sample, temperature
+0.2) cited abbreviations by name, which code cannot verify → v3 makes this a check failure, and the repair
+round fixes it. Remaining risk: the judge score (clarity for a beginner) is not measured yet — it needs the
+judge model plus a human-rated calibration set. One v1 case took 19 min: the Mac slept 19:29–19:47
+(confirmed in the system log); the 90 s budget itself works.
+
+## 5.5 Gauge adjustment (UC2)
+
+`eval/eval_gauge.py`: every synthetic pattern × 2 knitter gauges (±10–18 % stitches, ±5–12 % rows).
+
+| Split | n | success | closest valid count (brute force) | motifs kept | width ≤ 1 cm | width misses unavoidable | width error mean / max | length ≤ 1 cm | length error mean / max |
+|---|---|---|---|---|---|---|---|---|---|
+| dev | 72 | 1.000 | 1.000 | 1.000 | 0.764 | 1.000 | 0.84 / 5.5 cm | 0.847 | 0.52 / 1.6 cm |
+| test | 54 | 1.000 | 1.000* | 1.000 | 0.796 | 1.000 | 0.74 / 4.9 cm | 0.889 | 0.51 / 1.9 cm |
+
+\* first run 0.981: the eval compared with the target rounded to 2 decimals (93.5 vs 93.5000…01), so two
+equally close counts looked like a miss; the eval now uses the exact target and accepts ties.
+
+**Reading the numbers.** The maths is right every time (closest valid count, motifs intact). The 1 cm width
+target from §1.8 is not reachable for patterns with large motifs: feather & fan repeats every 18 stitches
+(≈ 10 cm per step) and the cable scarf every 8 — **every** width miss is such a case, where no valid count
+gets within 1 cm (mean width error per template: feather & fan 3.3–3.6 cm, cable 1.4–1.5 cm, all others
+≤ 0.7 cm). The system says so and advises changing needle size. Length errors come from finishing on a whole
+4- or 8-row repeat. Hand-calculated cases are unit tests (`tests/test_gauge.py`).
+
+## 5.6 Yarn advisor and rewriter
+Eval scripts ready (`eval_yarn_advisor.py`, `eval_rewriter.py`), not run yet (daily free-model quota).

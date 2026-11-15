@@ -13,6 +13,8 @@ before the next starts. This document grows with every component.
 | 6 | Explainer (`components/explainer.py`, `facts.py`) | code facts + LLM + grounding check | ✅ built, ⏳ eval needs quota | `eval/eval_explainer.py` |
 | 7 | Yarn linker (`components/yarn_linker.py`) | string-based entity linking | ✅ | `eval/eval_yarn_linker.py` |
 | 8 | Yarn advisor (`components/yarn_advisor.py`) | code facts + LLM + grounding check | ✅ built, ⏳ eval needs quota | `eval/eval_yarn_advisor.py` |
+| 9 | Gauge adjustment (`gauge.py`) | code | ✅ | `eval/eval_gauge.py`, `tests/test_gauge.py` |
+| 10 | Rewriter (`components/rewriter.py`) | code edit list + LLM + re-parse check, code fallback | ✅ built, ⏳ eval needs quota | `eval/eval_rewriter.py` |
 
 ## 4.1 Parsers
 
@@ -116,3 +118,26 @@ shown to the user as a warning. Optional focus ("Row 3", "the crown") explains o
   check as the explainer (citations `[yarn:id]`, `[cyc:n]`, `[fibre:x]`).
 - UI: the Yarn tab shows the linked yarn and the code-computed numbers immediately; the LLM is only called
   for the written answer.
+
+## 4.6 Gauge adjustment (UC2)
+`src/knit_copilot/gauge.py`, no model calls.
+1. **Flatten the size**: every per-size value is resolved for the chosen size.
+2. **Width**: target = cast-on × knitter sts / pattern sts. Candidate counts around the target (±30 %) are
+   tried in order of distance; a candidate is **valid** when the whole piece simulates (every "rep to end /
+   to last n sts" fits). For each candidate, single fixed-count repeats in a row ("(p2, k6) ×2") are re-solved
+   for the new width, and "repeat until N sts" targets are scaled — except a target equal to the cast-on (a
+   corner/point, e.g. the bias dishcloth) which follows the new cast-on.
+3. **Length**: "until X cm" is unchanged (the simulator converts it with the knitter's row gauge); fixed
+   repeat counts of row blocks are scaled by the row ratio (total passes, rounded).
+4. **Report**: changes (old → new), finished width (widest point) and length before/after, and a note when a
+   large motif makes an exact fit impossible (e.g. feather & fan: 18-stitch motif = steps of 10 cm), with the
+   advice to change needle size.
+
+## 4.7 Rewriter (UC2 text)
+`components/rewriter.py`, prompt `prompts/rewriter.md`. Code derives an **edit list** from the adjusted IR
+(gauge line, cast-on, stated counts, repeat counts written as totals, "repeat until" targets, one size). The
+LLM applies only these edits to the original text. The result is **re-parsed (hybrid) and simulated** at the
+knitter's gauge and must match the adjusted IR row by row; one repair with the concrete mismatch; otherwise
+the **code-rendered** version (generator's terse renderer, also verified) is shown with a warning.
+UI: Pattern → "My gauge" tab (swatch inputs → changes table, width/length before and after, notes →
+"Write my version of the pattern").

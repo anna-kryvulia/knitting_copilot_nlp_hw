@@ -67,7 +67,9 @@ def _span(word: str, first: int, last: int) -> str:
 
 
 def _label_range(labels: list[str]) -> str:
-    """['Row 1', 'Row 2', 'Row 3', 'Row 4'] → 'Rows 1–4'; other labels joined with commas."""
+    """['Row 1', 'Row 2', 'Row 3', 'Row 4'] → 'Rows 1–4'; ['Rnd 1'] → 'Rnd 1'; other labels joined with commas."""
+    if len(labels) == 1:
+        return labels[0]
 
     nums = [re.fullmatch(r"(Row|Rnd) (\d+)", lb) for lb in labels]
     if all(nums) and len({m.group(1) for m in nums}) == 1:

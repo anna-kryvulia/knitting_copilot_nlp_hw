@@ -44,3 +44,8 @@ def test_grouped_lines_and_time_counter():
     assert flat[0].instruction == "Rnd 1 (time 1 of 4)" and flat[3].instruction == "Rnd 1 (time 4 of 4)"
     assert flat[-1].worked_as == "bind off 88 sts"
     assert grouped[0].instruction == "Rnd 1"          # no "time 1 of 4" in the grouped view
+
+
+def test_label_range_single_and_many():
+    from knit_copilot.display import _label_range
+    assert _label_range(["Rnd 1"]) == "Rnd 1" and _label_range(["Row 1", "Row 2", "Row 3"]) == "Rows 1–3"

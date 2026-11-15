@@ -1,0 +1,189 @@
+{
+  "component": "gauge",
+  "split": "dev",
+  "version": "v1",
+  "model": "none",
+  "date": "2026-11-14",
+  "metrics": {
+    "overall": {
+      "n": 72,
+      "success": 1.0,
+      "closest_valid": 1.0,
+      "motifs_kept": 1.0,
+      "width_error_mean_cm": 0.84,
+      "width_error_max_cm": 5.5,
+      "width_within_1cm": 0.764,
+      "width_error_unavoidable": 1.0,
+      "length_error_mean_cm": 0.52,
+      "length_error_max_cm": 1.6,
+      "length_within_1cm": 0.847
+    },
+    "width_error_mean_by_template": {
+      "bias_dishcloth": 0.18,
+      "bordered_blanket": 0.04,
+      "cable_scarf": 1.5,
+      "eyelet_scarf": 0.61,
+      "feather_fan": 3.55,
+      "garter_scarf": 0.1,
+      "rib_scarf": 0.44,
+      "ribbed_hat": 0.69,
+      "seed_cowl": 0.44
+    }
+  },
+  "n": 72,
+  "failures": [
+    {
+      "id": "parse-004",
+      "template": "ribbed_hat",
+      "factor": [
+        0.9,
+        0.95
+      ],
+      "why": "chosen 96 best 96 target 93.6 width 49.5->50.8 unavoidable=True"
+    },
+    {
+      "id": "parse-006",
+      "template": "feather_fan",
+      "factor": [
+        0.85,
+        0.9
+      ],
+      "why": "chosen 56 best 56 target 47.47 width 26.7->31.5 unavoidable=True"
+    },
+    {
+      "id": "parse-006",
+      "template": "feather_fan",
+      "factor": [
+        0.9,
+        0.95
+      ],
+      "why": "chosen 56 best 56 target 50.4 width 26.7->29.6 unavoidable=True"
+    },
+    {
+      "id": "parse-007",
+      "template": "cable_scarf",
+      "factor": [
+        1.18,
+        1.12
+      ],
+      "why": "chosen 32 best 32 target 28.34 width 9.2->10.4 unavoidable=True"
+    },
+    {
+      "id": "parse-007",
+      "template": "cable_scarf",
+      "factor": [
+        0.85,
+        0.9
+      ],
+      "why": "chosen 24 best 24 target 20.4 width 9.2->10.9 unavoidable=True"
+    },
+    {
+      "id": "parse-042",
+      "template": "feather_fan",
+      "factor": [
+        1.18,
+        1.12
+      ],
+      "why": "chosen 74 best 74 target 65.96 width 31.1->34.9 unavoidable=True"
+    },
+    {
+      "id": "parse-042",
+      "template": "feather_fan",
+      "factor": [
+        0.85,
+        0.9
+      ],
+      "why": "chosen 56 best 56 target 47.6 width 31.1->36.6 unavoidable=True"
+    },
+    {
+      "id": "parse-043",
+      "template": "cable_scarf",
+      "factor": [
+        0.9,
+        0.95
+      ],
+      "why": "chosen 24 best 24 target 21.6 width 10.4->11.6 unavoidable=True"
+    },
+    {
+      "id": "parse-043",
+      "template": "cable_scarf",
+      "factor": [
+        0.85,
+        0.9
+      ],
+      "why": "chosen 24 best 24 target 20.45 width 10.4->12.2 unavoidable=True"
+    },
+    {
+      "id": "parse-051",
+      "template": "feather_fan",
+      "factor": [
+        1.1,
+        1.05
+      ],
+      "why": "chosen 56 best 56 target 61.6 width 31.1->28.3 unavoidable=True"
+    },
+    {
+      "id": "parse-051",
+      "template": "feather_fan",
+      "factor": [
+        0.9,
+        0.95
+      ],
+      "why": "chosen 56 best 56 target 50.4 width 31.1->34.6 unavoidable=True"
+    },
+    {
+      "id": "parse-052",
+      "template": "cable_scarf",
+      "factor": [
+        0.9,
+        0.95
+      ],
+      "why": "chosen 24 best 24 target 21.6 width 9.2->10.3 unavoidable=True"
+    },
+    {
+      "id": "parse-052",
+      "template": "cable_scarf",
+      "factor": [
+        0.85,
+        0.9
+      ],
+      "why": "chosen 24 best 24 target 20.4 width 9.2->10.9 unavoidable=True"
+    },
+    {
+      "id": "parse-060",
+      "template": "feather_fan",
+      "factor": [
+        1.18,
+        1.12
+      ],
+      "why": "chosen 38 best 38 target 44.75 width 19.3->16.4 unavoidable=True"
+    },
+    {
+      "id": "parse-060",
+      "template": "feather_fan",
+      "factor": [
+        0.9,
+        0.95
+      ],
+      "why": "chosen 38 best 38 target 34.14 width 19.3->21.5 unavoidable=True"
+    },
+    {
+      "id": "parse-061",
+      "template": "cable_scarf",
+      "factor": [
+        0.9,
+        0.95
+      ],
+      "why": "chosen 32 best 32 target 28.8 width 13.9->15.5 unavoidable=True"
+    },
+    {
+      "id": "parse-061",
+      "template": "cable_scarf",
+      "factor": [
+        0.85,
+        0.9
+      ],
+      "why": "chosen 24 best 24 target 27.27 width 13.9->12.2 unavoidable=True"
+    }
+  ]
+}

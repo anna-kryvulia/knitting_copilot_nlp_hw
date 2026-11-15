@@ -37,3 +37,14 @@ def test_repair_loop(monkeypatch):
     monkeypatch.setattr(explainer.llm, "chat", lambda *a, **k: {"content": next(answers)})
     out = explainer.run(explainer.ExplainerInput(pattern=parse(HAT).pattern))
     assert out.grounded and out.attempts == 2 and out.citations == ["k"]
+
+
+def test_citation_with_inline_definition():
+    sheet = _sheet()
+    text = "Work [k2tog: knit two together] and [k: knit]."
+    assert explainer.check(text, sheet) == [] and explainer.CITATION.findall(text) == ["k2tog", "k"]
+
+
+def test_citation_by_name_is_flagged():
+    problems = explainer.check("Then [knit two together: work two as one].", _sheet())
+    assert problems == ["cite abbreviations by id: use [k2tog] instead of [knit two together]"]

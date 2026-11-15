@@ -10,7 +10,8 @@ import pandas as pd
 import streamlit as st
 
 from knit_copilot import kb
-from knit_copilot.components import explainer, parser, yarn_advisor, yarn_linker
+from knit_copilot import gauge
+from knit_copilot.components import explainer, parser, rewriter, yarn_advisor, yarn_linker
 from knit_copilot.config import ROOT, settings
 from knit_copilot.display import row_lines
 from knit_copilot.retrieval import search as kbsearch
@@ -87,6 +88,8 @@ with tab_pattern:
                 out = parser.run(parser.ParserInput(text=text, mode=mode))
             st.session_state["parsed"] = out
             st.session_state["explanation"] = None
+            st.session_state["adjustment"] = None
+            st.session_state["rewrite"] = None
         out = st.session_state.get("parsed")
         if out is not None:
             if not out.ok:
@@ -116,7 +119,7 @@ with tab_pattern:
                                + ", ".join(f"{r.label} (says {r.stated_count}, computed {r.end_count})" for r in mism))
                 for w in out.warnings:
                     st.caption(f"⚠ {w}")
-                rows_tab, explain_tab = st.tabs(["Rows", "Explanation"])
+                rows_tab, explain_tab, gauge_tab = st.tabs(["Rows", "Explanation", "My gauge"])
                 with rows_tab:
                     every = st.toggle("Show every row", value=False,
                                       help="Off: repeated rows are grouped into one line. On: one line per row worked.")
@@ -148,6 +151,63 @@ with tab_pattern:
                         st.markdown(exp.text)
                         with st.expander("Facts the explanation is based on (computed by code)"):
                             st.code(exp.facts, language=None)
+                with gauge_tab:
+                    if not p.gauge:
+                        st.info("This pattern states no gauge, so it cannot be adjusted.")
+                    else:
+                        st.caption(f"Pattern gauge: {p.gauge.sts_per_10cm:g} sts"
+                                   + (f" × {p.gauge.rows_per_10cm:g} rows" if p.gauge.rows_per_10cm else "")
+                                   + " per 10 cm. Enter your swatch (after blocking):")
+                        g1, g2, g3 = st.columns(3)
+                        k_sts = g1.number_input("Your stitches / 10 cm", min_value=1.0, max_value=60.0,
+                                                value=float(p.gauge.sts_per_10cm), step=0.5)
+                        k_rows = g2.number_input("Your rows / 10 cm", min_value=0.0, max_value=80.0,
+                                                 value=float(p.gauge.rows_per_10cm or 0), step=0.5,
+                                                 help="0 = not measured")
+                        k_needle = g3.number_input("Your needles (mm)", min_value=0.0, max_value=25.0,
+                                                   value=float(p.gauge.needle_mm or 0), step=0.25)
+                        if st.button("Adjust to my gauge", type="primary"):
+                            try:
+                                st.session_state["adjustment"] = gauge.adjust(p, size, gauge.KnitterGauge(
+                                    sts_per_10cm=k_sts, rows_per_10cm=k_rows or None, needle_mm=k_needle or None))
+                                st.session_state["rewrite"] = None
+                            except ValueError as e:
+                                st.error(str(e))
+                        adj = st.session_state.get("adjustment")
+                        if adj is not None:
+                            if not adj.ok:
+                                st.error(" ".join(adj.notes))
+                            else:
+                                d1, d2, d3 = st.columns(3)
+                                d1.metric("Cast on", adj.chosen_stitches,
+                                          delta=adj.chosen_stitches - adj.changes[0].old)
+                                d2.metric("Width", f"{adj.after.width_cm:g} cm",
+                                          delta=f"{adj.after.width_cm - adj.before.width_cm:+.1f} cm", delta_color="off")
+                                if adj.after.length_cm:
+                                    d3.metric("Length", f"{adj.after.length_cm:g} cm",
+                                              delta=f"{adj.after.length_cm - (adj.before.length_cm or 0):+.1f} cm",
+                                              delta_color="off")
+                                for n in adj.notes:
+                                    st.info(n)
+                                st.dataframe(pd.DataFrame([{"Change": c.what, "Pattern": c.old, "Yours": c.new}
+                                                           for c in adj.changes]), hide_index=True,
+                                             use_container_width=True)
+                                if st.button("Write my version of the pattern",
+                                             help="The LLM rewrites the pattern in its own style; the result is "
+                                                  "re-read and checked row by row. If the check fails you get a "
+                                                  "version written by code."):
+                                    with st.spinner("Rewriting and checking…"):
+                                        st.session_state["rewrite"] = rewriter.run(
+                                            text, p, adj, use_llm=bool(settings.openrouter_api_key))
+                                rw = st.session_state.get("rewrite")
+                                if rw is not None:
+                                    if rw.method == "code_render":
+                                        st.warning("The rewritten text did not pass the check"
+                                                   + (f" ({rw.problems[0]})" if rw.problems else "")
+                                                   + " — showing a version written by code instead.")
+                                    else:
+                                        st.success("Rewritten and verified: every row matches the adjusted pattern.")
+                                    st.code(rw.text, language=None)
 
 # ---------- Yarn tab (UC3) ----------
 with tab_yarn:
