@@ -1,0 +1,158 @@
+# Real-pattern evaluation set (Part D). Metadata only: the pattern PDFs are copyrighted and stay in
+# git-ignored data/private/ravelry/. role: in_scope (Must tier) | borderline (thumb on hold) |
+# limit_probe (garments, Should tier: measured separately to show the system's limits).
+# Selection: chosen by the author from the modern candidate lists (docs/02_data_understanding.md §2.5).
+- slug: sherbet-bandana
+  title: Sherbet Bandana
+  designer: The Lamb & Kid Designs
+  url: https://www.ravelry.com/patterns/library/sherbet-bandana
+  year: 2023
+  projects: 360
+  category:
+  - Kerchief
+  role: in_scope
+  file: data/private/ravelry/sherbet-bandana.pdf
+  annotated: false
+- slug: stickjournalens-headscarf
+  title: stickjournalen's headscarf
+  designer: stickjournalen
+  url: https://www.ravelry.com/patterns/library/stickjournalens-headscarf
+  year: 2026
+  projects: 32
+  category:
+  - Kerchief
+  role: in_scope
+  file: data/private/ravelry/stickjournalens-headscarf.pdf
+  annotated: false
+- slug: blueberry-bandana
+  title: Blueberry Bandana
+  designer: Anouska Knits
+  url: https://www.ravelry.com/patterns/library/blueberry-bandana
+  year: 2025
+  projects: 24
+  category:
+  - Kerchief
+  role: in_scope
+  file: data/private/ravelry/blueberry-bandana.pdf
+  annotated: false
+- slug: the-sigrid-scarf
+  title: The Sigrid Scarf
+  designer: Ida Väyrynen
+  url: https://www.ravelry.com/patterns/library/the-sigrid-scarf
+  year: 2026
+  projects: 471
+  category:
+  - Scarf
+  role: in_scope
+  file: data/private/ravelry/the-sigrid-scarf.pdf
+  annotated: false
+- slug: sister-scarf
+  title: Sister Scarf
+  designer: PetiteKnit
+  url: https://www.ravelry.com/patterns/library/sister-scarf
+  year: 2024
+  projects: 211
+  category:
+  - Scarf
+  role: in_scope
+  file: data/private/ravelry/sister-scarf.pdf
+  annotated: false
+- slug: double-hat
+  title: Double Hat
+  designer: SuviKnits
+  url: https://www.ravelry.com/patterns/library/double-hat-4
+  year: 2025
+  projects: 261
+  category:
+  - Beanie, Toque
+  role: in_scope
+  file: data/private/ravelry/double-hat.pdf
+  annotated: false
+- slug: nick-chopper
+  title: Nick Chopper
+  designer: Noriko Ho
+  url: https://www.ravelry.com/patterns/library/nick-chopper
+  year: 2025
+  projects: 40
+  category:
+  - Beanie, Toque
+  role: in_scope
+  file: data/private/ravelry/nick-chopper.pdf
+  annotated: false
+- slug: feeling-good-legwarmers
+  title: Feeling Good Legwarmers
+  designer: nathalie denys
+  url: https://www.ravelry.com/patterns/library/feeling-good-legwarmers
+  year: 2024
+  projects: 107
+  category:
+  - Legwarmers
+  role: in_scope
+  file: data/private/ravelry/feeling-good-legwarmers.pdf
+  annotated: false
+- slug: heidi-leg-warmers
+  title: Heidi Leg Warmers
+  designer: Irene Lin
+  url: https://www.ravelry.com/patterns/library/heidi-leg-warmers
+  year: 2024
+  projects: 111
+  category:
+  - Legwarmers
+  role: in_scope
+  file: data/private/ravelry/heidi-leg-warmers.pdf
+  annotated: false
+- slug: moose-balaclava
+  title: Moose Balaclava
+  designer: slow stuff knitwear
+  url: https://www.ravelry.com/patterns/library/moose-balaclava
+  year: 2024
+  projects: 72
+  category:
+  - Balaclava
+  role: in_scope
+  file: data/private/ravelry/moose-balaclava.pdf
+  annotated: false
+- slug: 3x1-hood
+  title: 3x1 Hood
+  designer: sophia.knit
+  url: https://www.ravelry.com/patterns/library/3x1-hood
+  year: 2025
+  projects: 25
+  category:
+  - Balaclava
+  role: in_scope
+  file: data/private/ravelry/3x1-hood.pdf
+  annotated: false
+- slug: warm-and-simple
+  title: Warm and simple
+  designer: Sandrine Vos
+  url: https://www.ravelry.com/patterns/library/warm-and-simple
+  year: 2024
+  projects: 302
+  category:
+  - Fingerless Gloves/Mitts
+  role: borderline
+  file: data/private/ravelry/warm-and-simple.pdf
+  annotated: false
+- slug: garten-pullover
+  title: Garten - pullover
+  designer: Ellen Furderer
+  url: https://www.ravelry.com/patterns/library/garten---pullover
+  year: 2025
+  projects: 85
+  category:
+  - Pullover
+  role: limit_probe
+  file: data/private/ravelry/garten-pullover.pdf
+  annotated: false
+- slug: picnic-folks-top
+  title: Picnic Folks Top
+  designer: Wan Cheng Phua
+  url: https://www.ravelry.com/patterns/library/picnic-folks-top
+  year: 2023
+  projects: 172
+  category:
+  - Tee
+  role: limit_probe
+  file: data/private/ravelry/picnic-folks-top.pdf
+  annotated: false

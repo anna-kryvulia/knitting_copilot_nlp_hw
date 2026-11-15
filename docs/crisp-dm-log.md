@@ -174,3 +174,29 @@ Running log of decisions. Newest entries at the bottom. Format:
 - Fixes: chart default rows (score bug), row numbering, motif alignment; Gauge.stitch_pattern optional.
 - Next: Must-tier remaining: row tracker + project workflow (setup → lock, chat setup via tool calls,
   router, LangGraph); Part D (Ravelry annotations); judge calibration.
+
+## 2026-11-15 — 2. Data Understanding (revision) — Modern pattern set
+- What: `find_ravelry_patterns.py --modern` (Ravelry recently-popular, published ≥ 2019, ≥ 30 projects,
+  modern categories) → `docs/data/ravelry_pattern_candidates_modern.md`; doc 02 §2.5 updated.
+- Why: user feedback — the real-pattern eval should reflect what (younger) knitters make now, not 2000s classics.
+- Result: 12 patterns chosen (beanies, balaclava, bandanas, Sigrid scarf, Saturday Shrug, leg warmers,
+  headband, Portland Cap) + spare + 1 vest for the Should tier. Trending patterns with 0 projects excluded.
+- Next: user downloads PDFs into data/private/ravelry/; then Part D annotations.
+
+## 2026-11-15 — 2. Data Understanding (revision 2) — "More like the chosen ones"
+- What: user downloaded 6 modern patterns (balaclava, 2 bandanas/headscarves, scarf, leg warmers, double hat)
+  → copied to data/private/ravelry/; `find_ravelry_patterns.py --more` (2023+, ≥ 20 projects) → 38 candidates.
+- Why: the user's picks show the target style (recent accessories by small designers); the eval set should
+  match it. Human-in-the-loop data selection is recorded for the report.
+- Next: user adds 4–6 more → Part D annotations.
+
+## 2026-11-15 — 2. Data Understanding (revision 3) — Raglans, tops, scarves, mittens
+- What: `find_ravelry_patterns.py --garments` → 25 candidates (2022+, ≥ 30 projects).
+- Decision: scarves count as Must-tier eval cases; raglans/tops (Should) and mittens (borderline) are kept as
+  out-of-scope probes, reported separately, to show the system's limits.
+
+## 2026-11-15 — 3. Data Preparation (part D, start) — Real-pattern set fixed
+- What: 19 downloaded PDFs reviewed (text extracted with pypdf, techniques flagged); 14 kept and moved to
+  data/private/ravelry/ (git-ignored) with slug names; index `data/eval/ravelry/patterns.yaml`.
+- Why dropped: near-duplicates (4th kerchief, 3rd hood, 3rd scarf, 3rd garment) and one image-only PDF.
+- Next: annotate the 11 in-scope patterns (gold IR + counts), then run parser/explainer/charts on real text.

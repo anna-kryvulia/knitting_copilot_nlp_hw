@@ -19,7 +19,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=8", "jupyter"]
+dev = ["pytest>=8", "jupyter", "pypdf>=5"]
 
 [build-system]
 requires = ["setuptools>=69"]

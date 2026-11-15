@@ -145,6 +145,59 @@ Observations:
 - The PDFs are copyrighted: they are downloaded manually into git-ignored `data/private/ravelry/`; only
   our annotations and links are committed (`annotate-ravelry-pattern` skill).
 
+### Modern set (chosen)
+
+Revision (2026-11-15, user feedback): the classic set above is mostly patterns from the 2000s–2010s. The
+evaluation should reflect what knitters — especially younger ones — make **now**. `scripts/find_ravelry_patterns.py
+--modern` uses Ravelry's **recently-popular** ranking (recent activity), patterns published **2019 or later**
+with **≥ 30 projects** (trending patterns with 0 projects are untested and were dropped), same scope filters,
+and modern categories (balaclava, kerchief/bandana, leg warmers, headband, tote). Full list (33 candidates):
+`docs/data/ravelry_pattern_candidates_modern.md`.
+
+| # | Pattern (year) | Type | What it tests | Projects |
+|---|---|---|---|---|
+| 1 | Double Hat (2025) | ribbed beanie, in the round | folded brim, crown | 261 |
+| 2 | Sosna Ribbed Hat (2023) | ribbed beanie | fine-gauge rib, crown decreases | 108 |
+| 3 | July Hat (2019) | textured beanie | texture stitch | 956 |
+| 4 | Moose Balaclava (2024) | balaclava | flat + round sections (scope check after download) | 72 |
+| 5 | Sherbet Bandana (2023) | kerchief, flat | count changes every row | 360 |
+| 6 | Lace Headscarf (2025) | lace kerchief | written lace | 218 |
+| 7 | The Sigrid Scarf (2026) | scarf, flat | recent, popular | 471 |
+| 8 | Saturday Shrug (2023) | bulky rib, in the round | very popular bulky knit | 1,566 |
+| 9 | Torzal Cowl (2026) | cowl, in the round | simple control case | 46 |
+| 10 | Feeling Good Legwarmers (2024) | leg warmers, in the round | ribbing, trend item | 107 |
+| 11 | Main Street Headband (2024) | headband, flat | short textured piece | 141 |
+| 12 | Portland Cap (2022) | cable cap, in the round | written cables | 388 |
+| spare | Folio Tote (2021) | tote | | 35 |
+| Should | See My Vest – Worsted (2024) | vest | multi-piece tier | 1,103 |
+
+**User review of the modern set:** the author downloaded 6 of the 12 — Moose Balaclava, Sherbet Bandana,
+Lace Headscarf, The Sigrid Scarf, Feeling Good Legwarmers, Double Hat — i.e. recent (2023–2026) accessories by
+small independent designers, and rejected the classic-style beanies, cowl, shrug, headband, cable cap and tote.
+`find_ravelry_patterns.py --more` then searched for "more like these" (published ≥ 2023, ≥ 20 projects, 5 per
+category, already-shown patterns excluded; categories incl. bandana/kerchief, balaclava/hood, leg warmers,
+earflap hats, fingerless mitts, triangle shawls) → `docs/data/ravelry_pattern_candidates_more.md` (38
+candidates; "The Brioche Beanie" excluded by hand: brioche is out of scope; fingerless mitts flagged as
+borderline because of thumb gussets with held stitches).
+
+**Garments, scarves, mittens** (user request): `find_ravelry_patterns.py --garments` (published ≥ 2022,
+≥ 30 projects) → `docs/data/ravelry_pattern_candidates_garments.md`: top-down raglans (e.g. Step by Step
+Sweater, 24,753 projects), one-piece tops/tanks (Tip Top Tank, 2,068), scarves (PetiteKnit Sister Scarf),
+mittens. Raglans and tops are **Should tier** (sleeve stitches on hold, separate sleeves), mittens borderline
+(thumb gusset). They are still useful in the real-pattern eval to measure where the parser and explainer stop
+working — results reported separately from the in-scope patterns.
+
+**Final real-pattern set (14)** — `data/eval/ravelry/patterns.yaml` (metadata only). The author downloaded 19
+PDFs; 5 were dropped as too similar or unusable: a 4th kerchief (knitb6y lace headscarf, mostly charts), a 3rd
+balaclava/hood (Meri), a 3rd simple scarf (The 4x4 Scarf), a 3rd garment (Hällevik blouse), and MONOKROM
+(image-only PDF — no extractable text, would need OCR). Kept: 11 in scope (3 bandanas/headscarves, 2 scarves,
+2 hats, 2 leg warmers, 2 balaclavas/hoods), 1 borderline (fingerless mitts), 2 limit probes (raglan pullover,
+lace top). Designers are small independent studios; years 2023–2026.
+
+Observation: modern patterns are more often **charted** (lace, cables) and more often mix flat and
+round sections (balaclavas, bandanas with ties) — both are harder for the parser than the classic set, so
+the synthetic-vs-real gap is expected to be larger.
+
 ## 2.6 Knowledge base sources
 
 | KB | Content | Source / reference |
